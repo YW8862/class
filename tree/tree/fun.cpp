@@ -25,8 +25,8 @@ void BinaryTreeDestory(BTNode** root)
 {
 	if (root == NULL)
 		return;
-	BinaryTreeDestory((*root)->_left);
-	BinaryTreeDestory((*root)->_right);
+	BinaryTreeDestory(&(*root)->_left);
+	BinaryTreeDestory(&(*root)->_right);
 	free(*root);
 }
 
@@ -51,6 +51,42 @@ int BinaryTreeLeafSize(BTNode* root)
 // 二叉树第k层节点个数
 int BinaryTreeLevelKSize(BTNode* root, int k)
 {
+	if (!root || k <= 0) 
+		return 0;
+
+	int level = 1;
+	queue<BTNode*> q{ {root} };
+
+	while (!q.empty()) {
+		int size = q.size();
+		if (level == k) {
+			// Count the number of nodes at current level
+			int count = 0;
+			for (int i = 0; i < size; ++i) {
+				auto node = q.front();
+				q.pop();
+				if (node != nullptr) {
+					++count;
+				}
+			}
+			return count;
+		}
+
+		for (int i = 0; i < size; ++i) {
+			auto node = q.front();
+			q.pop();
+
+			if (node->_left) {
+				q.push(node->_left);
+			}
+			if (node->_right) {
+				q.push(node->_right);
+			}
+		}
+
+		++level;
+	}
+
 	return 0;
 }
 
@@ -99,11 +135,81 @@ void BinaryTreePostOrder(BTNode* root)
 // 层序遍历
 void BinaryTreeLevelOrder(BTNode* root)
 {
+		queue<BTNode*> Q;
+		Q.push(root);
 
+		while (!Q.empty()) {
+			BTNode* current = Q.front();
+			Q.pop();
+
+				// 输出节点的值
+			cout << current->_data << " ";
+
+			// 如果左子节点不为空，则将其插入队列
+			if (current->_left) {
+				Q.push(current->_left);
+			}
+
+			// 如果右子节点不为空，则将其插入队列
+			if (current->_right) {
+				Q.push(current->_right);
+			}
+		}
+	
 }
 
 // 判断二叉树是否是完全二叉树
 int BinaryTreeComplete(BTNode* root)
 {
-	return 0;
+	if (!root) {
+		return true;
+	}
+
+	bool isLastNonNullNodeFound = false;
+	vector<BTNode*> currLevel{ root };
+
+	while (true) {
+		vector<BTNode*> nextLevel;
+
+		for (auto& currNode : currLevel) {
+			if (currNode) {
+				if (isLastNonNullNodeFound && !currNode->_left && !currNode->_right) {
+					return false;
+				}
+
+				if (currNode->_left) {
+					nextLevel.push_back(currNode->_left);
+				}
+
+				if (currNode->_right) {
+					nextLevel.push_back(currNode->_right);
+				}
+				else {
+					isLastNonNullNodeFound = true;
+				}
+			}
+			else {
+				if (!isLastNonNullNodeFound) {
+					return false;
+				}
+			}
+		}
+
+		if (nextLevel.empty()) {
+			break;
+		}
+
+		currLevel.swap(nextLevel);
+	}
+
+	for (const auto& elem : currLevel) {
+		if (elem && !(elem->_left == nullptr && elem->_right == nullptr)) {
+			return false;
+		}
+	}
+
+	return true;
+
+
+	
 }

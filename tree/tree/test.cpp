@@ -13,6 +13,6 @@ int main()
 	printf("The number of the tree'sleaves is: %d \n", BinaryTreeLeafSize(root));
 	printf("\n");
 
-	BinaryTreeDestory(root);
+	BinaryTreeDestory(&root);
 	return 0;
 }
