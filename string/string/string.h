@@ -2,7 +2,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-namespace my_string {
+namespace mystring {
 	class string {
 	private:
 		char* _str;
@@ -68,9 +68,10 @@ namespace my_string {
 			return _size == 0;
 		}
 
-		void resize(size_t n, const char ch) {
+		void resize(size_t n, const char ch='\0') {
 			if (n <= _size) {
 				_str[n] = '\0';
+				_size = n;
 			}
 			else {
 				reserve(n);
@@ -110,6 +111,14 @@ namespace my_string {
 			append(s);
 		}
 
+		void clear() {
+			if (_size != 0) {
+				_str[0] = '\0';
+				_size = 0;
+			}
+
+		}
+
 		//插入
 		void insert(size_t pos, const char ch) {
 			assert(pos <= _size);
@@ -125,10 +134,48 @@ namespace my_string {
 			_size++;
 		}
 
-		void insert(size_t pos, const char* str) {
+		void insert(size_t pos, char ch)
+		{
+			assert(pos <= _size);
+
+			// 扩容2倍
+			if (_size == _capacity)
+			{
+				reserve(_capacity == 0 ? 4 : 2 * _capacity);
+			}
+
+			size_t end = _size + 1;
+			while (end > pos)
+			{
+				_str[end] = _str[end - 1];
+				--end;
+			}
+
+			_str[pos] = ch;
+			++_size;
+		}
+
+		void insert(size_t pos, const char* str)
+		{
 			assert(pos <= _size);
 			size_t len = strlen(str);
+			if (_size + len > _capacity)
+			{
+				// 扩容
+				reserve(_size + len);
+			}
+
+			size_t end = _size + len;
+			while (end > pos + len - 1)
+			{
+				_str[end] = _str[end - len];
+				end--;
+			}
+
+			strncpy(_str + pos, str, len);
+			_size += len;
 		}
+
 
 		//删除
 		void erase(size_t pos, size_t len = std::string::npos) {
@@ -141,6 +188,10 @@ namespace my_string {
 				strcpy(_str + pos, _str + pos + len);
 				_size -= len;
 			}
+		}
+
+		const char* c_str() {
+			return _str;
 		}
 
 ////////////////////////////////////////////////////////////////////
@@ -209,8 +260,40 @@ namespace my_string {
 			std::swap(_capacity, s._capacity);
 		}
 
-		friend ostream& operator<<(ostream& _cout, const my_string::string& s);
-		friend istream& operator>>(istream& _cin, my_string::string& s);
+
+		size_t find(char c, size_t pos = 0) const{
+			for (size_t i = pos; i < _size; ++i){
+				if (_str[i] == c)
+					return i;
+			}
+			return -1;//未找到
+		}
+
+		// 返回子串s在string中第一次出现的位置
+
+		size_t find(const char* s, size_t pos = 0) const{
+			assert(s);
+			assert(pos < _size);
+			const char* src = _str + pos;
+
+			while (*src){
+				const char* match = s;//如果不匹配，返回子串起始处重新查找
+				const char* cur = src;
+				while (*match && *match == *cur){
+					++match;
+					++cur;
+				}
+				if (*match == '\0'){
+					return src - _str;//返回下标
+				}
+				else{
+					++src;
+				}
+			}
+			return -1;
+		}
+		friend ostream& operator<<(ostream& _cout, const mystring::string& s);
+		friend istream& operator>>(istream& _cin, mystring::string& s);
 ///////////////////////////////////////////////////////////////////////////
 		// 返回c在string中第一次出现的位置
 
@@ -229,17 +312,19 @@ namespace my_string {
 
 	};
 
-	ostream& operator<<(ostream& _cout, const my_string::string& s) {
+	ostream& operator<<(ostream& _cout, const mystring::string& s) {
 
 		for (size_t i = 0; i < s.size(); ++i)
 		{
+			if (s[i] == '\0')
+				break;
 			_cout << s[i];
 		}
 		return _cout;
 
 	}
 
-	istream& operator>>(istream& _cin, my_string::string& s) {
+	istream& operator>>(istream& _cin, mystring::string& s) {
 		
 		char ch;
 		ch = _cin.get();
