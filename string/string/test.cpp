@@ -1,7 +1,5 @@
 #include"string.h"
 
-
-
 //test1 ππ‘Ï≤‚ ‘
 
 void test1() {
@@ -88,8 +86,49 @@ void test4() {
 	s1 += "234567";
 	cout << s1 << endl;
 
+	//≤‚ ‘clear
+	s1.clear();
+	cout << s1 << " s1._capacity:" << s1.capacity() <<"s1._size: "<< s1.size() << endl;
+
+	//≤‚ ‘swap∫Ø ˝
+	cout << "≤‚ ‘swap" << endl;
+	mystring::string s2 = "hello world 12345";
+	cout << s2 << endl;
+	s1.swap(s2);
+	cout << "s1: " << s1 << "s2: " << s2 << endl;
 
 
+	cout << "≤‚ ‘C_str" << endl;
+	//≤‚ ‘c_str
+	cout << s1.c_str() << endl;
+
+	//≤‚ ‘insert
+	cout <<endl<< "≤‚ ‘insert" << endl;
+	s1.insert(3, "haha");
+	cout << s1 << endl;
+	s1.insert(2, 's');
+	cout << s1 << endl;
+
+	//≤‚ ‘erase
+	cout << "≤‚ ‘erase:" << endl;
+	s1.erase(3, 5);
+	cout << s1 << endl;
+}
+
+void test5() {
+	mystring::string s1 = "hello world!";
+	for (int i = 0; i < s1.size(); i++) {
+		s1[i]++;
+		cout << s1[i] << " ";
+	}
+	cout << endl;
+}
+
+void test6() {
+	mystring::string s1 = "hello world!";
+	cout<<s1.find('5')<<endl;
+	cout << s1.find('l')<<endl;
+	cout << s1.find("hello") << endl;
 }
 
 ////test3 ≤‚ ‘Œ≤≤Â
@@ -132,8 +171,9 @@ int main() {
 	
 	//test1();                  //pass
 	//test2();					//pass
-	test3();					//pass
-	//test4();					//pass
-
+	//test3();					//pass
+	test4();					//pass
+	//test5();					//pass
+	//test6();
 	return 0;
 }

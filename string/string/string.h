@@ -30,6 +30,15 @@ namespace mystring {
 			strcpy(this->_str, str);
 		}
 
+		string& operator=(const char* s) {
+			delete [] this->_str;
+			this->_size = strlen(s);
+			this->_str = new char[_size + 1];
+			this->_capacity = _size;
+			memcpy(this->_str, s,_size);
+			this->_str[_size] = '\0';
+		}
+
 		string& operator=(const string& s) {
 			this->_str = new char[s.size() + 1];
 			this->_size = s._size;
@@ -134,27 +143,6 @@ namespace mystring {
 			_size++;
 		}
 
-		void insert(size_t pos, char ch)
-		{
-			assert(pos <= _size);
-
-			// 扩容2倍
-			if (_size == _capacity)
-			{
-				reserve(_capacity == 0 ? 4 : 2 * _capacity);
-			}
-
-			size_t end = _size + 1;
-			while (end > pos)
-			{
-				_str[end] = _str[end - 1];
-				--end;
-			}
-
-			_str[pos] = ch;
-			++_size;
-		}
-
 		void insert(size_t pos, const char* str)
 		{
 			assert(pos <= _size);
@@ -179,7 +167,7 @@ namespace mystring {
 
 		//删除
 		void erase(size_t pos, size_t len = std::string::npos) {
-			assert(pos < _size);
+			assert(pos<_size);
 			if (len == std::string::npos || len >= _size - pos) {
 				_str[pos] = '\0';
 				_size = pos;
@@ -187,6 +175,7 @@ namespace mystring {
 			else {
 				strcpy(_str + pos, _str + pos + len);
 				_size -= len;
+				_str[_size] = '\0';
 			}
 		}
 
@@ -295,21 +284,7 @@ namespace mystring {
 		friend ostream& operator<<(ostream& _cout, const mystring::string& s);
 		friend istream& operator>>(istream& _cin, mystring::string& s);
 ///////////////////////////////////////////////////////////////////////////
-		// 返回c在string中第一次出现的位置
-
-		size_t find(char c, size_t pos = 0) const {
-			for (int i = pos; i < _size; i++) {
-				if (_str[i] == c)
-					return i;
-			}
-		}
-		// 返回子串s在string中第一次出现的位置
-
-		size_t find(const char* s, size_t pos = 0) const;
-
-		// 在pos位置上插入字符c/字符串str，并返回该字符的位置
-		
-
+	
 	};
 
 	ostream& operator<<(ostream& _cout, const mystring::string& s) {
@@ -343,8 +318,8 @@ namespace mystring {
 			buff[i] = '\0';
 			s += buff;
 		}
-
 		return _cin;
 	}
 }
+
 
