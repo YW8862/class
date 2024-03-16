@@ -2,6 +2,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 #include<list>
+//#pragma pack(4)
 template<typename T>
 bool Less(T x, T y) {
 	return x < y;
@@ -110,21 +111,145 @@ public:
 class Student : public Person {
 public:
 	virtual void BuyTicket() { cout << "买票-半价" << endl; }
-	/*注意：在重写基类虚函数时，派生类的虚函数在不加virtual关键字时，虽然也可以构成重写(因
-	为继承后基类的虚函数被继承下来了在派生类依旧保持虚函数属性),但是该种写法不是很规范，不建议
-	这样使用*/
-	/*void BuyTicket() { cout << "买票-半价" << endl; }*/
+
 };
+
 void Func(Person& p)
 {
 	p.BuyTicket();
 }
-int main()
+
+//class Car {
+//public:
+//	virtual void Drive() {}
+//};
+//class Benz :public Car {
+//public:
+//	virtual void Drive() override { cout << "Benz-舒适" << endl; }
+//};
+
+
+//void test3() {
+//	Benz b;
+//	b.Drive();
+//}
+
+//int main()
+//{
+//	Person ps;
+//	Student st;
+//	Func(ps);
+//	Func(st);
+//	return 0;
+//}
+
+class Car
 {
-	Person ps;
-	Student st;
-	Func(ps);
-	Func(st);
-	return 0;
+public:
+	virtual void Drive() = 0;
+};
+class Benz :public Car
+{
+public:
+	virtual void Drive()
+	{
+		cout << "Benz-舒适" << endl;
+	}
+};
+class BMW :public Car
+{
+public:
+	virtual void Drive()
+	{
+		cout << "BMW-操控" << endl;
+	}
+};
+
+void Test()
+{
+	Car* pBenz = new Benz;
+	pBenz->Drive();
+	Car* pBMW = new BMW;
+	pBMW->Drive();
 }
 
+class Base
+{
+public:
+	virtual void Func1()
+	{
+		cout << "Func1()" << endl;
+	}
+private:
+	int _b = 1;
+};
+
+void test4() {
+	Base b;
+	cout << sizeof(b) << endl;
+}
+
+
+//Leetcode 118
+class Solution {
+public:
+	vector<vector<int>> generate(int numRows) {
+		vector<vector<int>>res;
+		vector<int>s = { 1 };
+		res.push_back(s);
+		if (numRows == 1)return res;
+		s = { 1,1 };
+		res.push_back(s);
+		if (numRows == 2)return res;
+		for (int i = 2; i < numRows; i++) {
+			s.resize(0);
+			s.push_back(1);
+			for (int j = 1; j < i; j++) {
+				s.push_back(res[i - 1][j - 1] + res[i - 1][j]);
+			}
+			s.push_back(1);
+			res.push_back(s);
+		}
+		return res;
+	}
+};
+
+class Solution2 {
+public:
+	                  
+	int MoreThanHalfNum_Solution(vector<int>& numbers) {
+		// write code here
+		if (numbers.size() == 1)return numbers[0];
+		int res = numbers[0];
+		int count = 0;
+		for (auto e : numbers) {
+			if (count == 0) {
+				res = e;
+				count++;
+			}
+			else if (e == res)
+				count++;
+			else {
+				count--;
+			}
+		}
+		return res;
+	}
+};
+
+
+int main() {
+	//test3();
+	//Test();
+	//test4();
+
+	vector<vector<int>>res=Solution().generate(5);
+	for (auto e : res) {
+		for (auto f : e) {
+			cout << f << " ";
+		}
+		cout << endl;
+	}
+	cout << endl;
+	return 0;
+}
