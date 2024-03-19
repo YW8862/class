@@ -65,25 +65,21 @@ public:
 		_InOrder(_root);
 	}
 
-	bool Erase(const K& key)
-	{
+	bool Erase(const K& key){
 		// 如果树为空，删除失败
 		if (nullptr == _root)
 			return false;
 		// 查找在data在树中的位置
 		Node* pCur = _root;
 		Node* pParent = nullptr;
-		while (pCur)
-		{
+		while (pCur){
 			if (key == pCur->_key)
 				break;
-			else if (key < pCur->_key)
-			{
+			else if (key < pCur->_key){
 				pParent = pCur;
 				pCur = pCur->_left;
 			}
-			else
-			{
+			else{
 				pParent = pCur;
 				pCur = pCur->_right;
 			}
@@ -92,8 +88,7 @@ public:
 		if (nullptr == pCur)
 			return false;
 		// 分以下情况进行删除，同学们自己画图分析完成
-		if (nullptr == pCur->_right)
-		{
+		if (nullptr == pCur->_right){
 			// 当前节点只有左孩子或者左孩子为空---可直接删除
 		}
 		else if (nullptr == pCur->_right){
@@ -138,7 +133,6 @@ private:
 		cout << _root->_key << " ";
 		_InOrder(_root->_right);
 	}
-
 };
 
 
