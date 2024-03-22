@@ -44,11 +44,11 @@ public:
 		while (cur != nullptr) {
 			if (cur->_key > key) {
 				p = cur;
-				cur = _root->_left;
+				cur = cur->_left;
 			}
 			else if (cur->_key < key) {
 				p = cur;
-				cur = _root->_right;
+				cur = cur->_right;
 			}
 		}
 		cur =new Node(key);
@@ -66,40 +66,7 @@ public:
 	}
 
 	bool Erase(const K& key){
-		// 如果树为空，删除失败
-		if (nullptr == _root)
-			return false;
-		// 查找在data在树中的位置
-		Node* pCur = _root;
-		Node* pParent = nullptr;
-		while (pCur){
-			if (key == pCur->_key)
-				break;
-			else if (key < pCur->_key){
-				pParent = pCur;
-				pCur = pCur->_left;
-			}
-			else{
-				pParent = pCur;
-				pCur = pCur->_right;
-			}
-		}
-		// data不在二叉搜索树中，无法删除
-		if (nullptr == pCur)
-			return false;
-		// 分以下情况进行删除，同学们自己画图分析完成
-		if (nullptr == pCur->_right){
-			// 当前节点只有左孩子或者左孩子为空---可直接删除
-		}
-		else if (nullptr == pCur->_right){
-			// 当前节点只有右孩子---可直接删除
-		}
-		else{
-			// 当前节点左右孩子都存在，直接删除不好删除，可以在其子树中找一个替代结点，
-			//比如：
-			// 找其左子树中的最大节点，即左子树中最右侧的节点，或者在其右子树中最小的节点，即右子树中最小的节点
-			// 替代节点找到后，将替代节点中的值交给待删除节点，转换成删除替代节点
-		}
+		Node*p=deleteNode(_root, key);
 		return true;
 	}
 
@@ -132,6 +99,61 @@ private:
 		_InOrder(_root->_left);
 		cout << _root->_key << " ";
 		_InOrder(_root->_right);
+	}
+
+	Node* minValueNode(Node* node) {
+		Node* current = node;
+		while (current && current->_left != nullptr)
+			current = current->_left;
+		return current;
+	}	
+	Node* maxValueNode(Node* node) {
+		Node* current = node;
+		while (current && current->_right != nullptr)
+			current = current->_right;
+		return current;
+	}
+
+	// 在 BST 中删除值为 key 的节点
+	Node* deleteNode(Node* root, int key) {
+		if (root == nullptr) return root;  // 如果树为空，直接返回
+
+		// 在左子树中查找
+		if (key < root->_key)
+			root->_left = deleteNode(root->_left, key);
+
+		// 在右子树中查找
+		else if (key > root->_key)
+			root->_right = deleteNode(root->_right, key);
+
+		// 找到要删除的节点
+		else {
+			// 节点只有一个子节点或没有子节点
+			if (root->_left == nullptr) {
+				Node* temp = root->_right;
+				delete root;
+				return temp;
+			}
+			else if (root->_right == nullptr) {
+				Node* temp = root->_left;
+				delete root;
+				return temp;
+			}
+
+			//// 节点有两个子节点，找到后继节点
+			//Node* temp = minValueNode(root->_right);
+
+			//// 将后继节点的值复制到当前节点
+			//root->_key = temp->_key;
+
+			//// 删除后继节点
+			//root->_right = deleteNode(root->_right, temp->_key);
+			Node* temp = maxValueNode(root->_left);
+			root->_key = temp->_key;
+			root->_left = deleteNode(root->_left, temp->_key);
+
+		}
+		return root;
 	}
 };
 
