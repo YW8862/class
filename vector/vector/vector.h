@@ -1,15 +1,9 @@
 #pragma once
 #include<iostream>
 using namespace std;
-
+#include<assert.h>
 
 namespace myvector {
-
-
-	class A {
-	private:
-		int _a;
-	};
 
 	template<typename T>
 	class vector {
@@ -22,6 +16,7 @@ namespace myvector {
 		T* _end_of_storge;
 	public:
 		// 构造和销毁
+		
 		vector()
 			: _start(nullptr)
 			, _finish(nullptr)
@@ -74,15 +69,6 @@ namespace myvector {
 			return *this;
 		}
 
-		vector<T>& operator=(initializer_list<T> l) {
-			vector<T> tmp(l);
-			std::swap(_start, tmp._start);
-			std::swap(_finish, tmp._finish);
-			std::swap(_end_of_storge, tmp._end_of_storge);
-			return *this;
-		}
-
-
 		~vector(){
 			if (_start){
 				delete[] _start;
@@ -124,7 +110,7 @@ namespace myvector {
 		void reserve(size_t n) {
 			if (_end_of_storge - _start < n) {
 				size_t old_size = _finish - _start;
-				T* tmp = new T[n];
+				T* tmp = new T[n];	
 				if (tmp) {
 					memcpy(tmp, _start, sizeof(T) * (_end_of_storge - _start));
 					delete[]_start;
@@ -153,7 +139,7 @@ namespace myvector {
 
 		T& operator[](size_t pos) {
 			assert(pos < size());
-			return _start + pos;
+			return *(_start + pos);
 		}
 
 		const T& operator[](size_t pos)const {
