@@ -25,7 +25,22 @@ bin-release/
 Debug/
 .vs
 Release/
-
+*.gitignore
+*.iml
+*.xml
+*.txt
+cmake-build-debug/
+*.json
+*.ninja_deps
+*.ninja_log
+*.cmake
+*.check_cache
+*.obj
+*.name
+*.log
+*.ninja
+*.bin
+*.
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.
