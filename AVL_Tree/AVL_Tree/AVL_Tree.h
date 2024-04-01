@@ -124,6 +124,8 @@ public:
         return true;
     }
 
+    void erase()
+
     void Inorder() {
         inorder(_root);
     }
