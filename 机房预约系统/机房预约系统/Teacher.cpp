@@ -1,7 +1,7 @@
 #include"Teacher.h"
 
 
-Teacher::Teacher(string name, string pwd, size_t id) : _id(id)	{
+Teacher::Teacher(size_t id, string name, string pwd) : _id(id)	{
 
 }
 

@@ -2,9 +2,10 @@
 #include"Identity.h"
 
 class Manager :public Identity {
+public:
 	//¥Ú”°≤Àµ•
 	Manager() = default;
-	Manager(string name,string pwd,size_t id);
+	Manager(string name,string pwd);
 	virtual void Oper_Menu();
 
 	void Add_Account();

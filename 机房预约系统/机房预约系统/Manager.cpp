@@ -1,5 +1,6 @@
 #include"Manager.h"
-Manager::Manager(string name, string pwd, size_t id):_id(id){
+
+Manager::Manager(string name, string pwd){
 
 }
 void Manager::Oper_Menu() {
@@ -15,7 +16,7 @@ void Manager::Show_Account() {
 }
 
 //查看机房信息
-void Manager::Show_Computer_Room() {
+void Manager::Show_Account() {
 
 }
 

@@ -1,6 +1,5 @@
 #include"Identity.h"
 
-
 class Student :public Identity {
 public:
 	Student() = default;

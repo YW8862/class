@@ -3,7 +3,7 @@
 class Teacher :public Identity {
 public:
 	Teacher() = default;
-	Teacher(string name, string pwd, size_t id);
+	Teacher(size_t id,string name, string pwd);
 
 	//≤Àµ•ΩÁ√Ê
 	virtual void Oper_Menu();
