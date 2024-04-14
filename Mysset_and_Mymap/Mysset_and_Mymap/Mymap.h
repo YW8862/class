@@ -36,7 +36,6 @@ namespace Mymap {
 
 	private:
 		RBTree<K, pair<K, V>,keyOfT> rbtree;
-
 	};
 	
 }
