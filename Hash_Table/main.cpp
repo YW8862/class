@@ -1,25 +1,1 @@
-#include "Hash_Table.h"
-int main(){
-//    hashTable<int,int>h;
-//    h.Insert(make_pair(1,2));
-//    h.Insert(make_pair(2,3));
-//    h.Insert(make_pair(3,4));
-//    h.Insert(make_pair(11,4));
-//    h.Insert(make_pair(12,4));
-//    h.Insert(make_pair(21,4));
-//    h.Insert(make_pair(31,4));
-//    h.Insert(make_pair(30,4));
-//    h.Insert(make_pair(32,4));
-//    h.Insert(make_pair(33,4));
-//    h.Insert(make_pair(35,4));
-//    cout<<h.find(2)->_data.second<<endl;
-    hashTable<string,string,HashFuncString>h;
-    h.Insert(make_pair("banana","Ïã½¶"));
-    h.Insert(make_pair("apple","Æ»¹û"));
-    h.Insert(make_pair("pear","Àæ×Ó"));
-    h.Insert(make_pair("watermelon","Î÷¹Ï"));
-    h.Insert(make_pair("pineapple","²¤ÂÜ"));
-    h.Insert(make_pair("strawberry","²İİ®"));
-    cout<<h.find("strawberry")->_data.second<<endl;
-    return 0;
-}
+#include "Hash_Table.h"int main(){//    hashTable<int,int>h;//    h.Insert(make_pair(1,2));//    h.Insert(make_pair(2,3));//    h.Insert(make_pair(3,4));//    h.Insert(make_pair(11,4));//    h.Insert(make_pair(12,4));//    h.Insert(make_pair(21,4));//    h.Insert(make_pair(31,4));//    h.Insert(make_pair(30,4));//    h.Insert(make_pair(32,4));//    h.Insert(make_pair(33,4));//    h.Insert(make_pair(35,4));//    cout<<h.find(2)->_data.second<<endl;    hashTable<string,string>h;    h.Insert(make_pair("banana","Ïã½¶"));    h.Insert(make_pair("apple","Æ»¹û"));    h.Insert(make_pair("pear","Àæ×Ó"));    h.Insert(make_pair("watermelon","Î÷¹Ï"));    h.Insert(make_pair("pineapple","²¤ÂÜ"));    h.Insert(make_pair("strawberry","²İİ®"));    cout<<h.find("strawberry")->_data.second<<endl;    return 0;}

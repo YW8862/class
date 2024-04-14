@@ -1,47 +1,70 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//查找时遇到空或者是存在才停止，遇到删除继续往后面找
-enum State{
-	EMPTY,
-	EXIST,
-	DELETE
+struct  Date{
+    int _year;
+    int _month;
+    int _day;
 };
 
-template<class K,class V>
-struct HashData {
-	pair<K, V> _data;
-	State _state;
+struct person{
+    string _name;
+    string _id;
+    unsigned int _age;
+    string _tel;
 };
 
 template<class K>
-class HashFunc{
-public:
-    size_t operator()(const K&key){
+struct HashFunc{
+    size_t operator()(const K& key){
         return (size_t)key;
     }
 };
 
-class HashFuncString{
-public:
-    size_t operator()(const string&s){
-        size_t cnt = 0;
-        for(auto e:s){
-            cnt += e;
+// 特化
+template<>
+struct HashFunc<string>{
+    size_t operator()(const string& s){
+        size_t hash = 0;
+        for (auto e : s){
+            hash += e;
+            hash *= 131;
         }
-        return cnt;
+
+        return hash;
     }
+};
+
+// 特化
+template<>
+struct HashFunc<Date>{
+    size_t operator()(const Date& d){
+        size_t hash = 0;
+        hash += d._year*10000+d._month*100+d._day;
+
+        return hash;
+    }
+};
+
+//查找时遇到空或者是存在才停止，遇到删除继续往后面找
+enum State{
+    EMPTY,
+    EXIST,
+    DELETE
+};
+template<class K,class V>
+struct HashData {
+    pair<K, V> _data;
+    State _state;
 };
 
 template<class K,class V,class Hash = HashFunc<K>>
 class hashTable {
 public:
     typedef HashData<K,V> hashData;
-
     hashTable(size_t size = 10 ):_n(0){
         _table.resize(size);
     }
-
     bool Insert(const pair<K,V>&kv){
         //如果哈希表的哈希因子超过0.7,进行扩容
 
@@ -84,8 +107,10 @@ public:
             if(key == _table[hashpos]._data.first
             &&_table[hashpos]._state != DELETE)
                 return &_table[hashpos];
-            else
-                ++ hashpos;
+            else{
+                ++hashpos;
+                hashpos = hashpos % _table.size();
+            }
         }
     }
 
