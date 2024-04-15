@@ -54,63 +54,59 @@ using namespace std;
 //}
 
 
-class Solution {
-public:
-    static vector<vector<string>> ret;
-    static vector<string> arr;
 
-    void set(int**& board, int n, int row, int col) {
-        // 将同行改为不可放置
-        for (int i = 0; i < n; i++)
-            board[row][i] = 2;
-        // 同列改为不可放置
-        for (int j = 0; j < n; j++)
-            board[j][col] = 2;
-        // 右下不可放置
-        for (int i = row + 1, j = col + 1; i < n && j < n; i++, j++) {
-            board[i][j] = 2;
-        }
-        // 左下角不可放置
-        for (int i = row + 1, j = col - 1; i < n && j >= 0; i++, j--) {
-            board[i][j] = 2;
-        }
-    }
+////N皇后
+//class Solution {
+//public:
+//    vector<vector<string>> solveNQueens(int n) {
+//        vector<vector<string>> result;
+//        vector<string> board(n, string(n, '.')); // 初始化空棋盘
+//
+//        solveNQueensDFS(board, 0, result);
+//
+//        return result;
+//    }
+//
+//private:
+//    void solveNQueensDFS(vector<string>& board, int row, vector<vector<string>>& result) {
+//        int n = board.size();
+//        if (row == n) {
+//            result.push_back(board);
+//            return;
+//        }
+//
+//        for (int col = 0; col < n; ++col) {
+//            if (isValid(board, row, col, n)) {
+//                board[row][col] = 'Q'; // 放置皇后
+//                solveNQueensDFS(board, row + 1, result); // 递归处理下一行
+//                board[row][col] = '.'; // 回溯，撤销当前位置的皇后
+//            }
+//        }
+//    }
+//
+//    bool isValid(vector<string>& board, int row, int col, int n) {
+//        // 检查列是否有皇后冲突
+//        for (int i = 0; i < row; ++i) {
+//            if (board[i][col] == 'Q') {
+//                return false;
+//            }
+//        }
+//
+//        // 检查左上至右下对角线是否有皇后冲突
+//        for (int i = row - 1, j = col - 1; i >= 0 && j >= 0; --i, --j) {
+//            if (board[i][j] == 'Q') {
+//                return false;
+//            }
+//        }
+//
+//        // 检查右上至左下对角线是否有皇后冲突
+//        for (int i = row - 1, j = col + 1; i >= 0 && j < n; --i, ++j) {
+//            if (board[i][j] == 'Q') {
+//                return false;
+//            }
+//        }
+//
+//        return true;
+//    }
+//};
 
-    void Queen(int** board, int n, int row) {
-        if (n == row) {
-            for (int i = 0; i < n; i++) {
-                string s;
-                for (int j = 0; j < n; j++)
-                    if (board[i][j] == 1)
-                        s += 'Q';
-                    else
-                        s += '.';
-                arr.push_back(s);
-            }
-            ret.push_back(arr);
-            return;
-        }
-
-        for (int i = 0; i < n; i++) {
-            if (board[row - 1][i] == 0) {
-                board[row - 1][i] = 1;
-                set(board, n, row - 1, i);
-                Queen(board, n, row + 1);
-                arr.clear();
-            }
-        }
-    }
-
-    vector<vector<string>> solveNQueens(int n) {
-        int** board = new int* [n];
-        for (int i = 0; i < n; i++)
-            board[i] = new int[n];
-        Queen(board, n, 1);
-        return Solution::ret;
-    }
-};
-
-int main() {
-    vector<vector<string>>ret = Solution().solveNQueens(10);
-    return 0;
-}
