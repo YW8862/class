@@ -42,6 +42,13 @@ namespace myvector {
 			}
 		}
 
+		vector(initializer_list<T>il) {
+			reserve(il.size());
+			for (auto e : il) {
+				push_back(e);
+			}
+		}
+
 		template<class InputIterator>
 		vector(InputIterator first, InputIterator last){
 			while (first != last){

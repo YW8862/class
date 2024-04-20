@@ -8,6 +8,11 @@ void test1() {
 	myvector::vector<int>v3(v2);
 	myvector::vector<int>v4(v3.begin(), v3.end());
 	myvector::vector<int>v5 = v4;
+	myvector::vector<int>v6 = { 1,2,3,4,5,6,7,8 };
+	for (auto e : v6) {
+		cout << e << " ";
+	}
+	cout << endl;
 }
 
 //²âÊÔµü´úÆ÷º¯Êý
@@ -92,9 +97,9 @@ void test4() {
 
 int main() {
 
-	//test1();
+	test1();
 	//test2();
 	//test3();
-	test4();
+	//test4();
 	return 0;
 }

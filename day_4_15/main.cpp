@@ -105,19 +105,42 @@ using namespace std;
 //}
 
 //牛客HJ91
-#include <iostream>
-#include<vector>
-using namespace std;
+//#include <iostream>
+//#include<vector>
+//using namespace std;
+//
+//int main() {
+//    int n=0,m=0;
+//    cin>>n>>m;
+//    vector<vector<int>>board(m+1,vector<int>(n+1,1));
+//    for(int i=1;i<=m;i++){
+//        for(int j=1;j<=n;j++){
+//            board[i][j] = board[i-1][j]+board[i][j-1];
+//        }
+//    }
+//    cout<<board[m][n]<<endl;
+//    return 0;
+//}
 
-int main() {
-    int n=0,m=0;
-    cin>>n>>m;
-    vector<vector<int>>board(m+1,vector<int>(n+1,1));
-    for(int i=1;i<=m;i++){
-        for(int j=1;j<=n;j++){
-            board[i][j] = board[i-1][j]+board[i][j-1];
-        }
-    }
-    cout<<board[m][n]<<endl;
-    return 0;
-}
+
+//class Board {
+//public:
+//    bool fun(int x1,int y1,int x2,int y2,int x3,int y3,
+//             vector<vector<int> > board){
+//        if(board[x1][y1]==1&&
+//           board[x1][y1]==board[x2][y2]&&
+//           board[x1][y1]==board[x3][y3])
+//            return true;
+//        return false;
+//    }
+//    bool checkWon(vector<vector<int> > board) {
+//        return fun(0,0,1,1,2,2,board)||
+//               fun(0,0,0,1,0,2,board)||
+//               fun(0,0,1,0,2,0,board)||
+//               fun(0,1,1,1,2,1,board)||
+//               fun(0,2,1,1,1,2,board)||
+//               fun(0,2,1,2,2,2,board)||
+//               fun(1,0,1,1,1,2,board)||
+//               fun(2,0,2,1,2,2,board);
+//    }
+//};

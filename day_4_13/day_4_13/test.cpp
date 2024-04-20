@@ -73,15 +73,29 @@ using namespace std;
 //}
 
 
-int main() {
+//int main() {
+//
+//    hashTable<string, string>h;
+//    h.Insert(make_pair("banana", "Ïã½¶"));
+//    h.Insert(make_pair("apple", "Æ»¹û"));
+//    h.Insert(make_pair("pear", "Àæ×Ó"));
+//    h.Insert(make_pair("watermelon", "Î÷¹Ï"));
+//    h.Insert(make_pair("pineapple", "²¤ÂÜ"));
+//    h.Insert(make_pair("strawberry", "²İİ®"));
+//    cout << h.find("strawberry")->_data.second << endl;
+//    return 0;
+//}
 
-    hashTable<string, string>h;
-    h.Insert(make_pair("banana", "Ïã½¶"));
-    h.Insert(make_pair("apple", "Æ»¹û"));
-    h.Insert(make_pair("pear", "Àæ×Ó"));
-    h.Insert(make_pair("watermelon", "Î÷¹Ï"));
-    h.Insert(make_pair("pineapple", "²¤ÂÜ"));
-    h.Insert(make_pair("strawberry", "²İİ®"));
-    cout << h.find("strawberry")->_data.second << endl;
+
+int main() {
+    //string s = "string";
+    //cout << typeid(s).name() << endl;
+    //cout << typeid("string").name() << endl;
+    //const int x = 10;
+    //cout << typeid(x).name() << endl;
+    const int x = 10;
+    cout << typeid(x).name() << endl;
+    decltype(x) y = 1;
+    cout << typeid(y).name() << endl;
     return 0;
 }
