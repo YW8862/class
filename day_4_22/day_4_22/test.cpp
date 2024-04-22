@@ -1,5 +1,7 @@
+#define _CRT_SECURE_NO_WARNINGS 1
 #include <bits/stdc++.h>
 using namespace std;
+
 
 namespace mystring {
 	class string {
@@ -11,9 +13,9 @@ namespace mystring {
 		typedef char* iterator;
 		typedef const char* const_iterator;
 
-        /////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////
 		//base
-        string():_str(nullptr),_size(0),_capacity(0){}
+		string() :_str(nullptr), _size(0), _capacity(0) {}
 
 		string(const string& s) {
 			this->_str = new char[s.size() + 1];
@@ -22,21 +24,21 @@ namespace mystring {
 			this->_capacity = s._capacity;
 		}
 
-        string(string&& s)noexcept:_str(nullptr),_size(0),_capacity(0) {
-            cout<<"å³å€¼å¼•ç”¨"<<endl;
-            swap(s);
-        }
+		string(string&& s)noexcept :_str(nullptr), _size(0), _capacity(0) {
+			cout << "ÒÆ¶¯¹¹Ôì" << endl;
+			swap(s);
+		}
 
-		string(const char* str): _size(strlen(str)), _str(new char[strlen(str) + 1]),_capacity(_size){
+		string(const char* str) : _size(strlen(str)), _str(new char[strlen(str) + 1]), _capacity(_size) {
 			strcpy(this->_str, str);
 		}
 
 		string& operator=(const char* s) {
-			delete [] this->_str;
+			delete[] this->_str;
 			this->_size = strlen(s);
 			this->_str = new char[_size + 1];
 			this->_capacity = _size;
-			memcpy(this->_str, s,_size);
+			memcpy(this->_str, s, _size);
 			this->_str[_size] = '\0';
 		}
 
@@ -61,9 +63,9 @@ namespace mystring {
 		size_t capacity() const {
 			return this->_capacity;
 		}
-        ///////////////////////////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////////////////
 		//capacity
-		//æ‰©å®¹
+		//À©ÈÝ
 		void reserve(size_t n) {
 			if (n > _capacity) {
 				char* tmp = new char[n + 1];
@@ -77,7 +79,7 @@ namespace mystring {
 			return _size == 0;
 		}
 
-		void resize(size_t n, const char ch='\0') {
+		void resize(size_t n, const char ch = '\0') {
 			if (n <= _size) {
 				_str[n] = '\0';
 				_size = n;
@@ -91,9 +93,9 @@ namespace mystring {
 				_size = n;
 			}
 		}
-        //////////////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////////////
 		//Modify
-		//å°¾æ’
+		//Î²²å
 		void push_back(const char s) {
 			if (_size == _capacity) {
 				reserve(_capacity == 0 ? 4 : 2 * _capacity);
@@ -128,7 +130,7 @@ namespace mystring {
 
 		}
 
-		//æ’å…¥
+		//²åÈë
 		void insert(size_t pos, const char ch) {
 			assert(pos <= _size);
 			if (_size == _capacity) {
@@ -149,7 +151,7 @@ namespace mystring {
 			size_t len = strlen(str);
 			if (_size + len > _capacity)
 			{
-				// æ‰©å®¹
+				// À©ÈÝ
 				reserve(_size + len);
 			}
 
@@ -164,9 +166,9 @@ namespace mystring {
 			_size += len;
 		}
 
-		//åˆ é™¤
+		//É¾³ý
 		void erase(size_t pos, size_t len = std::string::npos) {
-			assert(pos<_size);
+			assert(pos < _size);
 			if (len == std::string::npos || len >= _size - pos) {
 				_str[pos] = '\0';
 				_size = pos;
@@ -182,7 +184,7 @@ namespace mystring {
 			return _str;
 		}
 
-        ////////////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////////////////
 		// access
 		char& operator[](int pos) {
 			assert(pos < _size);
@@ -210,11 +212,11 @@ namespace mystring {
 			return _str + _size;
 		}
 
-        /////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////////////
 		//relational operators
 
 		bool operator<(const string& s) {
-			memcmp(this->_str, s._str,max(this->_size,s._size)) < 0;
+			memcmp(this->_str, s._str, max(this->_size, s._size)) < 0;
 		}
 
 
@@ -248,31 +250,31 @@ namespace mystring {
 			std::swap(_capacity, s._capacity);
 		}
 
-		size_t find(char c, size_t pos = 0) const{
-			for (size_t i = pos; i < _size; ++i){
+		size_t find(char c, size_t pos = 0) const {
+			for (size_t i = pos; i < _size; ++i) {
 				if (_str[i] == c)
 					return i;
 			}
-			return -1;//æœªæ‰¾åˆ°
+			return -1;//Î´ÕÒµ½
 		}
 
-		// è¿”å›žå­ä¸²såœ¨stringä¸­ç¬¬ä¸€æ¬¡å‡ºçŽ°çš„ä½ç½®
-		size_t find(const char* s, size_t pos = 0) const{
+		// ·µ»Ø×Ó´®sÔÚstringÖÐµÚÒ»´Î³öÏÖµÄÎ»ÖÃ
+		size_t find(const char* s, size_t pos = 0) const {
 			assert(s);
 			assert(pos < _size);
 			const char* src = _str + pos;
 
-			while (*src){
-				const char* match = s;//å¦‚æžœä¸åŒ¹é…ï¼Œè¿”å›žå­ä¸²èµ·å§‹å¤„é‡æ–°æŸ¥æ‰¾
+			while (*src) {
+				const char* match = s;//Èç¹û²»Æ¥Åä£¬·µ»Ø×Ó´®ÆðÊ¼´¦ÖØÐÂ²éÕÒ
 				const char* cur = src;
-				while (*match && *match == *cur){
+				while (*match && *match == *cur) {
 					++match;
 					++cur;
 				}
-				if (*match == '\0'){
-					return src - _str;//è¿”å›žä¸‹æ ‡
+				if (*match == '\0') {
+					return src - _str;//·µ»ØÏÂ±ê
 				}
-				else{
+				else {
 					++src;
 				}
 			}
@@ -280,7 +282,7 @@ namespace mystring {
 		}
 		friend ostream& operator<<(ostream& _cout, const mystring::string& s);
 		friend istream& operator>>(istream& _cin, mystring::string& s);
-///////////////////////////////////////////////////////////////////////////
+		///////////////////////////////////////////////////////////////////////////
 
 	};
 
@@ -318,83 +320,54 @@ namespace mystring {
 		return _cin;
 	}
 
-//    mystring::string to_string(int value){
-//        int flag = 0;
-//        mystring::string s();
-//        if(value < 0){
-//            value = 0 - value;
-//            flag = 1;
-//        }
-//        while(value = 0){
-//            char t = value%10 + 48;
-//            s += t;
-//            value /= 10;
-//        }
-//        if(flag){
-//            s += '-';
-//        }
-//        reverse(s.begin(),s.end());
-//        return s;
-//    }
+	//    mystring::string to_string(int value){
+	//        int flag = 0;
+	//        mystring::string s();
+	//        if(value < 0){
+	//            value = 0 - value;
+	//            flag = 1;
+	//        }
+	//        while(value = 0){
+	//            char t = value%10 + 48;
+	//            s += t;
+	//            value /= 10;
+	//        }
+	//        if(flag){
+	//            s += '-';
+	//        }
+	//        reverse(s.begin(),s.end());
+	//        return s;
+	//    }
 }
 
-
-//int main(){
-//    auto s = fun();
-//    cout<<s<<endl;
-//    return 0;
-//}
-
-////å·¦å€¼å¼•ç”¨
-//int& func1(){
-//    static int x=0;
+//int func1() {
+//    int x = 1;
+//    cout <<"func1\t\t" << &x << endl;
 //    return x;
 //}
 //
-////å³å€¼
-//int func2(){
-//    static int x=0;
+//int& func2() {
+//    int x = 1;
+//    cout << "func2\t\t" << &x << endl;
 //    return x;
 //}
 
 
-//int main(){
-//
-//    // ä»¥ä¸‹çš„pã€bã€cã€*péƒ½æ˜¯å·¦å€¼
-//    int* p = new int(0);
-//    int b = 1;
-//    const int c = 2;
-//    // ä»¥ä¸‹å‡ ä¸ªæ˜¯å¯¹ä¸Šé¢å·¦å€¼çš„å·¦å€¼å¼•ç”¨
-//    int*& rp = p;
-//    int& rb = b;
-//    const int& rc = c;
-//    int& pvalue = *p;
-//
-//    int*p = new int(0);
-//    int b=1;
-//    const int c=2;
-//    const int*ptr=&c;
-//    cout<<ptr<<endl;
+//int main() {
+//    int x1 = func1();
+//    int x2 = func2();
+//    cout << "main.x1\t" << &x1 << endl;
+//    cout << "main.x2\t" << &x2 << endl;
 //}
-
-int func1(){
-    int x=1;
-    cout<<&x<<endl;
-    return x;
+mystring::string fun() {
+	mystring::string s = "abcd";
+	return move(s);
 }
 
-int& func2(){
-    int x=1;
-    cout<<&x<<endl;
-    return x;
+int main() {
+
+	//mystring::string s(move(fun()));
+	mystring::string s(fun());
+	cout << s << endl;
+	return 0;
 }
-
-int main(){
-    int x1=func1();
-    int x2=func2();
-    cout<<&x1<<endl;
-    cout<<&x2<<endl;
-    return 0;
-}
-
-
