@@ -42,7 +42,7 @@ namespace mystring {
 			this->_str[_size] = '\0';
 		}
 
-		string& operator=(const string& s) {
+		string& operator=(const string& s) {/./././././././././././././././././././././././././././././././././././././././././././././././././././.............................................
 			this->_str = new char[s.size() + 1];
 			this->_size = s._size;
 			this->_capacity = s._capacity;
@@ -359,8 +359,10 @@ namespace mystring {
 //    cout << "main.x1\t" << &x1 << endl;
 //    cout << "main.x2\t" << &x2 << endl;
 //}
+
 mystring::string fun() {
 	mystring::string s = "abcd";
+	cout << &s << endl;
 	return move(s);
 }
 
@@ -368,6 +370,9 @@ int main() {
 
 	//mystring::string s(move(fun()));
 	mystring::string s(fun());
+	mystring::string&& s1 = fun();
 	cout << s << endl;
+	cout << &s1 << endl;
+	cout << &s << endl;
 	return 0;
 }
