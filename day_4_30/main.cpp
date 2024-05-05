@@ -112,6 +112,32 @@ using namespace std;
 
 
 //lambda表达式
+//lamada表达式的本质就是仿函数，其底层是匿名对象重载()操作符来实现的、
+//以下是lambda表达式的一种底层实现方式模拟
+class lambda_xxxx{
+private:
+    int a;
+    int b;
+public:
+    lambda_xxxx(int _a, int _b) :a(_a), b(_b){
+    }
+    bool operator()(int x, int y) throw(){
+        return a + b > x + y;
+    }
+};
+void LambdaDemo(){
+    int a = 1;
+    int b = 2;
+    lambda_xxxx lambda = lambda_xxxx(a, b);
+    bool ret = lambda.operator()(3, 4);
+}
+
+//lambda 表达式中的捕获列表，对应 lambda_xxxx 类的 private 成员
+//lambda 表达式中的形参列表，对应 lambda_xxxx 类成员函数 operator() 的形参列表
+//lambda 表达式中的 mutable，表明 lambda_xxxx 类成员函数 operator() 的是否具有常属性 const，即是否是 常成员函数
+//lambda 表达式中的返回类型，对应 lambda_xxxx 类成员函数 operator() 的返回类型
+// lambda 表达式中的函数体，对应 lambda_xxxx 类成员函数 operator() 的函数体
+
 
 //int main(){
 //    int a=1,b=2;
@@ -193,3 +219,4 @@ int main(){
     x();
     return 0;
 }
+
