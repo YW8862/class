@@ -225,32 +225,69 @@ public:
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
-template<class T>
-class Solution {
-private:
-    int pos;
-    int ret;
-public:
-    Solution(){
-        pos = 0;
-        ret = 0;
-    }
+//Leetcode230
+//template<class T>
+//class Solution {
+//private:
+//    int pos;
+//    int ret;
+//public:
+//    Solution(){
+//        pos = 0;
+//        ret = 0;
+//    }
+//
+//    int kthSmallest(TreeNode<T>* root, int k) {
+//        order(root,k);
+//        return ret;
+//    }
+//    void order(TreeNode<T>*root,int k){
+//        if(root==nullptr)return;
+//        order(root->left,k);
+//        pos++;
+//        if(pos == k)
+//            ret = root->val;
+//        order(root->right,k);
+//    }
+//};
 
-    int kthSmallest(TreeNode<T>* root, int k) {
-        order(root,k);
+//Leetcode257
+
+class Solution {
+public:
+    vector<string>ret;
+    vector<string> binaryTreePaths(TreeNode<int>* root) {
+        if(root==nullptr)
+            return ret;
+        string s = to_string(root->val);
+        if(root->left == nullptr && root->right == nullptr){
+            ret.push_back(s);
+            return ret;
+        }
+        order(root->left,s);
+        order(root->right,s);
         return ret;
     }
-    void order(TreeNode<T>*root,int k){
-        if(root==nullptr)return;
-        order(root->left,k);
-        pos++;
-        if(pos == k)
-            ret = root->val;
-        order(root->right,k);
+    void order(TreeNode<int>*root,string s){
+        if(root==nullptr){
+            return;
+        }
+        s+="->";
+        s+=to_string(root->val);
+        order(root->left,s);
+        order(root->right,s);
+        if(root->left==nullptr && root->right==nullptr){
+            ret.push_back(s);
+            return;
+        }
     }
-};
 
+};
 int main(){
-    Tree<int>t = {5,3,6,2,4,INT_MIN,INT_MIN,1};
-   cout<< Solution<int>().kthSmallest(t.root,3);
+    Tree<int>t = {1};
+    vector<string>ret = Solution().binaryTreePaths(t.root);
+    for(auto e:ret){
+        cout<<e<<endl;
+    }
+    return 0;
 }
