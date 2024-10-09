@@ -251,43 +251,101 @@ public:
 //    }
 //};
 
-//Leetcode257
+////Leetcode257
+//
+//class Solution {
+//public:
+//    vector<string>ret;
+//    vector<string> binaryTreePaths(TreeNode<int>* root) {
+//        if(root==nullptr)
+//            return ret;
+//        string s = to_string(root->val);
+//        if(root->left == nullptr && root->right == nullptr){
+//            ret.push_back(s);
+//            return ret;
+//        }
+//        order(root->left,s);
+//        order(root->right,s);
+//        return ret;
+//    }
+//    void order(TreeNode<int>*root,string s){
+//        if(root==nullptr){
+//            return;
+//        }
+//        s+="->";
+//        s+=to_string(root->val);
+//        order(root->left,s);
+//        order(root->right,s);
+//        if(root->left==nullptr && root->right==nullptr){
+//            ret.push_back(s);
+//            return;
+//        }
+//    }
+//
+//};
+//int main(){
+//    Tree<int>t = {1};
+//    vector<string>ret = Solution().binaryTreePaths(t.root);
+//    for(auto e:ret){
+//        cout<<e<<endl;
+//    }
+//    return 0;
+//}
 
-class Solution {
-public:
-    vector<string>ret;
-    vector<string> binaryTreePaths(TreeNode<int>* root) {
-        if(root==nullptr)
-            return ret;
-        string s = to_string(root->val);
-        if(root->left == nullptr && root->right == nullptr){
-            ret.push_back(s);
-            return ret;
-        }
-        order(root->left,s);
-        order(root->right,s);
-        return ret;
-    }
-    void order(TreeNode<int>*root,string s){
-        if(root==nullptr){
-            return;
-        }
-        s+="->";
-        s+=to_string(root->val);
-        order(root->left,s);
-        order(root->right,s);
-        if(root->left==nullptr && root->right==nullptr){
-            ret.push_back(s);
-            return;
-        }
-    }
+////Leetcode 46
+//class Solution {
+//public:
+//    vector<vector<int>>ret;
+//    vector<vector<int>> permute(vector<int>& nums) {
+//        vector<int>v;
+//        vector<bool>check(nums.size(),false);
+//        backtracking(nums,v,check);
+//        return ret;
+//    }
+//    void backtracking(vector<int>nums,vector<int>v,vector<bool>check){
+//        if(v.size() == nums.size()){
+//            ret.push_back(v);
+//            return;
+//        }
+//        for(int i=0;i<nums.size();i++){
+//            if(check[i] == false){
+//                //如果数字没有使用过，将数字放进数组中
+//                v.push_back(nums[i]);
+//                check[i] = true;
+//                backtracking(nums,v,check);
+//                //回退
+//                v.pop_back();
+//                check[i] = false;
+//            }
+//        }
+//
+//    }
+//};
 
-};
+////Leetcode 78
+//class Solution {
+//public:
+//    vector<vector<int>>ret;
+//    vector<vector<int>> subsets(vector<int>& nums) {
+//        vector<int>v;
+//        ret.push_back(v);
+//        bachtracking(nums,v,0);
+//        return ret;
+//    }
+//    void bachtracking(vector<int>nums,vector<int>v,int i){
+//        if(i == nums.size()){
+//            return;
+//        }
+//        for(int index = i;index<nums.size();index++){
+//            v.push_back(nums[index]);
+//            ret.push_back(v);
+//            bachtracking(nums,v,index+1);
+//            v.pop_back();
+//        }
+//    }
+//};
+
 int main(){
-    Tree<int>t = {1};
-    vector<string>ret = Solution().binaryTreePaths(t.root);
-    for(auto e:ret){
-        cout<<e<<endl;
-    }
+
     return 0;
 }
