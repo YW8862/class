@@ -4,7 +4,6 @@
 #include<cmath>
 using namespace std;
 
-using namespace std;
 
 //bool Is(int n){
 //    if(n<2)
