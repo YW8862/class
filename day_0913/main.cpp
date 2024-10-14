@@ -345,8 +345,29 @@ public:
 //    }
 //};
 
-int main(){
 
+#include <iostream>
+#include <string>
+using namespace std;
+std::string solution(std::string binary1, std::string binary2) {
+    // Please write your code here
+    int weight = 1;
+    int num1 = 0;
+    int num2 = 0;
+    while(!binary1.empty()){
+        num1 += (binary1[binary1.length()-1]-48)*weight;
+        binary1.pop_back();
+        weight *= 2;
+    }
+    weight = 1;
+    while(!binary2.empty()){
+        num2 += (binary2.at(binary2.length()-1)-'0')*weight;
+        binary2.pop_back();
+        weight *= 2;
+    }
+    return to_string(num1+num2);
+}
+int main(){
+    cout<<solution("110","101")<<endl;
     return 0;
 }
-111111111
