@@ -346,28 +346,101 @@ public:
 //};
 
 
-#include <iostream>
-#include <string>
-using namespace std;
-std::string solution(std::string binary1, std::string binary2) {
-    // Please write your code here
-    int weight = 1;
-    int num1 = 0;
-    int num2 = 0;
-    while(!binary1.empty()){
-        num1 += (binary1[binary1.length()-1]-48)*weight;
-        binary1.pop_back();
-        weight *= 2;
+//#include <iostream>
+//#include <string>
+//using namespace std;
+//std::string solution(std::string binary1, std::string binary2) {
+//    // Please write your code here
+//    int weight = 1;
+//    int num1 = 0;
+//    int num2 = 0;
+//    while(!binary1.empty()){
+//        num1 += (binary1[binary1.length()-1]-48)*weight;
+//        binary1.pop_back();
+//        weight *= 2;
+//    }
+//    weight = 1;
+//    while(!binary2.empty()){
+//        num2 += (binary2.at(binary2.length()-1)-'0')*weight;
+//        binary2.pop_back();
+//        weight *= 2;
+//    }
+//    return to_string(num1+num2);
+//}
+//int main(){
+//    cout<<solution("110","101")<<endl;
+//    return 0;
+//}
+
+//Leetcode1863
+//class Solution {
+//public:
+//    vector<vector<int>>ret;
+//    int sum;
+//    int subsetXORSum(vector<int>& nums) {
+//        sum = 0;
+//
+//        vector<int>v;
+//        bachtracking(nums,v,0);
+//        return sum;
+//    }
+//
+//    void bachtracking(vector<int>nums,vector<int>v,int i){
+//        if(i == nums.size()){
+//            return;
+//        }
+//        for(int index = i;index<nums.size();index++){
+//            v.push_back(nums[index]);
+//            int tmp = 1;
+//            for(auto e:v){
+//                tmp = tmp^e;
+//            }
+//            sum += tmp;
+//            bachtracking(nums,v,index+1);
+//            v.pop_back();
+//        }
+//}
+//};
+//int main(){
+//    vector<int>nums = {1,3};
+//    cout<<Solution().subsetXORSum(nums);
+//    return 0;
+//}
+
+//求字符串配比权重
+double getvalue(std::string s){
+    double weight = 0.1;
+    double value = 0.0;
+    for(auto e:s){
+        value += weight*e;
+        weight = weight+0.1;
     }
-    weight = 1;
-    while(!binary2.empty()){
-        num2 += (binary2.at(binary2.length()-1)-'0')*weight;
-        binary2.pop_back();
-        weight *= 2;
-    }
-    return to_string(num1+num2);
+    return value;
 }
-int main(){
-    cout<<solution("110","101")<<endl;
+std::string solution(std::string dna_sequence) {
+    // Please write your code here
+    //旋转字符串，按照权重求值
+    string ret = dna_sequence;
+    string restr = dna_sequence;
+    double minvalue = getvalue(dna_sequence);
+    for(int i=0;i<dna_sequence.size();i++){
+        auto e = dna_sequence.at(dna_sequence.size()-1);
+        dna_sequence.pop_back();
+        dna_sequence = e + dna_sequence;
+        double curval = getvalue(dna_sequence);
+        if(curval < minvalue){
+            ret = dna_sequence;
+            minvalue = curval;
+        }
+    }
+    return ret;
+}
+
+
+int main() {
+    // You can add more test cases here
+    std::cout << solution("ATCA") << std::endl;
+    std::cout << solution("CGAGTC") << std::endl;
+    std::cout << solution("TCATGGAGTGCTCCTGGAGGCTGAGTCCATCTCCAGTAG") << std::endl;
     return 0;
 }
