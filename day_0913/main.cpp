@@ -1,8 +1,21 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <stack>
+#include <set>
+
 using  namespace std;
 
+//单链表定义
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode() : val(0), next(nullptr) {}
+    ListNode(int x) : val(x), next(nullptr) {}
+    ListNode(int x, ListNode *next) : val(x), next(next) {}
+};
+
+//模板树节点定义
 template<class T>
 class TreeNode{
 public:
@@ -407,40 +420,353 @@ public:
 //    return 0;
 //}
 
-//求字符串配比权重
-double getvalue(std::string s){
-    double weight = 0.1;
-    double value = 0.0;
-    for(auto e:s){
-        value += weight*e;
-        weight = weight+0.1;
-    }
-    return value;
-}
-std::string solution(std::string dna_sequence) {
-    // Please write your code here
-    //旋转字符串，按照权重求值
-    string ret = dna_sequence;
-    string restr = dna_sequence;
-    double minvalue = getvalue(dna_sequence);
-    for(int i=0;i<dna_sequence.size();i++){
-        auto e = dna_sequence.at(dna_sequence.size()-1);
-        dna_sequence.pop_back();
-        dna_sequence = e + dna_sequence;
-        double curval = getvalue(dna_sequence);
-        if(curval < minvalue){
-            ret = dna_sequence;
-            minvalue = curval;
+////求字符串配比权重
+//double getvalue(std::string s){
+//    double weight = 0.1;
+//    double value = 0.0;
+//    for(auto e:s){
+//        value += weight*e;
+//        weight = weight+0.1;
+//    }
+//    return value;
+//}
+//std::string solution(std::string dna_sequence) {
+//    // Please write your code here
+//    //旋转字符串，按照权重求值
+//    string ret = dna_sequence;
+//    string restr = dna_sequence;
+//    double minvalue = getvalue(dna_sequence);
+//    for(int i=0;i<dna_sequence.size();i++){
+//        auto e = dna_sequence.at(dna_sequence.size()-1);
+//        dna_sequence.pop_back();
+//        dna_sequence = e + dna_sequence;
+//        double curval = getvalue(dna_sequence);
+//        if(curval < minvalue){
+//            ret = dna_sequence;
+//            minvalue = curval;
+//        }
+//    }
+//    return ret;
+//}
+//
+//
+//int main() {
+//    // You can add more test cases here
+//    std::cout << solution("ATCA") << std::endl;
+//    std::cout << solution("CGAGTC") << std::endl;
+//    std::cout << solution("TCATGGAGTGCTCCTGGAGGCTGAGTCCATCTCCAGTAG") << std::endl;
+//    return 0;
+//}
+
+//class MyQueue {
+//public:
+//    MyQueue()
+//    {
+//
+//    }
+//
+//    void push(int x)
+//    {
+//        s1.push(x);
+//    }
+//
+//    int pop()
+//    {
+//        //存放返回数据
+//        int ret = 0;
+//        //存放临时搬运数据
+//        int tmp = 0;
+//        //将s1的数据放到s2中
+//        while(!s1.empty())
+//        {
+//            tmp = s1.top();
+//            s1.pop();
+//            s2.push(tmp);
+//        }
+//        if(!s2.empty())
+//        {
+//            ret = s2.top();
+//            s2.pop();
+//        }
+//        while(!s2.empty())
+//        {
+//            tmp = s2.top();
+//            s2.pop();
+//            s1.push(tmp);
+//        }
+//        return ret;
+//    }
+//
+//    int peek()
+//    {
+//        //存放返回数据
+//        int ret = 0;
+//        //存放临时搬运数据
+//        int tmp = 0;
+//        //将s1的数据放到s2中
+//        while(!s1.empty())
+//        {
+//            tmp = s1.top();
+//            s1.pop();
+//            s2.push(tmp);
+//        }
+//        if(!s2.empty())
+//        {
+//            ret = s2.top();
+//        }
+//        while(!s2.empty())
+//        {
+//            tmp = s2.top();
+//            s2.pop();
+//            s1.push(tmp);
+//        }
+//        return ret;
+//    }
+//
+//    bool empty()
+//    {
+//        return s1.empty();
+//    }
+//private:
+//    stack<int>s1;
+//    stack<int>s2;
+//};
+//
+///**
+// * Your MyQueue object will be instantiated and called as such:
+// * MyQueue* obj = new MyQueue();
+// * obj->push(x);
+// * int param_2 = obj->pop();
+// * int param_3 = obj->peek();
+// * bool param_4 = obj->empty();
+// */
+//
+//int main()
+//{
+//    MyQueue obj;
+//    obj.push(1);
+//    obj.push(2);
+//    cout<<obj.peek()<<endl;
+//    cout<<obj.pop()<<endl;
+//    cout<<obj.empty()<<endl;
+//    return 0;
+//}
+
+////newcodeBM44
+////堆栈法
+//class Solution
+//{
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     *
+//     * @param s string字符串
+//     * @return bool布尔型
+//     */
+//    bool isValid(string s)
+//    {
+//        stack<char>st;
+//        char topvalue = '\0';
+//        for(auto e:s)
+//        {
+//            if(e == '(' || e == '[' || e == '{')
+//            {
+//                st.push(e);
+//            }
+//            else
+//            {
+//                if(st.empty())
+//                    return false;
+//                topvalue = st.top();
+//                st.pop();
+//                switch(e)
+//                {
+//                    case ')':
+//                        if (topvalue != '(')
+//                            return false;
+//                        break;
+//                    case ']':
+//                        if (topvalue != '[')
+//                            return false;
+//                        break;
+//                    case '}':
+//                        if (topvalue != '{')
+//                            return false;
+//                        break;
+//                    default:
+//                        break;
+//                }
+//            }
+//
+//        }
+//        if(!st.empty())
+//            return false;
+//        return true;
+//    }
+//};
+
+
+//* Definition for singly-linked list.
+
+////使用栈完成
+//class Solution {
+//public:
+//    bool isPalindrome(ListNode* head) {
+//        if(head == nullptr ||head->next == nullptr)
+//            return true;
+//        stack<int>st;
+//        int num = 0,curnum = 1;
+//        ListNode*cur = head;
+//        int topvalue = 0;
+//        while(cur){
+//            num++;
+//            cur = cur->next;
+//        }
+//        cur = head;
+//        while(cur){
+//            if(num%2 && curnum == num/2 + 1){
+//                curnum++;
+//                cur = cur->next;
+//                continue;
+//            }
+//            else if(curnum > num/2){
+//                if(st.empty())
+//                    return false;
+//                topvalue = st.top();
+//                st.pop();
+//                if(topvalue != cur->val)
+//                    return false;
+//            }else{
+//                st.push(cur->val);
+//            }
+//            curnum++;
+//            cur = cur->next;
+//        }
+//        if(st.empty())
+//            return true;
+//        return false;
+//    }
+//};
+
+////反拷比对
+//class Solution {
+//public:
+//    bool isPalindrome(ListNode* head) {
+//        if(head ==nullptr || head->next == nullptr)
+//            return true;
+//        forward_list<int>li;
+//        ListNode* cur = head;
+//        while(cur){
+//            li.push_front(cur->val);
+//            cur = cur -> next;
+//        }
+//        cur = head;
+//        for(auto e:li)
+//        {
+//            if(e != cur->val)
+//                return false;
+//            cur = cur->next;
+//        }
+//        return true;
+//    }
+//};
+/**
+ * struct ListNode {
+ *	int val;
+ *	struct ListNode *next;
+ *	ListNode(int x) : val(x), next(nullptr) {}
+ * };
+ */
+
+////排序复制法
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     *
+//     * @param lists ListNode类vector
+//     * @return ListNode类
+//     */
+//
+//    ListNode* mergeKLists(vector<ListNode*>& lists) {
+//        // write code here
+//        ListNode* newhead = new ListNode(0);
+//        ListNode* p = newhead;
+//        multiset<int>ms;
+//        for(auto e:lists){
+//            ListNode *cur = e;
+//            while(cur){
+//                ms.insert(cur->val);
+//                cur = cur->next;
+//            }
+//        }
+//        for(auto e:ms){
+//            ListNode *node = new ListNode(e);
+//            node->val = e;
+//            p->next = node;
+//            p = p->next;
+//        }
+//        return newhead->next;
+//    }
+//};
+
+//分治、归并法
+class Solution {
+public:
+    /**
+     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+     *
+     *
+     * @param lists ListNode类vector
+     * @return ListNode类
+     */
+     ListNode* merge(ListNode*list1,ListNode*list2){
+        ListNode* rethead = new ListNode(0);
+        ListNode* opret = rethead;
+        ListNode* p1 = list1;
+        ListNode* p2 = list2;
+        while(p1 && p2){
+            if(p1->val < p2->val){
+                opret->next = p1;
+                p1 = p1->next;
+            }else{
+                opret->next = p2;
+                p2 = p2->next;
+            }
+            opret = opret->next;
         }
+        opret->next = p1==nullptr?p2:p1;
+        return rethead->next;
     }
-    return ret;
-}
+    void print(ListNode* list){
+        ListNode* cur = list;
+        while(cur){
+            cout<<cur->val<<" ";
+            cur = cur->next;
+        }
+        cout<<endl;
+    }
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        // write code here
+        if(lists.size() == 0)
+            return nullptr;
+        if(lists.size() == 1)
+            return lists[0];
+        //return merge(lists[0],lists[1]);
+        int curnum = lists.size();
+        while(curnum != 1){
+            for(int i = 0;i<curnum/2;i++){
+                lists[i] = merge(lists[i], lists[curnum-1-i]);
+            }
+            curnum = curnum/2 + curnum%2;
+        }
+        return lists[0];
+    }
+};
 
-
-int main() {
-    // You can add more test cases here
-    std::cout << solution("ATCA") << std::endl;
-    std::cout << solution("CGAGTC") << std::endl;
-    std::cout << solution("TCATGGAGTGCTCCTGGAGGCTGAGTCCATCTCCAGTAG") << std::endl;
+int main()
+{
     return 0;
 }
