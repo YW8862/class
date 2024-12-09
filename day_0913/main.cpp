@@ -712,61 +712,99 @@ public:
 //    }
 //};
 
-//分治、归并法
-class Solution {
-public:
-    /**
-     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
-     *
-     *
-     * @param lists ListNode类vector
-     * @return ListNode类
-     */
-     ListNode* merge(ListNode*list1,ListNode*list2){
-        ListNode* rethead = new ListNode(0);
-        ListNode* opret = rethead;
-        ListNode* p1 = list1;
-        ListNode* p2 = list2;
-        while(p1 && p2){
-            if(p1->val < p2->val){
-                opret->next = p1;
-                p1 = p1->next;
-            }else{
-                opret->next = p2;
-                p2 = p2->next;
-            }
-            opret = opret->next;
-        }
-        opret->next = p1==nullptr?p2:p1;
-        return rethead->next;
-    }
-    void print(ListNode* list){
-        ListNode* cur = list;
-        while(cur){
-            cout<<cur->val<<" ";
-            cur = cur->next;
-        }
-        cout<<endl;
-    }
-    ListNode* mergeKLists(vector<ListNode*>& lists) {
-        // write code here
-        if(lists.size() == 0)
-            return nullptr;
-        if(lists.size() == 1)
-            return lists[0];
-        //return merge(lists[0],lists[1]);
-        int curnum = lists.size();
-        while(curnum != 1){
-            for(int i = 0;i<curnum/2;i++){
-                lists[i] = merge(lists[i], lists[curnum-1-i]);
-            }
-            curnum = curnum/2 + curnum%2;
-        }
-        return lists[0];
-    }
-};
+////分治、归并法
+//class Solution {
+//public:
+//    /**
+//     * 代码中的类名、方法名、参数名已经指定，请勿修改，直接返回方法规定的值即可
+//     *
+//     *
+//     * @param lists ListNode类vector
+//     * @return ListNode类
+//     */
+//     ListNode* merge(ListNode*list1,ListNode*list2){
+//        ListNode* rethead = new ListNode(0);
+//        ListNode* opret = rethead;
+//        ListNode* p1 = list1;
+//        ListNode* p2 = list2;
+//        while(p1 && p2){
+//            if(p1->val < p2->val){
+//                opret->next = p1;
+//                p1 = p1->next;
+//            }else{
+//                opret->next = p2;
+//                p2 = p2->next;
+//            }
+//            opret = opret->next;
+//        }
+//        opret->next = p1==nullptr?p2:p1;
+//        return rethead->next;
+//    }
+//    void print(ListNode* list){
+//        ListNode* cur = list;
+//        while(cur){
+//            cout<<cur->val<<" ";
+//            cur = cur->next;
+//        }
+//        cout<<endl;
+//    }
+//    ListNode* mergeKLists(vector<ListNode*>& lists) {
+//        // write code here
+//        if(lists.size() == 0)
+//            return nullptr;
+//        if(lists.size() == 1)
+//            return lists[0];
+//        //return merge(lists[0],lists[1]);
+//        int curnum = lists.size();
+//        while(curnum != 1){
+//            for(int i = 0;i<curnum/2;i++){
+//                lists[i] = merge(lists[i], lists[curnum-1-i]);
+//            }
+//            curnum = curnum/2 + curnum%2;
+//        }
+//        return lists[0];
+//    }
+//};
 
-int main()
-{
+////leetcode965
+//class Solution {
+//public:
+//    bool isUnivalTree(TreeNode<int>* root) {
+//        if(root==nullptr)
+//            return true;
+//        if(root->left&&root->right)
+//            return (root->val==root->left->val)
+//                   &&(root->val==root->right->val)
+//                   &&isUnivalTree(root->left)
+//                   &&isUnivalTree(root->right);
+//        if(root->left)
+//            return (root->val==root->left->val)
+//                   &&isUnivalTree(root->left);
+//        if(root->right)
+//            return (root->val==root->right->val)
+//                   &&isUnivalTree(root->right);
+//        return true;
+//    }
+//};
+
+void quicksort(vector<int>&nums,int left,int right){
+    if(left == right || nums.size() == 0)
+        return;
+    int pl = left,pr = right,stdnum = nums[left],stdpos = pl;
+    while(pl < pr){
+        if(nums[pr] < stdnum) {
+            stdpos = pr;
+            swap(nums[pl], nums[pr]);
+            pl++;
+        }else if(nums[pl] > stdnum){
+            stdpos = pl;
+            swap(nums[pl],nums[pr]);
+            pr--;
+        }
+    }
+}
+
+int main(){
+
     return 0;
 }
