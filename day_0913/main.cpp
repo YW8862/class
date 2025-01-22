@@ -3,9 +3,12 @@
 #include <algorithm>
 #include <stack>
 #include <set>
-
+#include <string.h>
+#include <numeric>
+#include <map>
+#include "Date.h"
 using  namespace std;
-
+using namespace myClass;
 //单链表定义
 struct ListNode {
     int val;
@@ -787,24 +790,140 @@ public:
 //    }
 //};
 
-void quicksort(vector<int>&nums,int left,int right){
-    if(left == right || nums.size() == 0)
-        return;
-    int pl = left,pr = right,stdnum = nums[left],stdpos = pl;
-    while(pl < pr){
-        if(nums[pr] < stdnum) {
-            stdpos = pr;
-            swap(nums[pl], nums[pr]);
-            pl++;
-        }else if(nums[pl] > stdnum){
-            stdpos = pl;
-            swap(nums[pl],nums[pr]);
-            pr--;
+
+
+//void quicksort(vector<int>&nums,int left,int right){
+//    if(left == right || nums.size() == 0)
+//        return;
+//    int pl = left,pr = right,stdnum = nums[left],stdpos = pl;
+//    while(pl < pr){
+//        if(nums[pr] < stdnum) {
+//            stdpos = pr;
+//            swap(nums[pl], nums[pr]);
+//            pl++;
+//        }else if(nums[pl] > stdnum){
+//            stdpos = pl;
+//            swap(nums[pl],nums[pr]);
+//            pr--;
+//        }
+//    }
+//}
+
+//int main(){
+//    const char* str1 = "runnoode";
+//    const char* str2 = "nood";
+//    char* ret = strstr(str1,str2);
+//    printf("&str1:%p\n",str1);
+//    printf("str1:%s\n",str1);
+//    printf("&ret:%p\n",ret);
+//    printf("ret:%s\n",ret);
+//    return 0;
+//}
+
+//Date类测试
+//int main()
+//{
+//    Date date1(2013,9,15);
+//    Date date2(2014,3,20);
+//    cout<<date2 - date1<<endl;
+//}
+
+//Leetcode414
+//class Solution {
+//public:
+//    int thirdMax(vector<int>& nums) {
+//        if(nums.size() == 1)    return nums[0];
+//        if(nums.size() == 2)    return nums[0]>nums[1]?nums[0]:nums[1];
+//
+//        sort(nums.begin(),nums.end());
+//        int p = nums.size()-1;
+//        //count for valid move
+//        int count = 0;
+//
+//        while(p >= 1 && count != 2)
+//        {
+//            p --;
+//            //valid move
+//            if(nums[p] != nums[p+1])
+//                count ++;
+//        }
+//        if(count == 2)
+//            return nums[p];
+//        return nums[nums.size()-1];
+//    }
+//};
+
+//leetcode 1958
+//class Solution {
+//public:
+//    int minOperations(vector<int>& nums, int x) {
+//        int target = accumulate(nums.begin(),nums.end(),0) - x;
+//        //no answer
+//        if(target<0)return -1;
+//
+//        int ret = -1;
+//        int left = 0,sum=0,size = nums.size();
+//        for(int right =0;right<size;right++)
+//        {
+//            sum += nums[right];
+//            while(sum>target)   sum -= nums[left++];//narrow the window
+//            if(sum == target)   ret = max(ret, right-left+1);
+//        }
+//        return ret < 0?-1:size-ret;
+//    }
+//};
+
+
+//leetcode 455
+//class Solution {
+//public:
+//    int findContentChildren(vector<int>& g, vector<int>& s) {
+//        sort(g.begin(),g.end());
+//        sort(s.begin(),s.end());
+//        int pg=0,ps=0,count=0;
+//        //order
+//        while(ps<s.size()&&pg<g.size())
+//        {
+//            if(s[ps++]>=g[pg])
+//            {
+//                pg++;
+//                count++;
+//            }
+//        }
+//        return count;
+//    }
+//};
+
+//leetcode 904
+class Solution
+{
+public:
+    int totalFruit(vector<int>& fruits)
+    {
+        int size = fruits.size();
+        map<int, int> cnt;
+
+        int left = 0, ans = 0;
+        for (int right = 0; right < size; ++right)
+        {
+            ++cnt[fruits[right]];
+            while (cnt.size() > 2)
+            {
+                cnt[fruits[left]]--;
+                if (cnt[fruits[left]] == 0)
+                {
+                    cnt.erase(fruits[left]);
+                }
+                ++left;
+            }
+            ans = max(ans, right - left + 1);
         }
+        return ans;
     }
-}
+};
 
-int main(){
-
-    return 0;
+int main()
+{
+    vector<int>fruits = {0,1,2,2};
+    cout<<Solution().totalFruit(fruits)<<endl;
 }
