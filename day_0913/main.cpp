@@ -894,36 +894,122 @@ public:
 //    }
 //};
 
-//leetcode 904
-class Solution
-{
-public:
-    int totalFruit(vector<int>& fruits)
-    {
-        int size = fruits.size();
-        map<int, int> cnt;
+////leetcode 904
+//class Solution
+//{
+//public:
+//    int totalFruit(vector<int>& fruits)
+//    {
+//        int size = fruits.size();
+//        map<int, int> cnt;
+//
+//        int left = 0, ans = 0;
+//        for (int right = 0; right < size; ++right)
+//        {
+//            ++cnt[fruits[right]];
+//            while (cnt.size() > 2)
+//            {
+//                cnt[fruits[left]]--;
+//                if (cnt[fruits[left]] == 0)
+//                {
+//                    cnt.erase(fruits[left]);
+//                }
+//                ++left;
+//            }
+//            ans = max(ans, right - left + 1);
+//        }
+//        return ans;
+//    }
+//};
+//
+//
+//int main()
+//{
+//    vector<int>fruits = {0,1,2,2};
+//    cout<<Solution().totalFruit(fruits)<<endl;
+//}
 
-        int left = 0, ans = 0;
-        for (int right = 0; right < size; ++right)
+
+//leetcode 905
+//class Solution {
+//public:
+//    vector<int> sortArrayByParity(vector<int>& nums) {
+//        int left = 0,right = nums.size()-1;
+//        while(left<right)
+//        {
+//            if(1==nums[left]%2 && 0==nums[right]%2)
+//            {
+//                swap(nums[left],nums[right]);
+//            }
+//            while(0==nums[left]%2&&left<nums.size())
+//            {
+//                left++;
+//            }
+//            while(1==nums[right]%2&&right>=0)
+//            {
+//                right--;
+//            }
+//        }
+//        return nums;
+//    }
+//};
+//
+//int main()
+//{
+//       vector<int>nums = {3,1,2,4};
+//       nums = Solution().sortArrayByParity(nums);
+//       for(auto num:nums)
+//       {
+//           cout<<num<<" ";
+//       }
+//}
+
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        vector<int>ms(26,0);
+        vector<int>mp(26,0);
+
+        int lens = s.size(),lenp = p.size();
+        //
+        for(auto ch:p)
         {
-            ++cnt[fruits[right]];
-            while (cnt.size() > 2)
-            {
-                cnt[fruits[left]]--;
-                if (cnt[fruits[left]] == 0)
-                {
-                    cnt.erase(fruits[left]);
-                }
-                ++left;
-            }
-            ans = max(ans, right - left + 1);
+            mp[ch-'a']++;
         }
-        return ans;
+        vector<int>res;
+        int left = 0,right = lenp-1;
+        //search for first window
+        for(int i=left;i<=right;i++)
+        {
+            ms[s[i]-'a']++;
+        }
+        if(ms == mp)
+        {
+            res.push_back(left);
+        }
+        while(right<lens-1)
+        {
+            right++;
+            ms[s[right]-'a']++;
+            ms[s[left]-'a']--;
+            left++;
+            if(ms == mp)
+            {
+                res.push_back(left);
+            }
+        }
+        return res;
     }
 };
 
 int main()
 {
-    vector<int>fruits = {0,1,2,2};
-    cout<<Solution().totalFruit(fruits)<<endl;
+    string s = "cbaebabacd";
+    string p = "abc";
+    vector<int>ans = Solution().findAnagrams(s,p);
+    for(auto index:ans)
+    {
+        cout<<index<<" ";
+    }
+    return 0;
 }
