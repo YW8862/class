@@ -964,52 +964,96 @@ public:
 //       }
 //}
 
+
+
+//class Solution {
+//public:
+//    vector<int> findAnagrams(string s, string p) {
+//        vector<int>ms(26,0);
+//        vector<int>mp(26,0);
+//
+//        int lens = s.size(),lenp = p.size();
+//        //
+//        for(auto ch:p)
+//        {
+//            mp[ch-'a']++;
+//        }
+//        vector<int>res;
+//        int left = 0,right = lenp-1;
+//        //search for first window
+//        for(int i=left;i<=right;i++)
+//        {
+//            ms[s[i]-'a']++;
+//        }
+//        if(ms == mp)
+//        {
+//            res.push_back(left);
+//        }
+//        while(right<lens-1)
+//        {
+//            right++;
+//            ms[s[right]-'a']++;
+//            ms[s[left]-'a']--;
+//            left++;
+//            if(ms == mp)
+//            {
+//                res.push_back(left);
+//            }
+//        }
+//        return res;
+//    }
+//};
+
+//int main()
+//{
+//    string s = "cbaebabacd";
+//    string p = "abc";
+//    vector<int>ans = Solution().findAnagrams(s,p);
+//    for(auto index:ans)
+//    {
+//        cout<<index<<" ";
+//    }
+//    return 0;
+//}
+
+//
 class Solution {
 public:
-    vector<int> findAnagrams(string s, string p) {
-        vector<int>ms(26,0);
-        vector<int>mp(26,0);
+    int longestSubstring(string s, int k) {
+        if(s.size()<k)  return 0;
+        return longSubString(s,0,s.size(),k);
+    }
+    int longSubString(string s,int begin,int end,int k)
+    {
+        if(begin >= end || end-begin < k) return 0;
+        vector<int>characters(26,0);
+        for(int i = begin;i<end;i++)
+        {
+            characters[s[i] - 'a']++;
+        }
 
-        int lens = s.size(),lenp = p.size();
-        //
-        for(auto ch:p)
+        int left=0,right=0,ans = 0;
+        bool flag = true;
+        for(int i=0;i<end;i++)
         {
-            mp[ch-'a']++;
-        }
-        vector<int>res;
-        int left = 0,right = lenp-1;
-        //search for first window
-        for(int i=left;i<=right;i++)
-        {
-            ms[s[i]-'a']++;
-        }
-        if(ms == mp)
-        {
-            res.push_back(left);
-        }
-        while(right<lens-1)
-        {
-            right++;
-            ms[s[right]-'a']++;
-            ms[s[left]-'a']--;
-            left++;
-            if(ms == mp)
+            if(characters[s[i] - 'a'] < k)
             {
-                res.push_back(left);
+                flag = false;
+                left = right;
+                right = i;
+                ans = max(ans,longSubString(s,left,right,k));
             }
         }
-        return res;
+        ans = right - left+1;
+        if(flag)
+            ans = max(ans,end-begin);
+        return ans;
     }
 };
 
 int main()
 {
-    string s = "cbaebabacd";
-    string p = "abc";
-    vector<int>ans = Solution().findAnagrams(s,p);
-    for(auto index:ans)
-    {
-        cout<<index<<" ";
-    }
+    string s = "bbaaacbd";
+    cout<<Solution().longestSubstring(s,3)<<endl;
     return 0;
 }
