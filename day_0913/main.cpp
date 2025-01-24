@@ -1017,43 +1017,76 @@ public:
 //}
 
 //
-class Solution {
-public:
-    int longestSubstring(string s, int k) {
-        if(s.size()<k)  return 0;
-        return longSubString(s,0,s.size(),k);
-    }
-    int longSubString(string s,int begin,int end,int k)
-    {
-        if(begin >= end || end-begin < k) return 0;
-        vector<int>characters(26,0);
-        for(int i = begin;i<end;i++)
-        {
-            characters[s[i] - 'a']++;
-        }
+//class Solution {
+//public:
+//    int longestSubstring(string s, int k) {
+//        if(s.size()<k)  return 0;
+//        return longSubString(s,0,s.size(),k);
+//    }
+//    int longSubString(string s,int begin,int end,int k)
+//    {
+//        if(begin >= end || end-begin < k) return 0;
+//        vector<int>characters(26,0);
+//        for(int i = begin;i<end;i++)
+//        {
+//            characters[s[i] - 'a']++;
+//        }
+//
+//        int left=0,right=0,ans = 0;
+//        bool flag = true;
+//        for(int i=0;i<end;i++)
+//        {
+//            if(characters[s[i] - 'a'] < k)
+//            {
+//                flag = false;
+//                left = right;
+//                right = i;
+//                ans = max(ans,longSubString(s,left,right,k));
+//            }
+//        }
+//        ans = right - left+1;
+//        if(flag)
+//            ans = max(ans,end-begin);
+//        return ans;
+//    }
+//};
+//
+//int main()
+//{
+//    string s = "bbaaacbd";
+//    cout<<Solution().longestSubstring(s,3)<<endl;
+//    return 0;
+//}
 
-        int left=0,right=0,ans = 0;
-        bool flag = true;
-        for(int i=0;i<end;i++)
-        {
-            if(characters[s[i] - 'a'] < k)
-            {
-                flag = false;
-                left = right;
-                right = i;
-                ans = max(ans,longSubString(s,left,right,k));
-            }
-        }
-        ans = right - left+1;
-        if(flag)
-            ans = max(ans,end-begin);
-        return ans;
-    }
-};
+//leetcode 1464
+//class Solution {
+//public:
+//    int maxProduct(vector<int>& nums) {
+//        size_t size = nums.size();
+//        sort(nums.begin(),nums.end());
+//        return (nums[size-1]-1)*(nums[size-2]-1);
+//    }
+//};
 
-int main()
-{
-    string s = "bbaaacbd";
-    cout<<Solution().longestSubstring(s,3)<<endl;
-    return 0;
-}
+
+//leetcode 424
+//class Solution {
+//public:
+//    int characterReplacement(string s, int k) {
+//        size_t size = s.size();
+//        vector<int>character(26,0);
+//        int left = 0,right = 0,maxch = 0;
+//        while(right<size)
+//        {
+//            character[s[right]-'A']++;
+//            maxch = max(maxch,character[s[right]-'A']);
+//            if(right-left+1-maxch > k)
+//            {
+//                character[s[left]-'A']--;
+//                left++;
+//            }
+//            right++;
+//        }
+//        return right-left;
+//    }
+//};
