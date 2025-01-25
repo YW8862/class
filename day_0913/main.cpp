@@ -6,6 +6,7 @@
 #include <string.h>
 #include <numeric>
 #include <map>
+#include <unordered_map>
 #include "Date.h"
 using  namespace std;
 using namespace myClass;
@@ -1090,3 +1091,89 @@ public:
 //        return right-left;
 //    }
 //};
+
+//leetcode 917
+//class Solution {
+//public:
+//    string reverseOnlyLetters(string s) {
+//        int left =0,right = s.size()-1;
+//        while(left < right)
+//        {
+//            if(!isalpha(s[left]))
+//            {
+//                left++;
+//            }
+//            if(!isalpha(s[right]))
+//            {
+//                right--;
+//            }
+//            if(isalpha(s[left])&&isalpha(s[right]))
+//            {
+//                swap(s[left],s[right]);
+//                left++;
+//                right--;
+//            }
+//        }
+//        return s;
+//    }
+//};
+
+//leetcode 76
+//class Solution {
+//public:
+//    unordered_map<char,int>tString;
+//    unordered_map<char,int>subString;
+//
+//    string minWindow(string s, string t) {
+//        if(s.size() < t.size())
+//            return string();
+//
+//        int left=0,right=0;
+//        int minStringPostion = 0,minLength = INT_MAX;
+//
+//        for(auto ch:t)
+//        {
+//            tString[ch]++;
+//        }
+//
+//        while(right <= s.size())
+//        {
+//            if(isValid())
+//            {
+//                if(right - left  < minLength)
+//                {
+//                    minStringPostion = left;
+//                    minLength = right - left;
+//                }
+//                subString[s[left]]--;
+//                left++;
+//            }
+//            else
+//            {
+//                subString[s[right]]++;
+//                right++;
+//            }
+//        }
+//        if(minLength != INT_MAX)
+//            return string(s,minStringPostion,minLength);
+//        return string();
+//    }
+//    bool isValid()
+//    {
+//        for(auto pair:tString)
+//        {
+//            if(tString[pair.first] > subString[pair.first])
+//                return false;
+//        }
+//        return true;
+//    }
+//};
+//
+//int main()
+//{
+//    string s = "ADOBECODEBANC";
+//    string t = "ABC";
+//    cout<<Solution().minWindow(s,t)<<endl;
+//    return 0;
+//}
+
