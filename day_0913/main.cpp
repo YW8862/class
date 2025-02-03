@@ -1214,3 +1214,66 @@ public:
 //        return -1;
 //    }
 //};
+
+//leetcode 58
+//class Solution {
+//public:
+//    int lengthOfLastWord(string s) {
+//        int p = s.size() - 1;
+//        int count = 0;
+//        bool flag = false;
+//        while(s[p] == ' ')
+//            p--;
+//        while(p>=0 && s[p] != ' ')
+//        {
+//            p--;
+//            count ++;
+//        }
+//        return count;
+//
+//    }
+//};
+
+
+//leetcode 34
+//class Solution {
+//public:
+//    vector<int> searchRange(vector<int>& nums, int target) {
+//        vector<int>ans(2);
+//        int pos = find(nums,target);
+//        if(pos == -1)
+//        {
+//            ans[0] = ans[1] = -1;
+//            return ans;
+//        }
+//        int left = pos,right = pos;
+//        while(left>=0 && nums[left]==nums[pos])
+//            left--;
+//        ans[0] = left + 1;
+//        while(right<nums.size() && nums[right]==nums[pos])
+//            right++;
+//        ans[1] = right - 1;
+//        return ans;
+//    }
+//    int find(vector<int>&nums,int target)
+//    {
+//        int left = 0,right = nums.size()-1,mid = 0;
+//        while(left<=right)
+//        {
+//            mid = (left + right) / 2;
+//            if(nums[mid] > target)
+//            {
+//                right = mid - 1;
+//            }
+//            else if(nums[mid] < target)
+//            {
+//                left = mid + 1;
+//            }
+//            else
+//            {
+//                return mid;
+//            }
+//        }
+//        return -1;
+//    }
+//};
