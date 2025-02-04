@@ -1277,3 +1277,68 @@ public:
 //        return -1;
 //    }
 //};
+
+//leetcode 69
+//class Solution {
+//public:
+//    int mySqrt(int x) {
+//        if(x == 0 || x == 1)    return x;
+//        int left = 0,right = x - 1;
+//        long long ans = -1,mid = 0;
+//        while(left <= right)
+//        {
+//            mid = (left + right)/2;
+//            if(mid*mid < x)
+//            {
+//                ans = max(ans,mid);
+//                left = mid + 1;
+//            }
+//            else if(mid*mid > x)
+//            {
+//                right = mid - 1;
+//            }
+//            else
+//            {
+//                return mid;
+//            }
+//        }
+//        return ans;
+//    }
+//};
+
+
+//leetcode 680
+//class Solution {
+//public:
+//    bool validPalindrome(string s) {
+//        int left = 0,right = s.size()-1;
+//
+//        while(left <= right)
+//        {
+//            if(s[left] == s[right])
+//            {
+//                left++;
+//                right--;
+//            }
+//            else
+//            {
+//                return isValid(s,left+1,right) || isValid(s,left,right-1);
+//            }
+//        }
+//        return true;
+//    }
+//    bool isValid(string s,int left,int right)
+//    {
+//        while(left <= right)
+//        {
+//            if(s[left] != s[right])
+//                return false;
+//            else
+//            {
+//                left++;
+//                right--;
+//            }
+//        }
+//        return true;
+//    }
+//};
