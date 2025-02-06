@@ -1342,3 +1342,57 @@ public:
 //        return true;
 //    }
 //};
+
+
+//leetcode 47
+//class Solution {
+//public:
+//    vector<vector<int>>ans;
+//    vector<vector<int>> permuteUnique(vector<int>& nums) {
+//        backtracking(nums,0);
+//        return ans;
+//    }
+//    void backtracking(vector<int> nums,int pos)
+//    {
+//        if(pos == nums.size()-1)
+//        {
+//            ans.push_back(nums);
+//            return;
+//        }
+//
+//        set<int>st;
+//        for(int i=pos;i<nums.size();i++)
+//        {
+//            if(st.find(nums[i]) == st.end())
+//            {
+//                st.insert(nums[i]);
+//                swap(nums[i],nums[pos]);
+//                backtracking(nums,pos+1);
+//                swap(nums[i],nums[pos]);
+//            }
+//        }
+//    }
+//};
+
+
+//leetcode 11
+//class Solution {
+//public:
+//    int maxArea(vector<int>& height) {
+//        int left = 0,right = height.size()-1;
+//        int MAXAREA = 0;
+//        while(left<right)
+//        {
+//            MAXAREA = max(min(height[left],height[right])*(right-left),MAXAREA);
+//            if(height[left]<height[right])
+//            {
+//                left++;
+//            }
+//            else
+//            {
+//                right--;
+//            }
+//        }
+//        return MAXAREA;
+//    }
+//};
