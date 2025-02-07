@@ -1396,3 +1396,72 @@ public:
 //        return MAXAREA;
 //    }
 //};
+
+
+//leetcode 53
+//法一:动态规划
+//class Solution {
+//public:
+//    int maxSubArray(vector<int>& nums) {
+//        vector<int>dp(nums.size());
+//        dp[0] = nums[0];
+//        int index = 1;
+//        while(index < nums.size())
+//        {
+//            dp[index] = max(dp[index-1]+nums[index],nums[index]);
+//            index++;
+//        }
+//        return *max_element(dp.begin(),dp.end());
+//    }
+//};
+
+
+//法二:贪心
+//class Solution {
+//public:
+//    int maxSubArray(vector<int>& nums) {
+//        int ans = nums[0];
+//        int sum = 0;
+//        for(auto num:nums)
+//        {
+//            if(sum > 0)
+//                sum += num;
+//            else
+//                sum = num;
+//            ans = max(ans,sum);
+//        }
+//        return ans;
+//    }
+//};
+
+//int main()
+//{
+//    vector<int>nums = {-2,1,-3,4,-1,2,1,-5,4};
+//    cout<<Solution().maxSubArray(nums)<<endl;
+//    return 0;
+//}
+
+//leetcode 238
+//class Solution {
+//public:
+//    vector<int> productExceptSelf(vector<int>& nums) {
+//        size_t size = nums.size();
+//        vector<int>left(size);
+//        vector<int>right(size);
+//        vector<int>ans(size);
+//        left[0] = right[size-1] = 1;
+//        int i=1;
+//        while(i<size)
+//        {
+//            left[i] = left[i-1]*nums[i-1];
+//            right[size - 1 - i] = right[size - i]*nums[size-i];
+//            i++;
+//        }
+//        for(int i=0;i<size;i++)
+//        {
+//            ans[i] = left[i]*right[i];
+//        }
+//        return ans;
+//    }
+//};
+
