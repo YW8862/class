@@ -1555,25 +1555,64 @@ public:
 
 
 //leetcode  560
-class Solution {
-public:
-    int subarraySum(vector<int>& nums, int k) {
-        int preNum = 0,count = 0;
-        unordered_map<int,int>mp;
-        for(auto num:nums)
-        {
-            mp[preNum]++;
-            preNum += num;
-            count += mp[preNum - k];
-        }
-        return count;
-    }
-};
+//class Solution {
+//public:
+//    int subarraySum(vector<int>& nums, int k) {
+//        int preNum = 0,count = 0;
+//        unordered_map<int,int>mp;
+//        for(auto num:nums)
+//        {
+//            mp[preNum]++;
+//            preNum += num;
+//            count += mp[preNum - k];
+//        }
+//        return count;
+//    }
+//};
+//
+//int main()
+//{
+//    vector<int>nums = {1,1,1};
+//    cout<<Solution().subarraySum(nums,2)<<endl;
+//
+//    return 0;
+//}
 
-int main()
-{
-    vector<int>nums = {1,1,1};
-    cout<<Solution().subarraySum(nums,2)<<endl;
 
-    return 0;
-}
+//leetcode 525
+//class Solution {
+//public:
+//    int findMaxLength(vector<int>& nums) {
+//        int pre =0;
+//        unordered_map<int,int>mp;
+//        int ans = 0;
+//        mp[0] = -1;
+//        for(int i=0;i<nums.size();i++)
+//        {
+//            if(nums[i] == 1)
+//                pre++;
+//            else
+//                pre--;
+//
+//            //记录第一次出现的位置
+//            if(mp[pre] == 0)
+//            {
+//                if((nums[0] == 0&& pre == -1)
+//                   ||nums[0] == pre)
+//                    ans = i;
+//                else
+//                    mp[pre] = i;
+//            }
+//            else
+//                ans = max(i-mp[pre],ans);
+//        }
+//        return ans;
+//    }
+//};
+//
+//int main()
+//{
+//    vector<int>nums = {0,0,1};
+//    cout<<Solution().findMaxLength(nums)<<endl;
+//    return 0;
+//}
