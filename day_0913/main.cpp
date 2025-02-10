@@ -7,6 +7,7 @@
 #include <numeric>
 #include <map>
 #include <unordered_map>
+#include <functional>
 #include "Date.h"
 using  namespace std;
 using namespace myClass;
@@ -1616,3 +1617,52 @@ public:
 //    cout<<Solution().findMaxLength(nums)<<endl;
 //    return 0;
 //}
+
+//leetcode 150
+//class Solution {
+//public:
+//    int evalRPN(vector<string>& tokens) {
+//        map<string,function<int(int,int)>> opFuntions={
+//                {"+",[](int x,int y)->auto{return x+y;}},
+//                {"-",[](int x,int y)->auto{return x-y;}},
+//                {"*",[](int x,int y)->auto{return x*y;}},
+//                {"/",[](int x,int y)->auto{return x/y;}}
+//        };
+//        stack<string>st;
+//        int top1,top2;
+//        for(string str:tokens)
+//        {
+//            if(opFuntions[str] != nullptr)
+//            {
+//                top1= stoi(st.top());
+//                st.pop();
+//                top2 = stoi(st.top());
+//                st.pop();
+//                top1 = opFuntions[str](top2,top1);
+//                st.push(to_string(top1));
+//            }
+//            else
+//            {
+//                st.push(str);
+//            }
+//        }
+//        return stoi(st.top());
+//    }
+//};
+
+
+//leetcode √Ê ‘0101
+//class Solution {
+//public:
+//    bool isUnique(string astr) {
+//        unsigned int hash = 0;
+//        for(auto ch:astr)
+//        {
+//            if((hash & 0x01<<(ch-'a')) == 0)
+//                hash |= 0x01<<(ch-'a');
+//            else
+//                return false;
+//        }
+//        return true;
+//    }
+//};
