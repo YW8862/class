@@ -1666,3 +1666,143 @@ public:
 //        return true;
 //    }
 //};
+
+
+//leetcde 155
+//法一:暴力检索
+//class MinStack {
+//public:
+//    MinStack() {
+//    }
+//
+//    void push(int val) {
+//        st.push_back(val);
+//    }
+//
+//    void pop() {
+//        st.pop_back();
+//    }
+//
+//    int top() {
+//        return st[st.size()-1];
+//    }
+//
+//    int getMin() {
+//        return *min_element(st.begin(),st.end());
+//    }
+//private:
+//    vector<int>st;
+//};
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack* obj = new MinStack();
+ * obj->push(val);
+ * obj->pop();
+ * int param_3 = obj->top();
+ * int param_4 = obj->getMin();
+ */
+
+
+//法二:最小栈
+//class MinStack {
+//public:
+//    MinStack() {
+//
+//    }
+//
+//    void push(int val) {
+//        nums.push(val);
+//        if(min_nums.empty() || min_nums.top()>=val)
+//        {
+//            min_nums.push(val);
+//        }
+//    }
+//
+//    void pop() {
+//        if(min_nums.empty() || min_nums.top() == nums.top())
+//            min_nums.pop();
+//        nums.pop();
+//    }
+//
+//    int top() {
+//        return nums.top();
+//    }
+//
+//    int getMin() {
+//        return min_nums.top();
+//    }
+//private:
+//    stack<int>nums;
+//    stack<int>min_nums;
+//};
+//
+///**
+// * Your MinStack object will be instantiated and called as such:
+// * MinStack* obj = new MinStack();
+// * obj->push(val);
+// * obj->pop();
+// * int param_3 = obj->top();
+// * int param_4 = obj->getMin();
+// */
+
+//leetcode 268
+
+//法一:哈希
+//class Solution {
+//public:
+//    int missingNumber(vector<int>& nums) {
+//        unordered_map<int,int>mp;
+//        for(auto num:nums)
+//        {
+//            mp[num]++;
+//        }
+//        for(int i=1;i<=nums.size();i++)
+//        {
+//            if(mp[i] == 0)
+//                return i;
+//        }
+//        return 0;
+//    }
+//};
+
+//法二:原地哈希
+//class Solution {
+//public:
+//    int missingNumber(vector<int>& nums) {
+//        sort(nums.begin(),nums.end());
+//        for(int i=0;i<nums.size();i++)
+//            if(nums[i] != i)
+//                return i;
+//        return nums.size();
+//    }
+//};
+
+//法三:求和相减法
+//class Solution {
+//public:
+//    int missingNumber(vector<int>& nums) {
+//        size_t size = nums.size();
+//        int sum = 0;
+//        sum = size*(size+1)/2;
+//        for(auto num:nums)
+//        {
+//            sum -= num;
+//        }
+//        return sum;
+//    }
+//};
+
+//法四:亦或
+//class Solution {
+//public:
+//    int missingNumber(vector<int>& nums) {
+//        int num = 0;
+//        for(int i=0;i<nums.size();i++)
+//        {
+//            num ^= (i+1);
+//            num ^= nums[i];
+//        }
+//        return num;
+//    }
+//};
