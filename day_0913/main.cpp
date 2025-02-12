@@ -1806,3 +1806,96 @@ public:
 //        return num;
 //    }
 //};
+
+//leetcode 232
+//class MyQueue {
+//public:
+//    MyQueue() {
+//
+//    }
+//
+//    void push(int x) {
+//        st1.push(x);
+//    }
+//
+//    int pop()
+//    {
+//        if(st2.empty())
+//        {
+//            int tmp = 0;
+//            //将st1元素放置st2中
+//            while(!st1.empty())
+//            {
+//                tmp = st1.top();
+//                st1.pop();
+//                st2.push(tmp);
+//            }
+//        }
+//        int ret = st2.top();
+//        st2.pop();
+//        return ret;
+//    }
+//
+//    int peek() {
+//        if(st2.empty())
+//        {
+//            int tmp = 0;
+//            //将st1元素放置st2中
+//            while(!st1.empty())
+//            {
+//                tmp = st1.top();
+//                st1.pop();
+//                st2.push(tmp);
+//            }
+//        }
+//        return st2.top();
+//    }
+//
+//    bool empty() {
+//        return st1.empty() && st2.empty();
+//    }
+//    stack<int>st1;
+//    stack<int>st2;
+//};
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * MyQueue* obj = new MyQueue();
+ * obj->push(x);
+ * int param_2 = obj->pop();
+ * int param_3 = obj->peek();
+ * bool param_4 = obj->empty();
+ */
+
+//leetcode 面试0805
+//class Solution {
+//public:
+//    int multiply(int A, int B) {
+//        int ret = 0;
+//        int i = 0;
+//        //找到第一位不为0
+//        for(;i<32;i++)
+//        {
+//            if((A<<i)& 0x80000000)
+//                break;
+//        }
+//        for(;i<32;i++)
+//        {
+//            if((A << i) & 0x80000000)
+//            {
+//                ret = (ret << 1) + B;
+//            }
+//            else
+//            {
+//                ret = (ret << 1);
+//            }
+//        }
+//        return ret;
+//    }
+//};
+//
+//int main()
+//{
+//    cout<<Solution().multiply(37,5)<<endl;
+//    return 0;
+//}
