@@ -9,73 +9,91 @@
 #include <unordered_map>
 #include <functional>
 #include "Date.h"
-using  namespace std;
+using namespace std;
 using namespace myClass;
+
 //单链表定义
 struct ListNode {
     int val;
     ListNode *next;
-    ListNode() : val(0), next(nullptr) {}
-    ListNode(int x) : val(x), next(nullptr) {}
-    ListNode(int x, ListNode *next) : val(x), next(next) {}
+
+    ListNode() : val(0), next(nullptr) {
+    }
+
+    ListNode(int x) : val(x), next(nullptr) {
+    }
+
+    ListNode(int x, ListNode *next) : val(x), next(next) {
+    }
 };
 
 //模板树节点定义
 template<class T>
-class TreeNode{
+class TreeNode {
 public:
     T val;
-    TreeNode<T>* left;
-    TreeNode<T>* right;
+    TreeNode<T> *left;
+    TreeNode<T> *right;
 
-    TreeNode():val(0),left(nullptr),right(nullptr){}
-    TreeNode(T x):val(x),left(nullptr),right(nullptr){}
-    TreeNode(T x,TreeNode*left,TreeNode*right):val(x),left(left),right(right){}
+    TreeNode(): val(0), left(nullptr), right(nullptr) {
+    }
+
+    TreeNode(T x): val(x), left(nullptr), right(nullptr) {
+    }
+
+    TreeNode(T x, TreeNode *left, TreeNode *right): val(x), left(left), right(right) {
+    }
 };
 
 template<class T>
-class Tree{
+class Tree {
 public:
-    TreeNode<T>*root;
-    void _preorder(TreeNode<T> *root){
-        if(root==nullptr)return;
-        cout<<root->val<<" ";
+    TreeNode<T> *root;
+
+    void _preorder(TreeNode<T> *root) {
+        if (root == nullptr)return;
+        cout << root->val << " ";
         _preorder(root->left);
         _preorder(root->right);
     }
-    void _inorder(TreeNode<T> *root){
-        if(root==nullptr)return;
+
+    void _inorder(TreeNode<T> *root) {
+        if (root == nullptr)return;
         _inorder(root->left);
-        cout<<root->val<<" ";
+        cout << root->val << " ";
         _inorder(root->right);
     }
-    void _postorder(TreeNode<T> *root){
-        if(root==nullptr)return;
+
+    void _postorder(TreeNode<T> *root) {
+        if (root == nullptr)return;
         _postorder(root->left);
         _postorder(root->right);
-        cout<<root->val<<" ";
+        cout << root->val << " ";
     }
-    TreeNode<T>* _init(vector<T> list,int pos){
-        if(pos>=list.size()||list[pos]==INT_MIN)return nullptr;
+
+    TreeNode<T> *_init(vector<T> list, int pos) {
+        if (pos >= list.size() || list[pos] == INT_MIN)return nullptr;
         TreeNode<T> *node = new TreeNode<T>(list[pos]);
-        node->left = _init(list,2*pos+1);
-        node->right = _init(list,2*pos+2);
+        node->left = _init(list, 2 * pos + 1);
+        node->right = _init(list, 2 * pos + 2);
         return node;
     }
+
 public:
-    Tree(initializer_list<T> list){
-        root = _init(list,0);
+    Tree(initializer_list<T> list) {
+        root = _init(list, 0);
     }
 
 
-    void preorder(){
+    void preorder() {
         _preorder(root);
     }
 
-    void inorder(){
+    void inorder() {
         _inorder(root);
     }
-    void postorder(){
+
+    void postorder() {
         _postorder(root);
     }
 };
@@ -793,7 +811,6 @@ public:
 //};
 
 
-
 //void quicksort(vector<int>&nums,int left,int right){
 //    if(left == right || nums.size() == 0)
 //        return;
@@ -965,7 +982,6 @@ public:
 //           cout<<num<<" ";
 //       }
 //}
-
 
 
 //class Solution {
@@ -1899,3 +1915,319 @@ public:
 //    cout<<Solution().multiply(37,5)<<endl;
 //    return 0;
 //}
+
+
+// class Solution {
+// public:
+//     vector<vector<int>> generateMatrix(int n) {
+//         vector<vector<int>>ans(n,vector<int>(n,0));
+//         int val = 1;
+//         int dir = 0;//表示前进方向，0表示向右，1表示向下，2表示向左，3表示向上
+//         int i=0,j=0;
+//         while(val <= n*n)
+//         {
+//             if(dir == 0)
+//             {
+//                 //说明未到边界且未遍历
+//                 if(j<=n-1 && ans[i][j]==0)
+//                 {
+//                     ans[i][j] = val;
+//                     val++;
+//                     j++;
+//                 }
+//                 //否则越界或重复遍历，切换到左下位置，并且改变方向
+//                 else
+//                 {
+//                     i++;
+//                     j--;
+//                     dir = 1;
+//                 }
+//             }
+//             else if(dir == 1)
+//             {
+//                 if(i<=n-1 && ans[i][j]==0)
+//                 {
+//                     ans[i][j] = val;
+//                     val++;
+//                     i++;
+//                 }
+//                 else
+//                 {
+//                     i--;
+//                     j--;
+//                     dir = 2;
+//                 }
+//             }
+//             else if(dir == 2)
+//             {
+//                 if(j>=0&&ans[i][j]==0)
+//                 {
+//                     ans[i][j] = val;
+//                     val++;
+//                     j--;
+//                 }
+//                 else
+//                 {
+//                     i--;
+//                     j++;
+//                     dir = 3;
+//                 }
+//             }
+//             else if(dir == 3)
+//             {
+//                 if(i>=0&&ans[i][j]==0)
+//                 {
+//                     ans[i][j] = val;
+//                     val++;
+//                     i--;
+//                 }
+//                 else
+//                 {
+//                     i++;
+//                     j++;
+//                     dir = 0;
+//                 }
+//             }
+//         }
+//
+//         return ans;
+//     }
+// };
+//
+// int main()
+// {
+//     vector<vector<int>> ans = Solution().generateMatrix(4);
+//     for (int i=0;i<4;i++) {
+//         for (int j=0;j<4;j++) {
+//             cout<<ans[i][j]<<" ";
+//         }
+//         cout<<endl;
+//     }
+//     return 0;
+// }
+
+
+//leetcode 394
+//class Solution {
+//public:
+//    string decodeString(string s)
+//    {
+//        return backtracking(s, 0, s.size());
+//    }
+//
+//    string backtracking(string s, int begin, int end)
+//    {
+//        string ret;
+//        for (int i = begin; i < end; )
+//        {
+//            if (isdigit(s[i]))
+//            {
+//                int time = 0;
+//                while (i < end && isdigit(s[i]))
+//                {
+//                    time = time * 10 + (s[i] - '0');
+//                    i++;
+//                }
+//
+//                //查找需要拷贝的子串
+//                int subBegin = i + 1;
+//                int subEnd = subBegin;
+//                int bracketCount = 1;
+//                while (subEnd < end && bracketCount > 0)
+//                {
+//                    if (s[subEnd] == '[')
+//                        bracketCount++;
+//                    else if (s[subEnd] == ']')
+//                        bracketCount--;
+//                    subEnd++;
+//                }
+//
+//                string subStr = backtracking(s, subBegin, subEnd - 1);
+//                for (int k = 0; k < time; k++)
+//                {
+//                    ret += subStr;
+//                }
+//                i = subEnd;
+//            }
+//            else
+//            {
+//                ret += s[i];
+//                i++;
+//            }
+//        }
+//        return ret;
+//    }
+//};
+
+
+//int main()
+//{
+//    cout << Solution().decodeString("100[leetcode]");
+//    return 0;
+//}
+
+//leetcode 43
+
+// class Solution {
+// public:
+//     string multiply(string num1, string num2) {
+//         if (num1 == "0" || num2 == "0")
+//             return "0";
+//         string ret,tmp = "0";
+//
+//         for (int i = num2.size() - 1; i >= 0; i--)
+//         {
+//             for (int j = 0; j < (num2[i] - '0'); j++)
+//             {
+//                 tmp = addStrings(num1, tmp);
+//             }
+//             ret += tmp[tmp.size() - 1];
+//             tmp.pop_back();
+//             if (tmp.size() == 0)
+//             {
+//                 tmp = "0";
+//             }
+//         }
+//         reverse(ret.begin(), ret.end());
+//         return tmp + ret;
+//     }
+//     string addStrings(string num1, string num2) {
+//         int k = 0;
+//         int p = 0;
+//
+//         string res;
+//         int p1 = num1.size() - 1;
+//         int p2 = num2.size() - 1;
+//         while (p1 >= 0 || p2 >= 0 || k)
+//         {
+//             int t = 0;
+//             if (p1 >= 0)
+//                 t += (num1[p1] - 48);
+//             if (p2 >= 0)
+//                 t += (num2[p2] - 48);
+//             t += k;
+//             k = t / 10;
+//             t = t % 10;
+//
+//             res += t + 48;
+//             p1--;
+//             p2--;
+//         }
+//         reverse(res.begin(), res.end());
+//         return res;
+//     }
+// };
+//
+// int main()
+// {
+//     cout << Solution().multiply("6", "501") << endl;
+//     return 0;
+// }
+
+//leetcode 581
+// class Solution {
+// public:
+//     int findUnsortedSubarray(vector<int> &nums)
+//     {
+//         vector<int> nums2 = nums;
+//         sort(nums2.begin(), nums2.end());
+//         int left = 0, right = nums.size() - 1;
+//         for (int i = 0; i < nums.size(); i++)
+//         {
+//             if (nums[i] != nums2[i])
+//             {
+//                 left = i;
+//                 break;
+//             }
+//             if (i == nums.size() - 1)
+//                 left = i;
+//         }
+//         for (int i = nums.size() - 1; i >= 0; i--)
+//         {
+//             if (nums[i] != nums2[i])
+//             {
+//                 right = i;
+//                 break;
+//             }
+//         }
+//         return left == right ? 0 : right - left + 1;
+//     }
+// };
+
+//leetcode 59
+// class Solution {
+// public:
+//     vector<vector<int>> generateMatrix(int n) {
+//         vector<vector<int>>ans(n,vector<int>(n,0));
+//         int val = 1;
+//         int dir = 0;//表示前进方向，0表示向右，1表示向下，2表示向左，3表示向上
+//         int i=0,j=0;
+//         while(val <= n*n)
+//         {
+//             if(dir == 0)
+//             {
+//                 //说明未到边界且未遍历
+//                 if(j<=n-1 && ans[i][j]==0)
+//                 {
+//                     ans[i][j] = val;
+//                     val++;
+//                     j++;
+//                 }
+//                 //否则越界或重复遍历，切换到左下位置，并且改变方向
+//                 else
+//                 {
+//                     i++;
+//                     j--;
+//                     dir = 1;
+//                 }
+//             }
+//             else if(dir == 1)
+//             {
+//                 if(i<=n-1 && ans[i][j]==0)
+//                 {
+//                     ans[i][j] = val;
+//                     val++;
+//                     i++;
+//                 }
+//                 else
+//                 {
+//                     i--;
+//                     j--;
+//                     dir = 2;
+//                 }
+//             }
+//             else if(dir == 2)
+//             {
+//                 if(j>=0&&ans[i][j]==0)
+//                 {
+//                     ans[i][j] = val;
+//                     val++;
+//                     j--;
+//                 }
+//                 else
+//                 {
+//                     i--;
+//                     j++;
+//                     dir = 3;
+//                 }
+//             }
+//             else if(dir == 3)
+//             {
+//                 if(i>=0&&ans[i][j]==0)
+//                 {
+//                     ans[i][j] = val;
+//                     val++;
+//                     i--;
+//                 }
+//                 else
+//                 {
+//                     i++;
+//                     j++;
+//                     dir = 0;
+//                 }
+//             }
+//         }
+//
+//         return ans;
+//     }
+// };
