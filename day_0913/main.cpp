@@ -2231,3 +2231,40 @@ public:
 //         return ans;
 //     }
 // };
+
+//leetcode 104
+// /**
+//  * Definition for a binary tree node.
+//  * struct TreeNode {
+//  *     int val;
+//  *     TreeNode *left;
+//  *     TreeNode *right;
+//  *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+//  *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+//  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+//  * };
+//  */
+// class Solution {
+// public:
+//     int maxDepth(TreeNode* root) {
+//         if(root)
+//             return max(maxDepth(root->left),maxDepth(root->right)) + 1;
+//         return 0;
+//     }
+// };
+
+//leetcode 3
+// class Solution {
+// public:
+//     int lengthOfLongestSubstring(string s) {
+//         vector<int>last(128,-1);
+//         int res = 0,start = 0;
+//         for(int i=0;i<s.size();i++)
+//         {
+//             start = max(start,last[s[i]] + 1);
+//             res= max(res,i - start + 1);
+//             last[s[i]] = i;
+//         }
+//         return res;
+//     }
+// };
