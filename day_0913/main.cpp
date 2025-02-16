@@ -8,24 +8,31 @@
 #include <map>
 #include <unordered_map>
 #include <functional>
+#include <cassert>
 #include "Date.h"
 using namespace std;
 using namespace myClass;
 
-//单链表定义
-struct ListNode {
-    int val;
+//单链表节点定义
+template <class T>
+class ListNode
+{
+public:
+    T val;
     ListNode *next;
 
-    ListNode() : val(0), next(nullptr) {
-    }
+    ListNode() : val(0), next(nullptr)
+    {}
 
-    ListNode(int x) : val(x), next(nullptr) {
-    }
+    explicit ListNode(T x) : val(x), next(nullptr)
+    {}
 
-    ListNode(int x, ListNode *next) : val(x), next(next) {
-    }
+    ListNode(T x, ListNode *next) : val(x), next(next)
+    {}
+
+    ListNode(const ListNode& node) = default;
 };
+
 
 //模板树节点定义
 template<class T>
@@ -96,6 +103,229 @@ public:
     void postorder() {
         _postorder(root);
     }
+};
+
+
+template<class K, class V>
+struct AVLTreeNode
+{
+	AVLTreeNode<K, V>* _left;
+	AVLTreeNode<K, V>* _right;
+	AVLTreeNode<K, V>* _parent;
+	int _bf; // balance factor
+	pair<K, V> _kv;
+
+	AVLTreeNode(const pair<K, V>& kv)
+		:_left(nullptr)
+		, _right(nullptr)
+		, _parent(nullptr)
+		, _bf(0)
+		, _kv(kv)
+	{}
+};
+
+template<class K, class V>
+class AVLTree
+{
+	typedef AVLTreeNode<K, V> Node;
+public:
+	bool Insert(const pair<K, V>& kv)
+	{
+		if (_root == nullptr)
+		{
+			_root = new Node(kv);
+			return true;
+		}
+
+		Node* parent = nullptr;
+		Node* cur = _root;
+		while (cur)
+		{
+			if (cur->kv.first < kv.first)
+			{
+				parent = cur;
+				cur = cur->_right;
+			}
+			else if (cur->kv.first > kv.first)
+			{
+				parent = cur;
+				cur = cur->_left;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		cur = new Node(kv);
+		if (parent->_kv.first < kv.first)
+		{
+			parent->_right = cur;
+		}
+		else
+		{
+			parent->_left = cur;
+		}
+		cur->_parent = parent;
+
+		while (parent)
+		{
+			if(cur == parent->left)
+			{
+				parent->_bf--;
+			}
+			else
+			{
+				parent->_bf++;
+			}
+
+			if (parent->_bf == 0)
+			{
+				break;
+			}
+			else if (parent->_bf == 1 || parent->_bf == -1)
+			{
+				cur = cur->_parent;
+				parent = parent->_parent;
+			}
+			else if (parent->_bf == 2 || parent->_bf == -2)
+			{
+				// 旋转处理
+				if (parent->_bf == 2 && cur->_bf == 1)
+				{
+					RotateL(parent);
+				}
+				else if (parent->_bf == -2 && cur->_bf == -1)
+				{
+					RotateR(parent);
+				}
+				else if (parent->_bf == -2 && cur->_bf == 1)
+				{
+					RotateLR(parent);
+				}
+				else
+				{
+					RotateRL(parent);
+				}
+
+				break;
+			}
+			else
+			{
+				// 插入之前AVL树就有问题
+				assert(false);
+			}
+		}
+
+		return true;
+	}
+
+	void RotateL(Node* parent)
+	{
+		Node* subR = parent->_right;
+		Node* subRL = subR->_left;
+
+		parent->_right = subRL;
+		if(subRL)
+			subRL->_parent = parent;
+
+		subR->_left = parent;
+		Node* ppnode = parent->_parent;
+		parent->_parent = subR;
+
+		if (parent == _root)
+		{
+			_root = subR;
+			subR->_parent = nullptr;
+		}
+		else
+		{
+			if (ppnode->_left == parent)
+			{
+				ppnode->_left = subR;
+			}
+			else
+			{
+				ppnode->_right = subR;
+			}
+			subR->_parent = ppnode;
+		}
+
+		parent->_bf = 0;
+		subR->_bf = 0;
+	}
+
+	void RotateR(Node* parent)
+	{
+		Node* subL = parent->_left;
+		Node* subLR = subL->_right;
+
+		parent->_left = subLR;
+		if (subLR)
+			subLR->_parent = parent;
+
+		subL->_right = parent;
+
+		Node* ppnode = parent->_parent;
+		parent->_parent = subL;
+
+		if (parent == _root)
+		{
+			_root = subL;
+			subL->_parent = nullptr;
+		}
+		else
+		{
+			if (ppnode->_left == parent)
+			{
+				ppnode->_left = subL;
+			}
+			else
+			{
+				ppnode->_right = subL;
+			}
+			subL->_parent = ppnode;
+		}
+
+		subL->_bf = 0;
+		parent->_bf = 0;
+	}
+
+	void RotateLR(Node* parent)
+	{
+		Node* subL = parent->_left;
+		Node* subLR = subL->_right;
+
+		int bf = subLR->_bf;
+		RotateL(parent->_left);
+		RotateR(parent);
+
+		if (bf == -1)
+		{
+			subLR->_bf = 0;
+			subL->_bf = 0;
+			parent->_bf = 1;
+		}
+		else if (bf == 1)
+		{
+			subLR->_bf = 0;
+			subL->_bf = -1;
+			parent->_bf = 0;
+		}
+		else if (bf == 0)
+		{
+			subLR->_bf = 0;
+			subL->_bf = 0;
+			parent->_bf = 0;
+		}
+		else
+		{
+			assert(false);
+		}
+	}
+
+private:
+	Node* _root = nullptr;
 };
 
 ////Leetcode 11
@@ -2267,4 +2497,71 @@ public:
 //         }
 //         return res;
 //     }
+// };
+
+//leetcode面试0204
+// template<class T>
+// class Solution {
+// public:
+//     ListNode<T>* partition(ListNode<T>* head, int x)
+//     {
+//         ListNode<T>* largeHead = new ListNode<T>(),* smallHead = new ListNode<T>();
+//         ListNode<T>* p = head;
+//         while(p)
+//         {
+//             if(p->val>=x)
+//             {
+//                 addListNode(largeHead,p);
+//             }
+//             else
+//             {
+//                 addListNode(smallHead,p);
+//             }
+//             p = p->next;
+//         }
+//         p = smallHead;
+//         while(p->next)
+//         {
+//             p = p->next;
+//         }
+//         p->next = largeHead->next;
+//         return smallHead->next;
+//     }
+//     void addListNode(ListNode<T>*& head,ListNode<T>* node)
+//     {
+//         ListNode<T>* p =head;
+//         while(p->next)
+//         {
+//             p = p->next;
+//         }
+//         p->next = node;
+//     }
+// };
+//
+// int main()
+// {
+//     vector<int>nums = {1,4,3,2,5,2};
+//     int x = 3;
+// }
+
+//leetcode	108
+// class Solution {
+// public:
+// 	TreeNode<int>* sortedArrayToBST(vector<int>& nums)
+// 	{
+// 		if(nums.size() == 0)    return nullptr;
+// 		return backtraching(nums,0,nums.size()-1);
+// 	}
+// 	TreeNode<int>* backtraching(vector<int>& nums,int begin,int end)
+// 	{
+// 		if(begin > end)
+// 			return nullptr;
+//
+// 		int mid = (begin + end)/2;
+// 		TreeNode<int>* root = new TreeNode<int>(nums[mid]);
+// 		root->left = backtraching(nums,begin,mid-1);
+// 		root->right = backtraching(nums,mid+1,end);
+// 		return root;
+//
+// 	}
 // };
