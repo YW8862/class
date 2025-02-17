@@ -2499,6 +2499,79 @@ private:
 //     }
 // };
 
+<<<<<<< HEAD
+
+//leetcode61
+// class Solution {
+// public:
+//     ListNode* rotateRight(ListNode* head, int k) {
+//         //0.如果是空节点或者是单节点，直接返回即可
+//         if(head == nullptr || head->next == nullptr)
+//             return head;
+//         //1.统计链表节点个数，以免重复遍历
+//         ListNode* p = head;
+//         int cnt = 0;
+//         while(p)
+//         {
+//             cnt++;
+//             p = p->next;
+//         }
+//         //2.先寻找倒数第k+1个节点
+//         ListNode*fast = head,*slow = head;
+//         //快指针先走k步
+//         k = k % cnt;
+//         int step = k;
+//         while(step--)
+//         {
+//             fast = fast->next;
+//             if(fast == nullptr)
+//                 fast = head;
+//         }
+//         //两个指针一起往后走
+//         while(fast->next)
+//         {
+//             fast = fast->next;
+//             slow = slow->next;
+//         }
+//         //3.将slow作为新的头节点，fast连接原先头节点
+//         if(slow != fast)
+//         {
+//             fast->next = head;
+//             head = slow->next;
+//             slow->next = nullptr;
+//         }
+//         return head;
+//     }
+// };
+
+//面试0806
+// class Solution
+// {
+// public:
+//     void hanota(vector<int>& A, vector<int>& B, vector<int>& C)
+//     {
+//         hanoi(A.size(),A,B,C);
+//     }
+//     void hanoi(size_t n,vector<int>& A, vector<int>& B, vector<int>& C)
+//     {
+//         //1.如果剩下最后一个元素，直接放到C柱上面
+//         if(n == 1)
+//         {
+//             C.push_back(A.back());
+//             A.pop_back();
+//         }
+//         else if(n>1)
+//         {
+//             //1.先将上面的盘子放到B柱子上
+//             hanoi(n-1,A,C,B);
+//             //2.再把最底下盘子放到C柱子上
+//             C.push_back(A.back());
+//             A.pop_back();
+//             //3.最后把B柱子放到C柱子上面即可
+//             hanoi(n-1,B,A,C);
+//         }
+//     }
+=======
 //leetcode面试0204
 // template<class T>
 // class Solution {
@@ -2564,4 +2637,5 @@ private:
 // 		return root;
 //
 // 	}
+>>>>>>> 9984ccf7e9bdaf8bd413638522f6485038a83aed
 // };
