@@ -9,6 +9,8 @@
 #include <unordered_map>
 #include <functional>
 #include <cassert>
+#include <queue>
+
 #include "Date.h"
 using namespace std;
 using namespace myClass;
@@ -2499,79 +2501,6 @@ private:
 //     }
 // };
 
-<<<<<<< HEAD
-
-//leetcode61
-// class Solution {
-// public:
-//     ListNode* rotateRight(ListNode* head, int k) {
-//         //0.如果是空节点或者是单节点，直接返回即可
-//         if(head == nullptr || head->next == nullptr)
-//             return head;
-//         //1.统计链表节点个数，以免重复遍历
-//         ListNode* p = head;
-//         int cnt = 0;
-//         while(p)
-//         {
-//             cnt++;
-//             p = p->next;
-//         }
-//         //2.先寻找倒数第k+1个节点
-//         ListNode*fast = head,*slow = head;
-//         //快指针先走k步
-//         k = k % cnt;
-//         int step = k;
-//         while(step--)
-//         {
-//             fast = fast->next;
-//             if(fast == nullptr)
-//                 fast = head;
-//         }
-//         //两个指针一起往后走
-//         while(fast->next)
-//         {
-//             fast = fast->next;
-//             slow = slow->next;
-//         }
-//         //3.将slow作为新的头节点，fast连接原先头节点
-//         if(slow != fast)
-//         {
-//             fast->next = head;
-//             head = slow->next;
-//             slow->next = nullptr;
-//         }
-//         return head;
-//     }
-// };
-
-//面试0806
-// class Solution
-// {
-// public:
-//     void hanota(vector<int>& A, vector<int>& B, vector<int>& C)
-//     {
-//         hanoi(A.size(),A,B,C);
-//     }
-//     void hanoi(size_t n,vector<int>& A, vector<int>& B, vector<int>& C)
-//     {
-//         //1.如果剩下最后一个元素，直接放到C柱上面
-//         if(n == 1)
-//         {
-//             C.push_back(A.back());
-//             A.pop_back();
-//         }
-//         else if(n>1)
-//         {
-//             //1.先将上面的盘子放到B柱子上
-//             hanoi(n-1,A,C,B);
-//             //2.再把最底下盘子放到C柱子上
-//             C.push_back(A.back());
-//             A.pop_back();
-//             //3.最后把B柱子放到C柱子上面即可
-//             hanoi(n-1,B,A,C);
-//         }
-//     }
-=======
 //leetcode面试0204
 // template<class T>
 // class Solution {
@@ -2637,5 +2566,203 @@ private:
 // 		return root;
 //
 // 	}
->>>>>>> 9984ccf7e9bdaf8bd413638522f6485038a83aed
+// };
+
+
+//leetcode 26
+// class Solution
+// {
+// public:
+//     int removeDuplicates(vector<int>& nums)
+//     {
+//         size_t size = nums.size();
+//         if(size == 0 || size == 1)
+//             return size;
+//         //统计重复出现的数字个数，用于移动数字
+//         int numCount = 0;
+//         for(int i=1;i<size;i++)
+//         {
+//             //如果两个数字相同，则将其前移
+//             if(nums[i] == nums[i-1])
+//             {
+//                 numCount++;
+//                 nums[i - numCount] = nums[i];
+//             }
+//         }
+//         return size - numCount;
+//     }
+// };
+//
+// int main()
+// {
+//     vector<int>nums = {1,1,2};
+//     cout<<"length: "<<Solution().removeDuplicates(nums)<<endl;
+// 	for (auto num:nums)
+// 	{
+// 		cout<<num<<" ";
+// 	}
+// 	cout<<endl;
+//     return 0;
+// }
+
+
+//lletcode  LCR187
+//法一:使用队列模拟约瑟夫环(超时)
+// class Solution {
+// public:
+// 	int iceBreakingGame(int num, int target)
+// 	{
+// 		//使用队列模拟约瑟夫环
+// 		queue<int>q;
+// 		for(int i=0;i<num;i++)
+// 		{
+// 			q.emplace(i);
+// 		}
+//
+// 		while(q.size()>1)
+// 		{
+// 			for(int i = 1;i<target;i++)
+// 			{
+// 				q.emplace(q.front());
+// 				q.pop();
+// 			}
+// 			q.pop();
+// 		}
+// 		return q.front();
+// 	}
+// };
+
+
+//法二:使用数组模拟约瑟夫环(超时)
+// class Solution {
+// public:
+// 	int iceBreakingGame(int num, int target)
+// 	{
+// 		vector<int>loop(num);
+// 		int cnt = 0;
+// 		for(int i=0;i<num;i++)
+// 		{
+// 			loop[i] = i;
+// 		}
+// 		int i = 0,k = 1;
+// 		while(cnt < num-1)
+// 		{
+// 			if(i == num)
+// 				i = 0;
+// 			//如果该位置玩家已经淘汰，跳过
+// 			if(loop[i] == -1)
+// 			{
+// 				i++;
+// 			}
+// 			else
+// 			{
+// 				if(k == target)
+// 				{
+// 					loop[i] = -1;
+// 					cnt++;
+// 					k = 0;
+// 				}
+// 				k++;
+// 				i++;
+// 			}
+// 		}
+// 		//返回最后赢家
+// 		return *max_element(loop.begin(),loop.end());
+// 	}
+// };
+
+
+//
+class LinkNode
+{
+public:
+	LinkNode(int num = 0):val(num),next(nullptr),prev(nullptr)
+	{}
+
+public:
+	LinkNode* next;
+	LinkNode* prev;
+	int val;
+};
+
+
+
+class Solution
+{
+public:
+	int iceBreakingGame(int num, int target)
+	{
+		if(num == 1 || num == 0)
+			return num;
+		//创建头节点
+		LinkNode* head = new LinkNode(0);
+		LinkNode* p = head;
+		for(int i = 0;i < num;i++)
+		{
+			LinkNode* node = new LinkNode(i);
+			p->next = node;
+			node->prev = p;
+			node->next = head;
+			head->prev = node;
+			p = p->next;
+		}
+
+		int k = 1;
+		p = head;
+		//开始游戏
+		while(head->next != head)
+		{
+			if(k == target)
+			{
+				cout<<p->val<<" 号玩家被淘汰"<<endl;
+				LinkNode* tmp = p;
+				p->prev ->next = p->next;
+				p->next ->prev = p->prev;
+				p = p->next;
+				delete tmp;
+				k = 1;
+			}
+			else
+			{
+				k++;
+				p = p->next;
+			}
+		}
+		return head->val;
+	}
+};
+
+int main()
+{
+	Solution().iceBreakingGame(5,3);
+}
+
+//法四:递归
+// class Solution
+// {
+// public:
+// 	int iceBreakingGame(int num, int target)
+// 	{
+// 		if(num == 1)
+// 			return 0;
+// 		int x = iceBreakingGame(num - 1,target);
+// 		return (x + target)%num;
+// 	}
+// };
+
+//法五:数学公式法
+// class Solution
+// {
+// public:
+// 	int iceBreakingGame(int num, int target)
+// 	{
+// 		//当只剩下一个玩家，下标为0
+// 		int f = 0;
+//
+// 		for(int i=2;i<=num;i++)
+// 		{
+// 			f = (f+target)%i;
+// 		}
+// 		return f;
+// 	}
 // };
