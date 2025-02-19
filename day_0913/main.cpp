@@ -2672,70 +2672,70 @@ private:
 // };
 
 
+//法三:循环链表模拟约瑟夫环
+// class LinkNode
+// {
+// public:
+// 	LinkNode(int num = 0):val(num),next(nullptr),prev(nullptr)
+// 	{}
 //
-class LinkNode
-{
-public:
-	LinkNode(int num = 0):val(num),next(nullptr),prev(nullptr)
-	{}
-
-public:
-	LinkNode* next;
-	LinkNode* prev;
-	int val;
-};
-
-
-
-class Solution
-{
-public:
-	int iceBreakingGame(int num, int target)
-	{
-		if(num == 1 || num == 0)
-			return num;
-		//创建头节点
-		LinkNode* head = new LinkNode(0);
-		LinkNode* p = head;
-		for(int i = 0;i < num;i++)
-		{
-			LinkNode* node = new LinkNode(i);
-			p->next = node;
-			node->prev = p;
-			node->next = head;
-			head->prev = node;
-			p = p->next;
-		}
-
-		int k = 1;
-		p = head;
-		//开始游戏
-		while(head->next != head)
-		{
-			if(k == target)
-			{
-				cout<<p->val<<" 号玩家被淘汰"<<endl;
-				LinkNode* tmp = p;
-				p->prev ->next = p->next;
-				p->next ->prev = p->prev;
-				p = p->next;
-				delete tmp;
-				k = 1;
-			}
-			else
-			{
-				k++;
-				p = p->next;
-			}
-		}
-		return head->val;
-	}
-};
-
-int main()
-{
-	Solution().iceBreakingGame(5,3);
-}
+// public:
+// 	LinkNode* next;
+// 	LinkNode* prev;
+// 	int val;
+// };
+//
+//
+//
+// class Solution
+// {
+// public:
+// 	int iceBreakingGame(int num, int target)
+// 	{
+// 		if(num == 1 || num == 0)
+// 			return num;
+// 		//创建头节点
+// 		LinkNode* head = new LinkNode(0);
+// 		LinkNode* p = head;
+// 		for(int i = 0;i < num;i++)
+// 		{
+// 			LinkNode* node = new LinkNode(i);
+// 			p->next = node;
+// 			node->prev = p;
+// 			node->next = head;
+// 			head->prev = node;
+// 			p = p->next;
+// 		}
+//
+// 		int k = 1;
+// 		p = head;
+// 		//开始游戏
+// 		while(head->next != head)
+// 		{
+// 			if(k == target)
+// 			{
+// 				cout<<p->val<<" 号玩家被淘汰"<<endl;
+// 				LinkNode* tmp = p;
+// 				p->prev ->next = p->next;
+// 				p->next ->prev = p->prev;
+// 				p = p->next;
+// 				delete tmp;
+// 				k = 1;
+// 			}
+// 			else
+// 			{
+// 				k++;
+// 				p = p->next;
+// 			}
+// 		}
+// 		return head->val;
+// 	}
+// };
+//
+// int main()
+// {
+// 	Solution().iceBreakingGame(5,3);
+// }
 
 //法四:递归
 // class Solution
@@ -2766,3 +2766,125 @@ int main()
 // 		return f;
 // 	}
 // };
+
+
+//leetcode 91
+// class Solution
+// {
+// public:
+// 	int numDecodings(string s)
+// 	{
+// 		if(s.size() == 0 || s[0] == '0')
+// 		{
+// 			return 0;
+// 		}
+// 		if(s.size() == 1)
+// 			return 1;
+// 		vector<int>dp(s.size());
+// 		if(s[0] >= '1'&&s[0] <= '9') dp[0] = 1;
+// 		else dp[0] = 0;
+//
+// 		if(s[1] >= '1'&&s[1] <= '9')    dp[1]+=1;
+// 		if(isvaild(s[0],s[1]))  dp[1] += 1;
+//
+// 		for(int i=2;i<s.size();i++)
+// 		{
+// 			if(s[i] >= '1'&&s[i] <= '9')
+// 				dp[i] += dp[i-1];
+// 			if(isvaild(s[i-1],s[i]))
+// 				dp[i] += dp[i-2];
+// 		}
+// 		return dp.back();
+// 	}
+//
+// 	bool isvaild(char ch1,char ch2)
+// 	{
+// 		int num = (ch1 - '0')*10 + ch2 - '0';
+// 		if(num >= 10&&num <= 26)
+// 			return true;
+// 		return false;
+// 	}
+// };
+
+
+//leetcode 206
+// class Solution
+// {
+// public:
+// 	ListNode* reverseList(ListNode* head)
+// 	{
+// 		//递归:
+// 		if(head == nullptr || head->next == nullptr)
+// 			return head;
+// 		ListNode* newhead = reverseList(head->next);
+// 		ListNode* p = newhead;
+// 		while(p->next)
+// 		{
+// 			p = p->next;
+// 		}
+// 		p->next = head;
+// 		head->next = nullptr;
+// 		return newhead;
+// 	}
+// };
+
+//leetcode 113
+//法一:dfs
+// class Solution
+// {
+// public:
+// 	vector<vector<int>>ans;
+// 	vector<vector<int>> pathSum(TreeNode* root, int targetSum)
+// 	{
+// 		backtracking(root,targetSum,vector<int>(),0);
+// 		return ans;
+// 	}
+// 	void backtracking(TreeNode* root,int targetSum,vector<int>path,int sum)
+// 	{
+// 		if(root == nullptr)
+// 			return;
+// 		sum += root->val;
+// 		path.push_back(root->val);
+// 		if(root->left == nullptr&&root->right == nullptr && sum == targetSum)
+// 		{
+// 			ans.push_back(path);
+// 			return;
+// 		}
+// 		backtracking(root->left,targetSum,path,sum);
+// 		backtracking(root->right,targetSum,path,sum);
+// 	}
+// };
+
+//dfs
+// class Solution
+// {
+// public:
+// 	vector<vector<int>>ans;
+// 	vector<int>path;
+// 	vector<vector<int>> pathSum(TreeNode* root, int targetSum)
+// 	{
+// 		backtracking(root,targetSum,0);
+// 		return ans;
+// 	}
+// 	void backtracking(TreeNode* root,int targetSum,int sum)
+// 	{
+// 		if(root == nullptr)
+// 			return;
+// 		sum += root->val;
+// 		path.emplace_back(root->val);
+// 		if(root->left == nullptr&&root->right == nullptr)
+// 		{
+// 			if(sum == targetSum)
+// 			{
+// 				ans.emplace_back(path);
+// 			}
+// 			path.pop_back();
+// 			return;
+// 		}
+// 		backtracking(root->left,targetSum,sum);
+// 		backtracking(root->right,targetSum,sum);
+// 		path.pop_back();
+// 	}
+// };
+
+
