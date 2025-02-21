@@ -2902,3 +2902,55 @@ private:
 //         return ans;
 //     }
 // };
+
+
+//leetcode 662
+// class Solution
+// {
+// public:
+//     //广度优先
+//     int widthOfBinaryTree(TreeNode* root)
+//     {
+//         //0.返回0或1的情况
+//         if(root == nullptr) return 0;
+//         if(root->left == nullptr && root->right == nullptr) return 1;
+//
+//         //1。广度优先，创建两个队列存放节点和节点索引
+//         queue<TreeNode*> nodes;
+//         queue<unsigned long long> nodeIndex;
+//         nodes.push(root);
+//         nodeIndex.push(1);
+//         unsigned long long ans = 0;
+//         while(nodes.size() > 0)
+//         {
+//             //获取每一层的元素个数
+//             size_t size = nodes.size();
+//             //存储每一层的初始索引
+//             unsigned long long initIndex = nodeIndex.front();
+//             unsigned long long index = initIndex;
+//
+//             for(int i=0;i<size;i++)
+//             {
+//                 //将头节点出队列
+//                 TreeNode* node = nodes.front();
+//                 nodes.pop();
+//                 index = nodeIndex.front();
+//                 nodeIndex.pop();
+//                 //如果左右节点不为空，入队列
+//                 if(node->left)
+//                 {
+//                     nodes.push(node->left);
+//                     nodeIndex.push(index*2);
+//                 }
+//                 if(node->right)
+//                 {
+//                     nodes.push(node->right);
+//                     nodeIndex.push(index*2+1);
+//                 }
+//             }
+//             //2.每次遍历完成一层，更新一次最大宽度
+//             ans = max<long long>(ans,index-initIndex+1);
+//         }
+//         return ans;
+//     }
+// };
