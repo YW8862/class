@@ -81,7 +81,8 @@ public:
     }
 
     TreeNode<T> *_init(vector<T> list, int pos) {
-        if (pos >= list.size() || list[pos] == INT_MIN)return nullptr;
+        if (pos >= list.size() || list[pos] == INT_MIN)
+        	return nullptr;
         TreeNode<T> *node = new TreeNode<T>(list[pos]);
         node->left = _init(list, 2 * pos + 1);
         node->right = _init(list, 2 * pos + 2);
@@ -2953,4 +2954,143 @@ private:
 //         }
 //         return ans;
 //     }
+// };
+
+//leetcode LCR125
+//解题思路，使用两个栈模拟队列 — — — —使用两个栈来模拟两个书车
+// class CQueue {
+// public:
+// 	CQueue()
+// 	{}
+//
+// 	//往st1中插入数据
+// 	void appendTail(int value)
+// 	{
+// 		if(value >= 1&&value <= 10000)
+// 		{
+// 			st1.push(value);
+// 		}
+// 	}
+//
+// 	int deleteHead()
+// 	{
+// 		//两个书车都是空的，无书可借
+// 		if(st1.empty()&&st2.empty())
+// 		{
+// 			return -1;
+// 		}
+// 		if(st2.empty())
+// 		{
+// 			while(!st1.empty())
+// 			{
+// 				st2.push(st1.top());
+// 				st1.pop();
+// 			}
+// 		}
+// 		int ans = st2.top();
+// 		st2.pop();
+// 		return ans;
+// 	}
+//
+// private:
+// 	stack<int>st1;
+// 	stack<int>st2;
+// };
+
+
+
+//leetcode 103
+// 法一: 维护两个栈，st1用于存从左到右遍历的节点，st2用于存放从右向左遍历的节点
+// st1中节点的子节点按照左孩子->右孩子的顺序插入st2中，st2中节点大的子节点按照右孩子->左孩子的顺序插入st1中
+// class Solution
+// {
+// public:
+// 	vector<vector<int>> zigzagLevelOrder(TreeNode* root)
+// 	{
+// 		if(root == nullptr)
+// 			return vector<vector<int>>();
+// 		stack<TreeNode*> st1;
+// 		stack<TreeNode*> st2;
+//
+// 		vector<vector<int>>ans;
+// 		//将根节点放入st1中
+// 		st1.push(root);
+// 		//只有st1和st2都为空才退出
+// 		while(!(st1.empty()&&st2.empty()))
+// 		{
+// 			vector<int> tmp;
+// 			tmp.clear();
+// 			while(!st1.empty())
+// 			{
+// 				TreeNode* node = st1.top();
+// 				st1.pop();
+// 				tmp.emplace_back(node->val);
+// 				if(node->left != nullptr)
+// 					st2.push(node->left);
+// 				if(node->right != nullptr)
+// 					st2.push(node->right);
+// 			}
+// 			if(tmp.size() > 0)
+// 				ans.push_back(tmp);
+// 			tmp.clear();
+//
+// 			while(!st2.empty())
+// 			{
+// 				TreeNode* node = st2.top();
+// 				st2.pop();
+// 				tmp.emplace_back(node->val);
+// 				if(node->right != nullptr)
+// 					st1.push(node->right);
+// 				if(node->left != nullptr)
+// 					st1.push(node->left);
+// 			}
+// 			if(tmp.size() > 0)
+// 				ans.push_back(tmp);
+// 		}
+// 		return ans;
+// 	}
+// };
+
+//法二:BFS
+// 法二:广度优先，遍历每一层的节点
+// class Solution
+// {
+// public:
+// 	vector<vector<int>> zigzagLevelOrder(TreeNode* root)
+// 	{
+// 		vector<vector<int>> ans;
+// 		if (root == nullptr) return ans;
+//
+// 		queue<TreeNode*> nodes;
+// 		nodes.push(root);
+// 		//记录遍历方向
+// 		bool leftToRight = true;
+//
+// 		while (!nodes.empty())
+// 		{
+// 			//获取队列中节点的个数
+// 			int levelSize = nodes.size();
+// 			vector<int> tmpNodes(levelSize);
+//
+// 			for (int i = 0; i < levelSize; ++i)
+// 			{
+// 				TreeNode* node = nodes.front();
+// 				nodes.pop();
+// 				//判断队列方向
+// 				int index = leftToRight ? i : levelSize - 1 - i;
+// 				tmpNodes[index] = node->val;
+//
+// 				if (node->left != nullptr)
+// 					nodes.push(node->left);
+// 				if (node->right != nullptr)
+// 					nodes.push(node->right);
+// 			}
+//
+// 			ans.emplace_back(tmpNodes);
+// 			//改变方向
+// 			leftToRight = !leftToRight;
+// 		}
+//
+// 		return ans;
+// 	}
 // };
