@@ -1,7 +1,10 @@
+#include <stdio.h>
 #include <vector>
 #include <string>
 #include <iostream>
 #include <stack>
+#include <cmath>
+#include <limits>
 using namespace std;
 
 
@@ -169,4 +172,166 @@ using namespace std;
 //private:
 //    stack<int>nums;
 //    stack<int>min_nums;
+//};
+
+
+//JZ13
+//class Solution
+//{
+//public:
+//    int movingCount(int threshold, int rows, int cols)
+//    {
+//        vector<vector<int>> matrix(rows);
+//        int cnt = 0;
+//        for (int i = 0; i < rows; i++)
+//        {
+//            //矩阵填充1表示未遍历，否则为已经遍历
+//            matrix[i] = vector<int>(cols, 1);
+//        }
+//
+//        backtraching(matrix, threshold, 0, 0, 0, cnt);
+//        return cnt;
+//    }
+//    //x表示当前的x坐标，y表示y坐标，dir表示调取的方向
+//    //0表示无方向，用于处理（0,0），1表示向右，2表示向下，3表示向左，4表示向上
+//    void backtraching(vector<vector<int>>& matrix, int threshole, int x, int y, int dir, int& cnt)
+//    {
+//        //表示已经遍历过，不再遍历
+//        if (!isValid(x, y, matrix))
+//        {
+//            return;
+//        }
+//        //如果符合条件，则计数，并且继续递归
+//        if (getNum(x) + getNum(y) <= threshole)
+//        {
+//            cnt++;
+//            matrix[y][x] = 0;
+//            //如果不是从右边来，则遍历右边
+//            if (dir != 3)
+//                backtraching(matrix, threshole, x + 1, y, 1, cnt);
+//            //如果不是从下边来，则遍历下边
+//            if (dir != 4)
+//                backtraching(matrix, threshole, x, y + 1, 2, cnt);
+//            //如果不从左边来的，则遍历左边
+//            if (dir != 1)
+//                backtraching(matrix, threshole, x - 1, y, 3, cnt);
+//            //如果不从上边来，则遍历上边
+//            if (dir != 2)
+//                backtraching(matrix, threshole, x, y - 1, 4, cnt);
+//        }
+//    }
+//private:
+//    int getNum(int num)
+//    {
+//        int sum = 0;
+//        while (num)
+//        {
+//            sum += num % 10;
+//            num /= 10;
+//        }
+//        return sum;
+//    }
+//
+//    bool isValid(int x, int y, const vector<vector<int>>& matrix)
+//    {
+//        if (x >= matrix[0].size() || x < 0 || y >= matrix.size() || y < 0 || matrix[y][x] == 0)
+//            return false;
+//        return true;
+//    }
+//};
+//
+//
+//int main()
+//{
+//    cout << Solution().movingCount(1, 2, 3) << endl;
+//    return 0;
+//}
+
+
+//JZ14 剪绳子
+//class Solution
+//{
+//public:
+//    int cutRope(int n)
+//    {
+//        int maxProduct = 0;
+//        for (int i = 2; i < n; i++)
+//        {
+//            //平均每一段的长度
+//            int avrPart = n / i;
+//            //剩下的长度
+//            int left = n % i;
+//            int tmp = 1;
+//            for (int j = 0; j < i; j++)
+//            {
+//                if (j < left)
+//                    tmp *= avrPart + 1;
+//                else
+//                    tmp *= avrPart;
+//            }
+//            maxProduct = max(maxProduct, tmp);
+//        }
+//        return maxProduct;
+//    }
+//};
+
+
+
+//JZ16 数值的整数次方
+// 定义一个极小的常量
+//const double EPSILON = 1e-9;
+//
+//bool isZero(double num) {
+//    return std::fabs(num) < EPSILON;
+//}
+//
+//
+//class Solution
+//{
+//public:
+//    double Power(double base, int exponent)
+//    {
+//        if (fabs(base) < 1e-15)
+//            return 0;
+//        if (exponent == 0)
+//            return 1;
+//
+//        int absExponent = abs(exponent);
+//        double result = 1.0;
+//        for (int i = 0; i < absExponent; i++)
+//        {
+//            result *= base;
+//        }
+//
+//        if (exponent < 0)
+//            result = 1.0 / result;
+//        return result;
+//    }
+//};
+
+
+//JZ18 删除链表的节点
+//class Solution
+//{
+//public:
+//    ListNode* deleteNode(ListNode* head, int val)
+//    {
+//        //如果头节点为目标节点，直接返回其下一个节点
+//        if (head->val == val)
+//            return head->next;
+//
+//        ListNode* preNode = head;
+//        ListNode* pNode = head->next;
+//        while (pNode->next)
+//        {
+//            if (pNode->val == val)
+//            {
+//                preNode->next = pNode->next;
+//                break;
+//            }
+//            preNode = pNode;
+//            pNode = pNode->next;
+//        }
+//        return head;
+//    }
 //};
