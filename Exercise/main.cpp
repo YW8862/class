@@ -3095,4 +3095,205 @@ private:
 // 	}
 // };
 
-vector<int>vi;
+
+//leetcode 662
+// class MyCircularQueue
+// {
+// public:
+//     MyCircularQueue(int k) :_capacity(k),_elementCnt(0),_headIndex(0),_tailIndex(0)
+//     {
+//         _elements.resize(k);
+//     }
+//
+//     bool enQueue(int value)
+//     {
+//         if(_elementCnt == _capacity)
+//             return false;
+//         _elements[_headIndex++] = value;
+//     	_headIndex %= _capacity;
+//     	_elementCnt++;
+//         return true;
+//     }
+//
+//     bool deQueue()
+//     {
+//         if(_elementCnt == 0)
+//             return false;
+//         _tailIndex++;
+//     	_tailIndex %= _capacity;
+//         _elementCnt--;
+//         return true;
+//     }
+//
+//     int Front()
+//     {
+//         if(_elementCnt == 0)
+//             return -1;
+//         return _elements[_tailIndex];
+//     }
+//
+//     int Rear()
+//     {
+//         if(_elementCnt == 0)
+//             return -1;
+//         return _elements[(_headIndex +_capacity - 1) % _capacity];
+//     }
+//
+//     bool isEmpty()
+//     {
+//         return _elementCnt == 0;
+//     }
+//
+//     bool isFull()
+//     {
+//         return _elementCnt == _capacity;
+//     }
+// private:
+//     vector<int> _elements;
+//     int _elementCnt;
+//     int _capacity;
+//
+//     int _headIndex;
+//     int _tailIndex;
+// };
+//
+// int main()
+// {
+// 	MyCircularQueue q(3);
+// 	cout<<q.enQueue(1)<<endl;
+// 	cout<<q.enQueue(2)<<endl;
+// 	cout<<q.enQueue(3)<<endl;
+// 	cout<<q.enQueue(4)<<endl;
+// 	cout<<endl;
+// 	cout<<q.Rear()<<endl;
+// 	cout<<q.isFull()<<endl;
+// 	cout<<q.deQueue()<<endl;
+// 	cout<<q.enQueue(4)<<endl;
+// 	cout<<q.Rear()<<endl;
+// 	return 0;
+// }
+
+
+//leetcode 41
+//思路:原地哈希，将数字n放到第n个位置
+// class Solution
+// {
+// public:
+// 	int firstMissingPositive(vector<int>& nums)
+// 	{
+// 		for(int i=0;i<nums.size();i++)
+// 		{
+// 			while(nums[i] != i+1)
+// 			{
+// 				//如果该数字不在1-n的范围内
+// 				if(nums[i] <= 0 || nums[i] > nums.size() || (nums[i] == nums[nums[i] - 1]))
+// 					break;
+// 				//获取i位置数字的正确下标,并且与其交换
+// 				int index = nums[i] - 1;
+// 				nums[i] = nums[index];
+// 				nums[index] = index + 1;
+// 			}
+// 		}
+// 		//查找第一个与下标不对应的数字
+// 		for(int i=0;i<nums.size();i++)
+// 		{
+// 			if(nums[i] != (i + 1))
+// 				return i + 1;
+// 		}
+// 		return nums.size() + 1;
+// 	}
+// };
+
+
+//LCR 169
+// class Solution
+// {
+// public:
+// 	char dismantlingAction(string arr)
+// 	{
+// 		if(arr.size() == 0)
+// 			return ' ';
+// 		vector<int>chs(26,0);
+// 		for(auto ch:arr)
+// 		{
+// 			chs[ch - 'a']++;
+// 		}
+//
+// 		for(auto ch:arr)
+// 		{
+// 			if(chs[ch - 'a'] == 1)
+// 				return ch;
+// 		}
+// 		return ' ';
+// 	}
+// };
+
+
+//leetcode 143
+//思路:先找到中间节点，将右边逆置后合并两边节点
+// class Solution
+// {
+// public:
+// 	void reorderList(ListNode* head)
+// 	{
+// 		if(head == nullptr || head->next == nullptr)
+// 			return;
+// 		//获取中间节点
+// 		ListNode *middlenode = middleNode(head);
+// 		//划分左子链表
+// 		ListNode *left = head;
+// 		//划分右子链表
+// 		ListNode *right = middlenode->next;
+// 		middlenode->next = nullptr;
+// 		//逆置右子链表
+// 		right = reverseList(right);
+// 		//合并链表
+// 		mergeList(left,right);
+// 	}
+//
+// private:
+// 	//获取中间节点
+// 	ListNode* middleNode(ListNode* head)
+// 	{
+// 		if(head == nullptr || head->next == nullptr)
+// 			return head;
+// 		ListNode *fast = head->next;
+// 		ListNode *slow = head;
+// 		while(fast)
+// 		{
+// 			slow = slow->next;
+// 			if(fast->next == nullptr)
+// 				break;
+// 			fast = fast->next->next;
+// 		}
+// 		return slow;
+// 	}
+//
+// 	//逆置右边节点
+// 	ListNode* reverseList(ListNode* head)
+// 	{
+// 		//递归
+// 		if(head == nullptr || head->next == nullptr)
+// 			return head;
+// 		ListNode* newhead = reverseList(head->next);
+// 		head->next->next = head;
+// 		head->next = nullptr;
+// 		return newhead;
+// 	}
+//
+// 	//合并两个链表
+// 	void mergeList(ListNode* l1, ListNode* l2) {
+// 		ListNode* l1_tmp;
+// 		ListNode* l2_tmp;
+// 		while (l1 != nullptr && l2 != nullptr) {
+// 			l1_tmp = l1->next;
+// 			l2_tmp = l2->next;
+//
+// 			l1->next = l2;
+// 			l1 = l1_tmp;
+//
+// 			l2->next = l1;
+// 			l2 = l2_tmp;
+// 		}
+// 	}
+// };
