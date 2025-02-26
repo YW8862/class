@@ -3297,3 +3297,168 @@ private:
 // 		}
 // 	}
 // };
+
+//
+// class AnimalShelf
+// {
+// public:
+//     AnimalShelf():total(0)
+//     {}
+//
+//     void enqueue(vector<int> animal)
+//     {
+//         if(total >= 20000)
+//             return;
+//
+//         if(animal[1] == 0 )
+//         {
+//             cat.push(animal);
+//             total++;
+//         }
+//         else if(animal[1] == 1)
+//         {
+//             dog.push(animal);
+//             total++;
+//         }
+//     }
+//
+//     vector<int> dequeueAny()
+//     {
+//         //如果动物数少于等于0，直接返回
+//         if(total <= 0)
+//             return {};
+//         //如果猫为空，直接返回狗
+//         if(cat.empty() || cat.front()[0] > dog.front()[0])
+//         {
+//             vector<int> value = dog.front();
+//             dog.pop();
+//             total--;
+//             return value;
+//         }
+//         if(dog.empty() || dog.front()[0] < dog.front()[0])
+//         {
+//             vector<int> value = cat.front();
+//             cat.pop();
+//             total--;
+//             return value;
+//         }
+//         return {};
+//     }
+//
+//     vector<int> dequeueDog()
+//     {
+//         if(!dog.empty())
+//         {
+//             vector<int> value = dog.front();
+//             dog.pop();
+//             total--;
+//         }
+//         return {};
+//     }
+//
+//     vector<int> dequeueCat()
+//     {
+//         if(!cat.empty())
+//         {
+//             vector<int> value = cat.front();
+//             cat.pop();
+//             total--;
+//         }
+//         return {};
+//     }
+// private:
+//     queue<vector<int>> cat;
+//     queue<vector<int>> dog;
+//     int total;
+// };
+//
+// int main()
+// {
+// 	AnimalShelf animals;
+// 	animals.enqueue({0,0});
+// 	animals.enqueue({1,0});
+// 	animals.dequeueCat();
+// 	animals.dequeueDog();
+// 	animals.dequeueAny();
+//     return 0;
+// }
+
+
+//leetcode 199
+//思路:层序遍历，获取每层的最后一个元素
+// class Solution
+// {
+// public:
+// 	vector<int> rightSideView(TreeNode* root)
+// 	{
+// 		if(root == nullptr)
+// 			return {};
+// 		queue<TreeNode*> nodes;
+// 		nodes.push(root);
+//
+// 		vector<int>ans;
+// 		//直到队列中元素全部取出
+// 		while(nodes.size()>0)
+// 		{
+// 			size_t size = nodes.size();
+// 			//直接获取每一层的最后一个元素的值
+// 			ans.emplace_back(nodes.back()->val);
+// 			for(int i=0;i<size;i++)
+// 			{
+// 				TreeNode* node = nodes.front();
+// 				nodes.pop();
+// 				if(node -> left)
+// 				{
+// 					nodes.push(node->left);
+// 				}
+// 				if(node->right)
+// 				{
+// 					nodes.push(node->right);
+// 				}
+// 			}
+// 		}
+// 		return ans;
+// 	}
+// };
+
+
+//leetcode 429
+// 层序遍历
+// class Solution
+// {
+// public:
+// 	vector<vector<int>> levelOrder(Node* root)
+// 	{
+// 		if(root == nullptr)
+// 			return {};
+// 		queue<Node*> nodes;
+//
+// 		nodes.push(root);
+// 		vector<vector<int>> ans;
+//
+// 		while (nodes.size() > 0)
+// 		{
+// 			size_t size = nodes.size();
+// 			vector<int> level;
+// 			// 获取每一层的节点值
+// 			for (int i = 0; i < size; i++)
+// 			{
+// 				Node* node = nodes.front();
+// 				nodes.pop();
+// 				if (node != nullptr)
+// 				{
+// 					level.push_back(node->val);
+// 					for (auto& cnode : node->children)
+// 					{
+// 						if (cnode != nullptr)
+// 						{
+// 							nodes.push(cnode);
+// 						}
+// 					}
+// 				}
+// 			}
+// 			ans.emplace_back(level);
+// 		}
+// 		return ans;
+// 	}
+// };
