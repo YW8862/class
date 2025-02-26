@@ -4,9 +4,72 @@
 #include <iostream>
 #include <stack>
 #include <cmath>
+#include <queue>
 #include <limits>
 using namespace std;
 
+class TreeNode
+{
+public:
+    TreeNode() :val(0), left(nullptr), right(nullptr)
+    {}
+    
+    TreeNode(int x) :val(x), left(nullptr), right(nullptr)
+    {}
+
+    TreeNode(int x, TreeNode* _left, TreeNode* _right):val(x),left(_left),right(_right)
+    {}
+
+    TreeNode(const TreeNode& node):val(node.val),left(node.left),right(node.right)
+    {}
+
+public:
+    TreeNode *left;
+    TreeNode *right;
+    int val;
+};
+
+TreeNode* createTree(const vector<int>& levelOrder)
+{
+    if (levelOrder.empty() || levelOrder[0] == INT_MIN) {
+        return nullptr;
+    }
+
+    // 创建根节点
+    TreeNode* root = new TreeNode(levelOrder[0]);
+    queue<TreeNode*> q;
+    q.push(root);
+
+    int i = 1;
+    while (!q.empty() && i < levelOrder.size()) {
+        TreeNode* current = q.front();
+        q.pop();
+
+        // 处理左子节点
+        if (levelOrder[i] != INT_MIN) {
+            current->left = new TreeNode(levelOrder[i]);
+            q.push(current->left);
+        }
+        i++;
+
+        // 处理右子节点
+        if (i < levelOrder.size() && levelOrder[i] != INT_MIN) {
+            current->right = new TreeNode(levelOrder[i]);
+            q.push(current->right);
+        }
+        i++;
+    }
+    return root;
+}
+
+void preOrder(TreeNode* root)
+{
+    if (root == nullptr)
+        return;
+    cout << root->val << " ";
+    preOrder(root->left);
+    preOrder(root->right);
+}
 
 //JZ3
 //class Solution
@@ -335,3 +398,49 @@ using namespace std;
 //        return head;
 //    }
 //};
+
+
+//思路:递归，只要两个节点都在某棵树的左子树或者是右子树中找到，说明该右子树的根节点为二者的最近公共祖先
+class Solution
+{
+public:
+    int lowestCommonAncestor(TreeNode* root, int o1, int o2)
+    {
+        TreeNode* node = root;
+        while (true)
+        {
+            //如果两个数字都在左子树，向左子树移动
+            if (find(node->left, o1) && find(node->left, o2))
+            {
+                node = node->left;
+            }
+            else if (find(node->right, o1) && find(node->right, o2))
+            {
+                node = node->right;
+            }
+            else
+            {
+                break;
+            }
+        }
+        return node->val;
+    }
+
+    bool find(TreeNode* root, int num)
+    {
+        if (root == nullptr)
+            return false;
+        return (root->val == num) || find(root->left, num) || find(root->right, num);
+    }
+};
+
+int main()
+{
+    TreeNode* root = createTree({ 5,14,1,3,INT_MIN,
+        INT_MIN,INT_MIN,12,INT_MIN,4,13,0,6,INT_MIN,
+        INT_MIN,15,INT_MIN,INT_MIN,INT_MIN,9,7,INT_MIN,
+        2,INT_MIN,INT_MIN,8,11,10 });
+    //preOrder(root);
+    cout << Solution().lowestCommonAncestor(root, 9, 7);
+    return 0;
+}
