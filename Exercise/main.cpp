@@ -3463,4 +3463,88 @@ private:
 // 	}
 // };
 
+//leetcode 402
+// class Solution
+// {
+// public:
+//     string removeKdigits(string num, int k)
+//     {
+//     	size_t size = num.size();
+//         //如果移除的位数大于等于原来的位数
+//         if(k >= size)
+//             return "0";
+//         stack<char>nums;
+//         nums.push(num[0]);
+//
+//         //1.去除前一位比后一位大的数字
+//         for(int i=1;i<size;i++)
+//         {
+//             while(!nums.empty() && num[i] < nums.top() && k>0)
+//             {
+//                 nums.pop();
+//                 k--;
+//             }
+//             nums.push(num[i]);
+//         }
+//
+//         //2.如果还没有处理完，去除最后的几位
+//         for(int i=0;i<k;i++)
+//         {
+//             nums.pop();
+//         }
+//
+//         //3.去除首位的0
+//         string ans;
+//         while(!nums.empty())
+//         {
+//             ans += nums.top();
+//             nums.pop();
+//         }
+//         while(ans.size() != 1 && ans.back() == '0')
+//             ans.pop_back();
+//         reverse(ans.begin(),ans.end());
+//         return ans;
+//     }
+// };
+//
+// int main()
+// {
+// 	cout<<Solution().removeKdigits("10",1)<<endl;
+//     return 0;
+// }
 
+//leetcode 506
+//思路:记录原来的位置后排序，根据原来的位置放入排名
+// class Solution
+// {
+// public:
+// 	vector<string> findRelativeRanks(vector<int>& score)
+// 	{
+// 		//pair的含义为<分数,原来位置>
+// 		vector<pair<int,int>> arr;
+// 		for(int i=0;i<score.size();i++)
+// 		{
+// 			arr.emplace_back(score[i],i);
+// 		}
+// 		//按照分数排序
+// 		sort(arr.begin(),arr.end(),[](pair<int,int>p1,pair<int,int>p2) -> int{return p1.first>p2.first;});
+// 		//前三名按照金银铜奖填入描述
+// 		vector<string> description = {"Gold Medal","Silver Medal","Bronze Medal"};
+// 		vector<string> ans(score.size());
+// 		//写入描述
+// 		for(int i=0;i<ans.size();i++)
+// 		{
+// 			//前三名按照金银铜奖填入描述
+// 			if(i <= 2)
+// 			{
+// 				ans[arr[i].second] = description[i];
+// 			}
+// 			//后面的名词使用数字填入
+// 			else
+// 			{
+// 				ans[arr[i].second] = std::to_string(i + 1);
+// 			}
+// 		}
+// 		return ans;
+// 	}
+// };
