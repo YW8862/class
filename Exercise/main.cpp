@@ -3548,3 +3548,153 @@ private:
 // 		return ans;
 // 	}
 // };
+
+
+//leetcode 1700
+// class Solution
+// {
+// public:
+// 	int countStudents(vector<int>& students, vector<int>& sandwiches)
+// 	{
+// 		//记录剩下未吃午餐的学生数量
+// 		size_t leftStudents = students.size();
+// 		size_t pstudent = 0,psanwich = 0;
+// 		//记录开始不吃的位置
+// 		size_t startpos = -1;
+// 		while(true)
+// 		{
+// 			if(students[pstudent] == sandwiches[psanwich])
+// 			{
+// 				//三明治吃完的，该同学标记为-1,三明治标记为-1
+// 				students[pstudent] = sandwiches[psanwich] = -1;
+// 				//往后找第一个没有吃的同学
+// 				pstudent = (pstudent + 1)%students.size();
+// 				//往后找第一个没有吃的三明治
+// 				psanwich += 1;
+// 				//消除积欠
+// 				startpos = -1;
+// 				leftStudents--;
+// 			}
+// 			else
+// 			{
+// 				//只有消除上次的积欠才更新
+// 				if(startpos == -1)
+// 				{
+// 					startpos = pstudent;
+// 				}
+// 				//表示已经转完一圈
+// 				else if(startpos == pstudent)
+// 				{
+// 					break;
+// 				}
+// 				pstudent = (pstudent + 1)%students.size();
+// 			}
+// 			if(leftStudents == 0)
+// 				break;
+// 		}
+// 		return leftStudents;
+// 	}
+// };
+
+//leetcode 146
+// struct Node
+// {
+// 	int _key, _val;
+// 	Node *_prev, *_next;;
+//
+// 	Node():_key(0),_val(0),_prev(nullptr),_next(nullptr)
+// 	{}
+//
+// 	Node(int key,int val):_key(key),_val(val),_prev(nullptr),_next(nullptr)
+// 	{}
+// };
+//
+// class LRUCache
+// {
+// public:
+// 	explicit LRUCache(int capacity) :_capacity(capacity),_size(0)
+// 	{
+// 		_head = new Node();
+// 		_head->_prev = _head;
+// 		_head->_next = _head;
+// 	}
+//
+// 	int get(int key)
+// 	{
+// 		//如果找到了该键值对，返回其值，并将其转移到首位
+// 		if(_hash.count(key))
+// 		{
+// 			removeNode(_hash[key]);
+// 			addNode(_hash[key]);
+// 			return _hash[key]->_val;
+// 		}
+// 		//如果没有找到，返回-1
+// 		return -1;
+// 	}
+//
+// 	void put(int key, int value)
+// 	{
+// 		//如果该键值对存在，直接将其移动到第一个位置，并且更新其value即可
+// 		if(_hash.count(key))
+// 		{
+// 			removeNode(_hash[key]);
+// 			addNode(_hash[key]);
+// 			_hash[key]->_val = value;
+// 			return;
+// 		}
+// 		//如果不存在且队列满了,将最后一个元素删除，并且将新的插入队列首部
+// 		if(_capacity == _size)
+// 		{
+// 			_hash.erase(_head->_prev->_key);
+// 			removeNode(_head->_prev);
+// 			_size--;
+// 		}
+// 		Node *newNode = new Node(key,value);
+// 		addNode(newNode);
+// 		_size++;
+//
+// 		_hash[key] = newNode;
+// 	}
+//
+// private:
+// 	void addNode(Node *node)
+// 	{
+// 		node->_next = _head->_next;
+// 		node->_prev = _head->_prev;
+// 		_head->_next->_prev = node;
+// 		_head->_next = node;
+// 	}
+//
+// 	void removeNode(Node *node)
+// 	{
+// 		node->_next->_prev = node->_prev;
+// 		node->_prev->_next = node->_next;
+// 		//delete node;
+// 	}
+//
+// private:
+// 	unordered_map<int,Node*> _hash;
+// 	Node *_head;
+// 	int _capacity,_size;
+// };
+//
+// /**
+//  * Your LRUCache object will be instantiated and called as such:
+//  * LRUCache* obj = new LRUCache(capacity);
+//  * int param_1 = obj->get(key);
+//  * obj->put(key,value);
+//  */
+//
+// int main()
+// {
+// 	LRUCache cache(2);
+// 	cache.put(2,1);
+// 	cache.put(3,2);
+// 	cout<<"cache.get(3): "<<cache.get(3)<<endl;
+// 	cout<<"cache.get(2): "<<cache.get(2)<<endl;
+// 	cache.put(4,3);
+// 	cout<<"cache.get(2): "<<cache.get(2)<<endl;
+// 	cout<<"cache.get(3): "<<cache.get(3)<<endl;
+// 	cout<<"cache.get(4): "<<cache.get(4)<<endl;
+// 	return 0;
+//}
