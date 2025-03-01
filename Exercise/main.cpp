@@ -3698,3 +3698,94 @@ private:
 // 	cout<<"cache.get(4): "<<cache.get(4)<<endl;
 // 	return 0;
 //}
+
+
+//leetcode 2073
+//法一:模拟队列
+// class Solution
+// {
+// public:
+// 	int timeRequiredToBuy(vector<int>& tickets, int k)
+// 	{
+// 		int ans = 0;
+// 		int pos = 0;
+// 		while(true)
+// 		{
+// 			//如果当前人还需要买票
+// 			if(tickets[pos] > 0)
+// 			{
+// 				ans++;
+// 				tickets[pos]--;
+// 				//遍历到第k个人，并且此人已经买完票
+// 				if(pos == k && tickets[pos] == 0)
+// 				{
+// 					break;
+// 				}
+// 			}
+// 			//否则向后遍历
+// 			pos = (pos + 1)%tickets.size();
+// 		}
+// 		return ans;
+// 	}
+// };
+
+
+//法二，在k之前，需要计算min(tickets[pos],tickets[k]),在k之后，可以比k少一张票,即为min(tickets[pos],tickets[k]-1)
+// class Solution
+// {
+// public:
+// 	int timeRequiredToBuy(vector<int>& tickets, int k)
+// 	{
+// 		int ans = 0;
+// 		for(int i=0;i<tickets.size();i++)
+// 		{
+// 			//在k前面，需要买min(tickets[pos],tickets[k])张票
+// 			if(i <= k)
+// 			{
+// 				ans += min(tickets[i],tickets[k]);
+// 			}
+// 			else
+// 			{
+// 				ans += min(tickets[i],tickets[k]-1);
+// 			}
+// 		}
+// 		return ans;
+// 	}
+// };
+
+
+//leetcode 面试0102
+//使用一个哈希记录s1的字符，再遍历s2的字符，如果有不同的，直接返回false即可，否则返回true
+// class Solution
+// {
+// public:
+// 	bool CheckPermutation(string s1, string s2)
+// 	{
+// 		//保证两个字符串长度相同
+// 		if(s1.size() != s2.size())
+// 			return false;
+//
+// 		int str1[26];
+// 		for(auto &ch:s1)
+// 		{
+// 			str1[ch-'a'] ++;
+// 		}
+//
+// 		for(auto &ch:s2)
+// 		{
+// 			str1[ch-'a'] --;
+// 			//如果出现不同的字符，直接返回false
+// 			if(str1[ch-'a'] < 0)
+// 			{
+// 				return false;
+// 			}
+// 		}
+// 		return true;
+// 	}
+// };
+//
+// int main()
+// {
+//
+// 	return 0;
+// }
