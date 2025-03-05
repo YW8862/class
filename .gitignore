@@ -15,7 +15,6 @@ bin-release/
 
 #过滤掉不想要文件和文件夹
 *.exe
-*.sln
 *.vcxproj
 *.filters
 *.user
@@ -23,7 +22,6 @@ bin-release/
 *.db
 *.ipch
 Debug/
-.vs
 Release/
 *.gitignore
 *.iml
