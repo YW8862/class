@@ -1,8 +1,8 @@
-#include <iostream>
-#include "test.h"
+//#include <iostream>
+//#include "test.h"
 
-template A<int>;
-template void showNumber<int>(int);
+//template A<int>;
+//template void showNumber<int>(int);
 
 //#include <stdio.h>
 //int a = 9527;
