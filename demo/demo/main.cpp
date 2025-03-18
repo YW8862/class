@@ -1,10 +1,12 @@
 #include <iostream>
-#include "test.h"
+//#include "test.h"
+#include "sort.h"
 #pragma pack(1)
 using std::cin;
 using std::cout;
 using std::endl;
 
+//test extern
 //extern int a;
 //extern void print();
 //int main()
@@ -107,53 +109,67 @@ using std::endl;
 //	return 0;
 //}
 
+//test extend
+//class A
+//{
+//public:
+//	A()
+//	{
+//		a_data = 1;
+//	}
+//public:
+//	int a_data;
+//};
+//
+//class B :virtual public A{
+//public:
+//	B() {}
+//public:
+//	int b_data;
+//};
+//
+//class C :virtual public A {
+//public:
+//	C() {}
+//public:
+//	int c_data;
+//};
+//
+//class D :public B, public C {
+//public:
+//	D() {}
+//public:
+//	int d_data;
+//};
+//
+//int main()
+//{
+//	A a;
+//	B b;
+//	C c;
+//	D d;
+//	printf("&d.B::a_data: %p\n", &d.B::a_data);
+//	printf("&d.C::a_data: %p\n", &d.C::a_data);
+//	d.B::a_data = 2025;
+//	cout << d.C::a_data << endl;
+//	cout << "sizeof(A)" << sizeof(A) << endl;
+//	cout << "sizeof(B)" << sizeof(B) << endl;
+//	cout << "sizeof(C)" << sizeof(C) << endl;
+//	cout << "sizeof(D)" << sizeof(D) << endl;
+//	cout << "a_data " << d.a_data << endl;
+//	return 0;
+//}
 
-class A
-{
-public:
-	A()
-	{
-		a_data = 1;
-	}
-public:
-	int a_data;
-};
 
-class B :virtual public A{
-public:
-	B() {}
-public:
-	int b_data;
-};
-
-class C :virtual public A {
-public:
-	C() {}
-public:
-	int c_data;
-};
-
-class D :public B, public C {
-public:
-	D() {}
-public:
-	int d_data;
-};
-
+//test sort
 int main()
 {
-	A a;
-	B b;
-	C c;
-	D d;
-	printf("&d.B::a_data: %p\n", &d.B::a_data);
-	printf("&d.C::a_data: %p\n", &d.C::a_data);
-	d.B::a_data = 2025;
-	cout << d.C::a_data << endl;
-	cout << "sizeof(A)" << sizeof(A) << endl;
-	cout << "sizeof(B)" << sizeof(B) << endl;
-	cout << "sizeof(C)" << sizeof(C) << endl;
-	cout << "sizeof(D)" << sizeof(D) << endl;
-	cout << "a_data " << d.a_data << endl;
+	std::vector<int> nums = {};
+	selectSort(nums);
+	for (auto& num : nums)
+	{
+		cout << num << " ";
+	}
+	cout << endl;
 	return 0;
 }
