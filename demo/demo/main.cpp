@@ -1,4 +1,5 @@
 #include <iostream>
+#include <array>
 //#include "test.h"
 //#include "sort.h"
 #pragma pack(1)
@@ -231,88 +232,88 @@ using std::endl;
 //	return 0;
 //}
 
-class charBuffer
-{
-public:
-	charBuffer(int size = 10) :_size(size), _buffer(new char[size])
-	{
-		cout << "default constructor" << endl;
-	}
-
-	charBuffer(const charBuffer& other):_size(other._size),_buffer(new char[other._size])
-	{
-		memcpy(_buffer, other._buffer, other._size);
-		cout << "copy constructor" << endl;
-	}
-
-	charBuffer(charBuffer&& other) :_size(other._size), _buffer(other._buffer)
-	{
-		other._size = 0;
-		other._buffer = nullptr;
-		cout << "move constructor" << endl;
-	}
-	
-	charBuffer& operator=(const charBuffer& other)
-	{
-		//如果为自身，返回自身即可
-		if (&other == this)
-			return *this;
-		//1.先尝试分配新的空间
-		char* buffer = new char[other._size];
-
-		//2.释放原来空间
-		delete[] _buffer;
-		_size = 0;
-
-		//3.拷贝内容
-		memcpy(buffer, other._buffer, other._size);
-		_buffer = buffer;
-		_size = other._size;
-
-		cout << "copy assignment" << endl;
-
-		return *this;
-	}
-
-	charBuffer& operator=(charBuffer&& other)
-	{
-		//如果为自身，返回自身即可
-		if (&other == this)
-			return *this;
-
-		//1.释放原来空间
-		delete[] _buffer;
-		_size = 0;
-
-		//2.获取资源
-		_buffer = other._buffer;
-		_size = other._size;
-
-		//3.将other置为空
-		other._buffer = nullptr;
-		other._size = 0;
-
-		cout << "move assignment" << endl;
-
-		return *this;
-	}
-
-	~charBuffer()
-	{
-		delete[]_buffer;
-		_size = 0;
-		cout << "destructor" << endl;
-	}
-
-	char* getBuffer()
-	{
-		return _buffer;
-	}
-
-private:
-	int _size;
-	char* _buffer;
-};
+//class charBuffer
+//{
+//public:
+//	charBuffer(int size = 10) :_size(size), _buffer(new char[size])
+//	{
+//		cout << "default constructor" << endl;
+//	}
+//
+//	charBuffer(const charBuffer& other):_size(other._size),_buffer(new char[other._size])
+//	{
+//		memcpy(_buffer, other._buffer, other._size);
+//		cout << "copy constructor" << endl;
+//	}
+//
+//	charBuffer(charBuffer&& other) :_size(other._size), _buffer(other._buffer)
+//	{
+//		other._size = 0;
+//		other._buffer = nullptr;
+//		cout << "move constructor" << endl;
+//	}
+//	
+//	charBuffer& operator=(const charBuffer& other)
+//	{
+//		//如果为自身，返回自身即可
+//		if (&other == this)
+//			return *this;
+//		//1.先尝试分配新的空间
+//		char* buffer = new char[other._size];
+//
+//		//2.释放原来空间
+//		delete[] _buffer;
+//		_size = 0;
+//
+//		//3.拷贝内容
+//		memcpy(buffer, other._buffer, other._size);
+//		_buffer = buffer;
+//		_size = other._size;
+//
+//		cout << "copy assignment" << endl;
+//
+//		return *this;
+//	}
+//
+//	charBuffer& operator=(charBuffer&& other)
+//	{
+//		//如果为自身，返回自身即可
+//		if (&other == this)
+//			return *this;
+//
+//		//1.释放原来空间
+//		delete[] _buffer;
+//		_size = 0;
+//
+//		//2.获取资源
+//		_buffer = other._buffer;
+//		_size = other._size;
+//
+//		//3.将other置为空
+//		other._buffer = nullptr;
+//		other._size = 0;
+//
+//		cout << "move assignment" << endl;
+//
+//		return *this;
+//	}
+//
+//	~charBuffer()
+//	{
+//		delete[]_buffer;
+//		_size = 0;
+//		cout << "destructor" << endl;
+//	}
+//
+//	char* getBuffer()
+//	{
+//		return _buffer;
+//	}
+//
+//private:
+//	int _size;
+//	char* _buffer;
+//};
 
 //charBuffer getBuffer()
 //{
@@ -320,29 +321,55 @@ private:
 //	return buffer;
 //}
 
-void f(charBuffer& buffer)
-{
-	cout << "左值引用" << endl;
-}
+//void f(charBuffer& buffer)
+//{
+//	cout << "左值引用" << endl;
+//}
+//
+//void f(charBuffer&& buffer)
+//{
+//	cout << "右值引用" << endl;
+//}
+//
+//template<typename T>
+//void g(T&& buffer)
+//{
+//	f(static_cast<T&&>(buffer));
+//}
+//
+//int main()
+//{
+//	charBuffer buffer1(100);
+//	charBuffer buffer2(100);
+//
+//	g(buffer1);
+//	g(std::move(buffer2));
+//	
+//	return 0;
+//}
 
-void f(charBuffer&& buffer)
-{
-	cout << "右值引用" << endl;
-}
+//int main()
+//{
+//	int a = 2*2+7;
+//	//constexpr int b{a+2};
+//	//cout << b << endl;
+//	return 0;
+//}
 
-template<typename T>
-void g(T&& buffer)
+
+constexpr int getSize(int a, int b)
 {
-	f(static_cast<T&&>(buffer));
+	return a + b;
 }
 
 int main()
 {
-	charBuffer buffer1(100);
-	charBuffer buffer2(100);
+	const int a = 10;
+	constexpr int b{ a + 1 };
 
-	g(buffer1);
-	g(std::move(buffer2));
-	
+	constexpr float c = 3.14;
+	const float d{ c + 1.0f };
+
+	/*std::array<int, getSize(2, 3)> arr;*/
 	return 0;
 }
