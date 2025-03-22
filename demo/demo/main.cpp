@@ -1,5 +1,6 @@
 #include <iostream>
 #include <array>
+#include <functional>
 //#include "test.h"
 //#include "sort.h"
 #pragma pack(1)
@@ -357,19 +358,49 @@ using std::endl;
 //}
 
 
-constexpr int getSize(int a, int b)
-{
-	return a + b;
-}
+//constexpr int getSize(int a, int b)
+//{
+//	return a + b;
+//}
+//
+//int main()
+//{
+//	const int a = 10;
+//	constexpr int b{ a + 1 };
+//
+//	constexpr float c = 3.14;
+//	const float d{ c + 1.0f };
+//
+//	/*std::array<int, getSize(2, 3)> arr;*/
+//	return 0;
+//}
 
-int main()
-{
-	const int a = 10;
-	constexpr int b{ a + 1 };
 
-	constexpr float c = 3.14;
-	const float d{ c + 1.0f };
+//using func_t = void(*)(int, int);
+//using func_t = std::function<void(int, int)>;
 
-	/*std::array<int, getSize(2, 3)> arr;*/
-	return 0;
-}
+//void add(int a, int b)
+//{
+//	cout << a + b << endl;
+//}
+//
+//void sub(int a, int b)
+//{
+//	cout << a - b << endl;
+//}
+//
+//void test(void(*arr[2][2])(int, int))
+//{
+//	arr[0][0](1, 2);
+//	arr[1][1](2, 1);
+//}
+//
+//int main()
+//{
+//	//func_t arr[2][2] = { {add,sub},{add,sub}};
+//	void(*arr[2][2])(int, int) = { {add,sub},{add,sub} };
+//	test(arr);
+//	return 0;
+//}
+
+
