@@ -4204,3 +4204,328 @@ public:
 //         return profit;
 //     }
 // };
+
+// //leetcode746
+// class Solution {
+// public:
+//     int minCostClimbingStairs(vector<int>& cost) {
+//         if(cost.size() < 1)
+//         {
+//             return 0;
+//         }
+//         //1.创建dp数组
+//         vector<int>mincost(cost.size()+1);
+//         //2.初始化，下标为0和1最小花费都是0
+//         mincost[0] = 0;
+//         mincost[1] = 0;
+//         //3.递推公式 当前最小 = 前一个加上花费和前两个加上花费
+//         for(int i = 2;i<=cost.size();i++)
+//         {
+//             mincost[i] = min(mincost[i-1]+cost[i-1],mincost[i-2]+cost[i-2]);
+//         }
+//         //4.
+//         return mincost[cost.size()];
+//     }
+// };
+
+//leetcode 740
+// class Solution {
+// public:
+// 	int deleteAndEarn(vector<int>& nums)
+// 	{
+// 		if(nums.size() == 0)
+// 		{
+// 			return 0;
+// 		}
+// 		if(nums.size() == 1)
+// 		{
+// 			return nums[0];
+// 		}
+// 		//0.创建哈希表标记每个数字出现的次数
+// 		map<int,int>cnt;
+// 		for(int i=0;i<nums.size();i++)
+// 		{
+// 			cnt[nums[i]]++;
+// 		}
+// 		vector<int>finalNums;
+// 		for (auto &pair:cnt)
+// 		{
+// 			finalNums.push_back(pair.first);
+// 		}
+// 		//1.确定dp数组的含义
+// 		//数组表示删除当前数字获得的最大点数
+// 		//下标表示数字
+// 		vector<int>dp (cnt.size());
+// 		//2.确定递推公式 dp[i] = max(dp[i-1],dp[i-2]+nums[i];
+//
+// 		//3.初始化,初始化前两位，其余初始化为0
+// 		dp[0] = finalNums[0]*cnt[finalNums[0]];
+// 		dp[1] = finalNums[1]*cnt[finalNums[1]] + (finalNums[1]-1 != finalNums[0]?dp[0]:0);
+//
+// 		//4.遍历
+//
+// 		for (int i=2;i<finalNums.size();i++)
+// 		{
+// 			if (finalNums[i] == finalNums[i-1]+1)
+// 			{
+// 				dp[i] = max(dp[i-1],dp[i-2] + finalNums[i]*cnt[finalNums[i]]);
+// 			}
+// 			else
+// 			{
+// 				dp[i] = finalNums[i]*cnt[finalNums[i]] + max(dp[i-1],dp[i-2]);
+// 			}
+// 		}
+//
+// 		for(int i=0;i<dp.size();i++)
+// 		{
+// 			cout<<dp[i]<<" ";
+// 		}
+// 		cout<<endl;
+// 		return dp[dp.size()-1];
+// 	}
+// };
+//
+// int main()
+// {
+// 	vector<int> nums = {1,1,1,2,4,5,5,5,6};
+// 	cout<<Solution().deleteAndEarn(nums)<<endl;
+// 	return 0;
+// }
+
+//leetcode198
+// class Solution
+// {
+// public:
+// 	int rob(vector<int>& nums)
+// 	{
+// 		int size = nums.size();
+// 		if(size == 0)
+// 		{
+// 			return 0;
+// 		}
+// 		if(size <= 2)
+// 		{
+// 			return *max_element(nums.begin(),nums.end());
+// 		}
+//
+// 		//1.设计数组及下标含义
+// 		//数组dp和下标i表示打劫到第i家获得的最大利润dp[i]
+// 		vector<int> dp(size);
+// 		//2.确定递推式
+// 		//dp[i] = max(dp[i - 1],dp[i-2]+nums[i]);
+// 		//3.初始化
+// 		//初始化前两家即可
+// 		dp[0] = nums[0];
+// 		dp[1] = max(dp[0],nums[1]);
+// 		//4.遍历
+// 		for(int i=2;i<nums.size();i++)
+// 		{
+// 			dp[i] = max(dp[i-1],dp[i-2]+nums[i]);
+// 		}
+// 		return dp[size-1];
+// 	}
+// };
+
+//leetcode 62
+// class Solution
+// {
+// public:
+// 	int uniquePaths(int m, int n)
+// 	{
+// 		//1.确定数组及下标含义
+// 		//维护一个二维数组dp,dp[i][j]表示坐标i,j的路径数
+// 		vector<vector<int>> dp(m,vector<int>(n,0));
+// 		//2.求出递推式
+// 		//递推式为dp[i][j] = dp[i-1][j] + dp[i][j-1]
+//
+// 		//3.初始化
+// 		//首行和首列初始化为1，其余为0即可
+// 		for(int i = 0;i < m;i++)
+// 		{
+// 			for(int j = 0;j < n;j++)
+// 			{
+// 				if(i == 0||j == 0)
+// 				{
+// 					dp[i][j] = 1;
+// 				}
+// 			}
+// 		}
+// 		//4.遍历
+// 		for(int i=1;i<m;i++)
+// 		{
+// 			for(int j=1;j<n;j++)
+// 			{
+// 				dp[i][j] = dp[i-1][j] + dp[i][j-1];
+// 			}
+// 		}
+// 		//4.打印调试
+// 		for(int i = 0;i<m;i++)
+// 		{
+// 			for(int j = 0;j<n;j++)
+// 			{
+// 				cout<<dp[i][j]<<" ";
+// 			}
+// 			cout<<endl;
+// 		}
+// 		return dp[m-1][n-1];
+// 	}
+// };
+//
+// int main()
+// {
+// 	cout<<Solution().uniquePaths(3,7)<<endl;
+// 	return 0;
+// }
+
+//leetcode 64
+// class Solution
+// {
+// public:
+// 	int minPathSum(vector<vector<int>>& grid)
+// 	{
+// 		int m = grid.size();
+// 		int n = grid[0].size();
+// 		//1.确定数组及下标含义
+// 		//数组dp[i][j]表示i,j坐标的最小数字和
+// 		vector<vector<int>> dp(m,vector<int>(n,0));
+// 		//2.确定递推式
+// 		//dp[i][j] = (dp[i-1][j],dp[i][j-1]) + dp[i][j]
+// 		//3.初始化
+// 		//初始化第一行和第一列数据即可
+// 		dp[0][0] = grid[0][0];
+// 		for(int i = 0;i<m;i++)
+// 		{
+// 			for(int j = 0;j<n;j++)
+// 			{
+// 				if(i == 0 && j != 0)
+// 				{
+// 					dp[i][j] = dp[i][j-1] + grid[i][j];
+// 				}
+// 				if(j == 0 && i != 0)
+// 				{
+// 					dp[i][j] = dp[i-1][j] + grid[i][j];
+// 				}
+// 			}
+// 		}
+// 		//4.遍历
+// 		for(int i=1;i<m;i++)
+// 		{
+// 			for(int j = 1;j<n;j++)
+// 			{
+// 				dp[i][j] = min(dp[i-1][j],dp[i][j-1])+grid[i][j];
+// 			}
+// 		}
+// 		return dp[m-1][n-1];
+// 	}
+// };
+
+//leetcode 63
+// class Solution
+// {
+// public:
+// 	int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid)
+// 	{
+// 		int m = obstacleGrid.size();
+// 		int n = obstacleGrid[0].size();
+// 		//1.确定数组及下标含义
+// 		//dp[i][j]表示i,j位置的路径数
+// 		vector<vector<int>> dp(m,vector<int>(n,0));
+// 		//2.确定递推式
+// 		//递推式为dp[i][j] = dp[i-1][j] + dp[i][j-1]
+// 		//3.初始化
+// 		//初始化首行和首列除去障碍的即可
+// 		dp[0][0] = obstacleGrid[0][0] == 1?0:1;
+// 		for(int i=0;i<m;i++)
+// 		{
+// 			for(int j = 0;j<n;j++)
+// 			{
+// 				if(i == 0&&j == 0)
+// 				{
+// 					continue;
+// 				}
+// 				if(i == 0)
+// 				{
+//
+// 					dp[i][j] = obstacleGrid[i][j] == 1?0:dp[i][j-1];
+// 				}
+// 				if(j == 0)
+// 				{
+// 					dp[i][j] = obstacleGrid[i][j] == 1?0:dp[i-1][j];
+// 				}
+// 			}
+// 		}
+// 		//4.遍历
+// 		for(int i = 1;i<m;i++)
+// 		{
+// 			for(int j = 1;j<n;j++)
+// 			{
+// 				if(obstacleGrid[i][j] == 1)
+// 				{
+// 					dp[i][j] = 0;
+// 				}
+// 				else
+// 				{
+// 					dp[i][j] = dp[i-1][j] + dp[i][j-1];
+// 				}
+// 			}
+// 		}
+// 		//5.打印调试
+// 		for(int i = 0;i<m;i++)
+// 		{
+// 			for(int j = 0;j<n;j++)
+// 			{
+// 				cout<<dp[i][j]<<" ";
+// 			}
+// 			cout<<endl;
+// 		}
+// 		return dp[m-1][n-1];
+// 	}
+// };
+
+//leetcode 120
+class Solution
+{
+public:
+	int minimumTotal(vector<vector<int>>& triangle)
+	{
+		int m = triangle.size();
+		int n = triangle[m-1].size();
+		//1.确定数组及下标含义
+		//数组dp[i][j]表示i,j的最小路径和
+		vector<vector<int>>dp(m,vector<int>(n,INT_MAX));
+		//2.确定推导公式
+		//dp[i][j] = min(dp[i-1][j],dp[i-1][j-1])+triangle[i][j];
+
+		//3.初始化
+		//初始化第一行值即第一列即可
+		dp[0][0] = triangle[0][0];
+		for(int i = 1;i<m;i++)
+		{
+			dp[i][0] = dp[i-1][0]+triangle[i][0];
+		}
+		//4.遍历
+		for(int i=1;i<m;i++)
+		{
+			for(int j = 1;j<=i;j++)
+			{
+				if(j<i)
+				{
+					dp[i][j] = min(dp[i-1][j],dp[i-1][j-1])+triangle[i][j];
+				}
+				else
+				{
+					dp[i][j] = dp[i-1][j-1]+triangle[i][j];
+				}
+			}
+		}
+		return *min_element(dp[m-1].begin(),dp[m-1].end());
+	}
+};
+
+int main()
+{
+	vector<vector<int>> triangle = {{2},{3,4},{6,5,7},{4,1,8,3}};
+	cout<<Solution().minimumTotal(triangle)<<endl;
+
+	return 0;
+}

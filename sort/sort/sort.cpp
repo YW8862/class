@@ -228,94 +228,94 @@
 //	}
 //}
 
-void bubbleSort(std::vector<int>& nums)
-{
-	for (int i = 0; i < nums.size(); i++)
-	{
-		bool sorted = true;
-		for (int j = 1; j < nums.size() - i; j++)
-		{
-			if (nums[j] < nums[j - 1])
-			{
-				std::swap(nums[j], nums[j - 1]);
-				sorted = false;
-			}
-		}
-		if (sorted)
-		{
-			return;
-		}
-	}
-}
-
-void selectSort(std::vector<int>& nums)
-{
-	int size = nums.size();
-	for (int i = 0; i < size; i++)
-	{
-		int maxnum = nums[0];
-		int maxpos = 0;
-		for (int j = 0; j < size - i; j++)
-		{
-			if (nums[j] > maxnum)
-			{
-				maxnum = nums[j];
-				maxpos = j;
-			}
-		}
-		std::swap(nums[size - i], nums[maxpos]);
-	}
-}
-
-void heapfy(std::vector<int> &nums, int i, int n)
-{
-	int largestpos = i;
-	int left = 2 * i + 1;
-	int right = 2 * i + 2;
-	if (left<n && nums[left]>nums[largestpos])
-	{
-		largestpos = left;
-	}
-	if (right<n && nums[right]>nums[largestpos])
-	{
-		largestpos = right;
-	}
-	//如果没有交换，调整完成
-	if (largestpos == i)
-	{
-		return;
-	}
-	std::swap(nums[i],nums[largestpos]);
-	heapfy(nums, largestpos,n);
-}
-
-void heapSort(std::vector<int>& nums)
-{
-	int n = nums.size();
-	//调整为大顶堆
-	for (int i = n / 2 - 1; i >= 0; i--)
-	{
-		heapfy(nums, i, n);
-	}
-
-	for (int i = n - 1; i >= 0; i--)
-	{
-		std::swap(nums[0], nums[i]);
-		heapfy(nums, 0, i);
-	}
-}
-
-void insertSort(std::vector<int>& nums)
-{
-	int size = nums.size();
-	for (int i = 1; i < size; i++)
-	{
-		int key = nums[i];
-		int j = i;
-		for (; j >= 0&&nums[j] > key; j--)
-		{
-			nums[j + 1] = nums[j];
-		}
-		nums[j] = key;
-	}
-}
+//void bubbleSort(std::vector<int>& nums)
+//{
+//	for (int i = 0; i < nums.size(); i++)
+//	{
+//		bool sorted = true;
+//		for (int j = 1; j < nums.size() - i; j++)
+//		{
+//			if (nums[j] < nums[j - 1])
+//			{
+//				std::swap(nums[j], nums[j - 1]);
+//				sorted = false;
+//			}
+//		}
+//		if (sorted)
+//		{
+//			return;
+//		}
+//	}
+//}
+//
+//void selectSort(std::vector<int>& nums)
+//{
+//	int size = nums.size();
+//	for (int i = 0; i < size; i++)
+//	{
+//		int maxnum = nums[0];
+//		int maxpos = 0;
+//		for (int j = 0; j < size - i; j++)
+//		{
+//			if (nums[j] > maxnum)
+//			{
+//				maxnum = nums[j];
+//				maxpos = j;
+//			}
+//		}
+//		std::swap(nums[size - i], nums[maxpos]);
+//	}
+//}
+//
+//void heapfy(std::vector<int> &nums, int i, int n)
+//{
+//	int largestpos = i;
+//	int left = 2 * i + 1;
+//	int right = 2 * i + 2;
+//	if (left<n && nums[left]>nums[largestpos])
+//	{
+//		largestpos = left;
+//	}
+//	if (right<n && nums[right]>nums[largestpos])
+//	{
+//		largestpos = right;
+//	}
+//	//如果没有交换，调整完成
+//	if (largestpos == i)
+//	{
+//		return;
+//	}
+//	std::swap(nums[i],nums[largestpos]);
+//	heapfy(nums, largestpos,n);
+//}
+//
+//void heapSort(std::vector<int>& nums)
+//{
+//	int n = nums.size();
+//	//调整为大顶堆
+//	for (int i = n / 2 - 1; i >= 0; i--)
+//	{
+//		heapfy(nums, i, n);
+//	}
+//
+//	for (int i = n - 1; i >= 0; i--)
+//	{
+//		std::swap(nums[0], nums[i]);
+//		heapfy(nums, 0, i);
+//	}
+//}
+//
+//void insertSort(std::vector<int>& nums)
+//{
+//	int size = nums.size();
+//	for (int i = 1; i < size; i++)
+//	{
+//		int key = nums[i];
+//		int j = i;
+//		for (; j >= 0&&nums[j] > key; j--)
+//		{
+//			nums[j + 1] = nums[j];
+//		}
+//		nums[j] = key;
+//	}
+//}
