@@ -4483,49 +4483,51 @@ public:
 // };
 
 //leetcode 120
-class Solution
-{
-public:
-	int minimumTotal(vector<vector<int>>& triangle)
-	{
-		int m = triangle.size();
-		int n = triangle[m-1].size();
-		//1.确定数组及下标含义
-		//数组dp[i][j]表示i,j的最小路径和
-		vector<vector<int>>dp(m,vector<int>(n,INT_MAX));
-		//2.确定推导公式
-		//dp[i][j] = min(dp[i-1][j],dp[i-1][j-1])+triangle[i][j];
+// class Solution
+// {
+// public:
+// 	int minimumTotal(vector<vector<int>>& triangle)
+// 	{
+// 		int m = triangle.size();
+// 		int n = triangle[m-1].size();
+// 		//1.确定数组及下标含义
+// 		//数组dp[i][j]表示i,j的最小路径和
+// 		vector<vector<int>>dp(m,vector<int>(n,INT_MAX));
+// 		//2.确定推导公式
+// 		//dp[i][j] = min(dp[i-1][j],dp[i-1][j-1])+triangle[i][j];
+//
+// 		//3.初始化
+// 		//初始化第一行值即第一列即可
+// 		dp[0][0] = triangle[0][0];
+// 		for(int i = 1;i<m;i++)
+// 		{
+// 			dp[i][0] = dp[i-1][0]+triangle[i][0];
+// 		}
+// 		//4.遍历
+// 		for(int i=1;i<m;i++)
+// 		{
+// 			for(int j = 1;j<=i;j++)
+// 			{
+// 				if(j<i)
+// 				{
+// 					dp[i][j] = min(dp[i-1][j],dp[i-1][j-1])+triangle[i][j];
+// 				}
+// 				else
+// 				{
+// 					dp[i][j] = dp[i-1][j-1]+triangle[i][j];
+// 				}
+// 			}
+// 		}
+// 		return *min_element(dp[m-1].begin(),dp[m-1].end());
+// 	}
+// };
+//
+// int main()
+// {
+// 	vector<vector<int>> triangle = {{2},{3,4},{6,5,7},{4,1,8,3}};
+// 	cout<<Solution().minimumTotal(triangle)<<endl;
+//
+// 	return 0;
+// }
 
-		//3.初始化
-		//初始化第一行值即第一列即可
-		dp[0][0] = triangle[0][0];
-		for(int i = 1;i<m;i++)
-		{
-			dp[i][0] = dp[i-1][0]+triangle[i][0];
-		}
-		//4.遍历
-		for(int i=1;i<m;i++)
-		{
-			for(int j = 1;j<=i;j++)
-			{
-				if(j<i)
-				{
-					dp[i][j] = min(dp[i-1][j],dp[i-1][j-1])+triangle[i][j];
-				}
-				else
-				{
-					dp[i][j] = dp[i-1][j-1]+triangle[i][j];
-				}
-			}
-		}
-		return *min_element(dp[m-1].begin(),dp[m-1].end());
-	}
-};
 
-int main()
-{
-	vector<vector<int>> triangle = {{2},{3,4},{6,5,7},{4,1,8,3}};
-	cout<<Solution().minimumTotal(triangle)<<endl;
-
-	return 0;
-}
