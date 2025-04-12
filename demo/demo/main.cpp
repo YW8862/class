@@ -403,3 +403,67 @@ using std::endl;
 //	return 0;
 //}
 
+
+//class A
+//{
+//public:
+//	virtual void print()
+//	{
+//		cout << "11111111111111111" << endl;
+//	}
+//
+//private:
+//	int a_data;
+//};
+//
+//class B :public A
+//{
+//public:
+//	void print()
+//	{
+//		cout << "22222222222222222" << endl;
+//	}
+//
+//private:
+//	int b_data;
+//};
+//
+//int main()
+//{
+//	A* a = new A();
+//	A* b = new B();
+//	a->print();
+//	b->print();
+//	return 0;
+//}
+
+class A
+{
+public:
+	A() = default;
+	
+	A(int a) :a_data(a) 
+	{
+		cout << "带参构造" << endl; 
+	}
+
+	A(const A& other)
+	{
+		cout << "拷贝构造" << endl;
+		a_data = other.a_data;
+	}
+
+	void print()
+	{
+		cout << a_data << endl;
+	}
+private:
+	int a_data;
+};
+
+int main()
+{
+	A a = 3;
+	a.print();
+	return 0;
+}
