@@ -52,49 +52,128 @@ using namespace std;
 //    cout << v-dp[v][n - 1] << endl;
 //}
 
-vector<int> buildNext(string str)
-{
-	vector<int> next(str.size());
-	int prefixLen = 0;
-	int i = 1;
-	while (i < str.size())
-	{
-		if (str[i] == str[next[prefixLen]])
-		{
-			prefixLen++;
-			next[i] = prefixLen;
-			i++;
-		}
-		else
-		{
-			if (prefixLen == 0)
-			{
-				prefixLen = 0;
-				next[i] = 0;
-				i++;
-			}
-			else
-			{
-				prefixLen = next[prefixLen - 1];
-			}
-		}
-	}
-	return next;
-}
 
 
-//int kmpSearch(string str1,string str2)
+//实现KMP算法
+//vector<int> buildNext(string str)
 //{
-//	
+//	vector<int> next(str.size());
+//	int prefixLen = 0;
+//	int i = 1;
+//	while (i < str.size())
+//	{
+//		if (str[i] == str[next[prefixLen]])
+//		{
+//			prefixLen++;
+//			next[i] = prefixLen;
+//			i++;
+//		}
+//		else
+//		{
+//			if (prefixLen == 0)
+//			{
+//				prefixLen = 0;
+//				next[i] = 0;
+//				i++;
+//			}
+//			else
+//			{
+//				prefixLen = next[prefixLen - 1];
+//			}
+//		}
+//	}
+//	return next;
 //}
+//
+//
+////int kmpSearch(string str1,string str2)
+////{
+////	
+////}
+//
+//int main()
+//{
+//	vector<int> next = buildNext("ABACABAB");
+//	for (int i = 0; i < next.size(); i++)
+//	{
+//		cout << next[i] << " ";
+//	}
+//
+//	return 0;
+//}
+
+
+
+
+class Solution {
+public:
+
+    //判断一个坐标是否合法，即是否越界且在左上角半区
+    bool isValid(vector<vector<int> >& m, int x, int y)
+    {   
+        return y >= x && x >= 0 && x < m.size() && y >= 0 && y < m[0].size();
+    }
+
+    //x,y表示当前坐标，dir表示上一步到现在这步的方向
+    //0表示无方向，即刚进入地图，1表示向右，2表示向下，3表示向左，4表示向上
+    void bfs(vector<vector<int> >& m, int x, int y, int dir)
+    {
+        //标记位置
+        if (m[x][y] == 1)
+            m[x][y] = -1;
+        else
+            return;
+
+        //表示左边合法并且未遍历过
+        if (dir != 1 && isValid(m, x, y - 1))
+        {
+            bfs(m, x, y - 1, 3);
+        }
+
+        //表示上面合法并且未遍历过
+        if (dir != 2 && isValid(m, x - 1, y))
+        {
+            bfs(m, x, y - 1, 4);
+        }
+
+        //表示右边合法且未遍历过
+        if (dir != 3 && isValid(m, x, y + 1))
+        {
+            bfs(m, x, y + 1, 1);
+        }
+
+        //表示下面合法且未遍历过
+        if (dir != 4 && isValid(m, x + 1, y))
+        {
+            bfs(m, x + 1, y, 2);
+        }
+    }
+
+    int citys(vector<vector<int> >& m) {
+        int n = m.size();
+        // write code here
+        //双向图岛屿问题
+        //深度优先
+        int islandCnt = 0;
+        //广度优先遍历岛屿，将遍历过的位置标记为-1        
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = i; j < n; j++)
+            {
+                if (m[i][j] == 1)
+                {
+                    islandCnt++;
+                    bfs(m, i, j, 0);
+                }
+            }
+        }
+        return islandCnt;
+    }
+};
+
 
 int main()
 {
-	vector<int> next = buildNext("ABACABAB");
-	for (int i = 0; i < next.size(); i++)
-	{
-		cout << next[i] << " ";
-	}
-
-	return 0;
+    vector<vector<int>> m = { {1,1,0},{1,1,0},{0,0,1} };
+    cout << Solution().citys(m) << endl;
 }
