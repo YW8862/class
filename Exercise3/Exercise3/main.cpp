@@ -52,9 +52,7 @@ using namespace std;
 //    cout << v-dp[v][n - 1] << endl;
 //}
 
-
-
-//实现KMP算法
+////实现KMP算法
 //vector<int> buildNext(string str)
 //{
 //	vector<int> next(str.size());
@@ -85,11 +83,17 @@ using namespace std;
 //	return next;
 //}
 //
+///**
+// * @brief 
+// * @param str1 
+// * @param str2 
+// * @return 
+// */
+//int kmpSearch(string str1,string str2)
+//{
 //
-////int kmpSearch(string str1,string str2)
-////{
-////	
-////}
+//	return 1;
+//}
 //
 //int main()
 //{
@@ -102,78 +106,194 @@ using namespace std;
 //	return 0;
 //}
 
+////岛屿问题 dfs
+//class Solution {
+//public:
+//
+//    // 深度优先搜索遍历连通区域
+//    void dfs(vector<vector<int>>& m, int node,vector<bool> &visited) 
+//    {
+//        visited[node] = true;
+//        for (int i = 0; i < m.size(); i++)
+//        {
+//            if (m[node][i] == 1 && !visited[i])
+//            {
+//                dfs(m, i, visited);
+//            }
+//        }
+//    }
+//
+//    int citys(vector<vector<int>>& m) {
+//        int n = m.size();
+//        int islandCnt = 0;
+//        if (n == 0)
+//            return 0;
+//        vector<bool> visited(n, false);
+//        for (int i = 0; i < n; i++)
+//        {
+//            //说明没有遍历过
+//            if (!visited[i])
+//            {
+//                islandCnt++;
+//                dfs(m, i, visited);
+//            }
+//        }
+//        return islandCnt;
+//    }
+//};
+//
+//
+//int main()
+//{
+//    vector<vector<int>> m = { {0,0,1},{0,0,0},{1,0,0} };
+//    cout << Solution().citys(m) << endl;
+//}
+
+//namespace ns_ptr
+//{
+//	template<typename T>
+//	class shared_ptr
+//	{
+//	public:
+//		shared_ptr() :cnt(nullptr), ptr(nullptr)
+//		{
+//		}
+//
+//		shared_ptr(T* _ptr) :cnt(new int(1)), ptr(_ptr)
+//		{
+//		}
+//
+//		shared_ptr(const shared_ptr<T>& other) :cnt(other.cnt), ptr(other.ptr)
+//		{
+//			addCount();
+//		}
+//
+//		~shared_ptr()
+//		{
+//			showCnt();
+//			delCount();
+//		}
+//
+//		void addCount()
+//		{
+//			++(*cnt);
+//		}
+//
+//		void delCount()
+//		{
+//			if (--(*cnt) == 0)
+//			{
+//				delete ptr;
+//				delete cnt;
+//			}
+//		}
+//
+//		shared_ptr operator=(const shared_ptr<T>& other)
+//		{
+//			if (other.ptr == ptr)	return *this;
+//			//解除绑定
+//			delCount();
+//			//
+//			ptr = other.ptr;
+//			cnt = other.cnt;
+//			addCount();
+//
+//			return *this;
+//		}
+//
+//		T& operator *()
+//		{
+//			return *ptr;
+//		}
+//
+//		T* operator->()
+//		{
+//			return ptr;
+//		}
+//
+//		void showCnt()
+//		{
+//			printf("&p:%p  cnt:%d\n", this, *cnt);
+//		}
+//
+//	private:
+//		int* cnt;
+//		T* ptr;
+//	};
+//};
+//
+//
+//int main()
+//{
+//	int *a = new int(1024);
+//	ns_ptr::shared_ptr<int> sp1 = a;
+//	cout << *sp1 << endl;
+//	cout << "---------------------" << endl;
+//	ns_ptr::shared_ptr<int> sp2 = sp1;
+//	cout << *sp2 << endl;
+//	return 0;
+//}
 
 
-
-class Solution {
-public:
-
-    //判断一个坐标是否合法，即是否越界且在左上角半区
-    bool isValid(vector<vector<int> >& m, int x, int y)
-    {   
-        return y >= x && x >= 0 && x < m.size() && y >= 0 && y < m[0].size();
-    }
-
-    //x,y表示当前坐标，dir表示上一步到现在这步的方向
-    //0表示无方向，即刚进入地图，1表示向右，2表示向下，3表示向左，4表示向上
-    void bfs(vector<vector<int> >& m, int x, int y, int dir)
-    {
-        //标记位置
-        if (m[x][y] == 1)
-            m[x][y] = -1;
-        else
-            return;
-
-        //表示左边合法并且未遍历过
-        if (dir != 1 && isValid(m, x, y - 1))
-        {
-            bfs(m, x, y - 1, 3);
-        }
-
-        //表示上面合法并且未遍历过
-        if (dir != 2 && isValid(m, x - 1, y))
-        {
-            bfs(m, x, y - 1, 4);
-        }
-
-        //表示右边合法且未遍历过
-        if (dir != 3 && isValid(m, x, y + 1))
-        {
-            bfs(m, x, y + 1, 1);
-        }
-
-        //表示下面合法且未遍历过
-        if (dir != 4 && isValid(m, x + 1, y))
-        {
-            bfs(m, x + 1, y, 2);
-        }
-    }
-
-    int citys(vector<vector<int> >& m) {
-        int n = m.size();
-        // write code here
-        //双向图岛屿问题
-        //深度优先
-        int islandCnt = 0;
-        //广度优先遍历岛屿，将遍历过的位置标记为-1        
-        for (int i = 0; i < n; i++)
-        {
-            for (int j = i; j < n; j++)
-            {
-                if (m[i][j] == 1)
-                {
-                    islandCnt++;
-                    bfs(m, i, j, 0);
-                }
-            }
-        }
-        return islandCnt;
-    }
-};
+//leetcode 71
+//class Solution
+//{
+//public:
+//    vector<string> split(const string& str)
+//    {
+//        if (str.size() == 0)
+//            return {};
+//        vector<string> result;
+//        int begin = 0;
+//        int end = str.find("/");
+//        while (end != string::npos)
+//        {
+//            result.push_back(str.substr(begin, end - begin));
+//            begin = end + 1;
+//            end = str.find("/", begin);
+//        }
+//        result.push_back(str.substr(begin));
+//        return result;
+//    }
+//
+//    string simplifyPath(string path)
+//    {
+//        vector<string> result = split(path);
+//        //正栈
+//        stack<string> st1;
+//        //用于反转的逆栈
+//        stack<string> st2;
+//        for (auto& str : result)
+//        {
+//            //如果目录为空或者为本路径
+//            if (str == "" || str == ".")
+//                continue;
+//            if (str == ".." && !st1.empty())
+//                st1.pop();
+//            else if (str != "." && str != ".." && str != "")
+//            {
+//                st1.push(str);
+//            }
+//        }
+//
+//        while (!st1.empty())
+//        {
+//            st2.push(st1.top());
+//            st1.pop();
+//        }
+//
+//        string finalPath;
+//        while (!st2.empty())
+//        {
+//            finalPath += "/";
+//            finalPath += st2.top();
+//            st2.pop();
+//        }
+//        if (finalPath.size() == 0)
+//            finalPath = "/";
+//
+//        return finalPath;
+//    }
+//};
 
 
-int main()
-{
-    vector<vector<int>> m = { {1,1,0},{1,1,0},{0,0,1} };
-    cout << Solution().citys(m) << endl;
-}
